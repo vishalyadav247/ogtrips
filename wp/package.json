@@ -1,0 +1,27 @@
+{
+  "name": "ogtrips-wp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OgTrips WordPress build: GeneratePress child theme (ogtrips) + ogtrips-core plugin, local env via wp-env.",
+  "license": "GPL-2.0-or-later",
+  "type": "module",
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "setup": "wp-env run cli sh wp-content/ogtrips-scripts/setup.sh",
+    "build:icons": "node scripts/build-icons.mjs",
+    "build:fonts": "node scripts/build-fonts.mjs",
+    "test:e2e": "playwright test",
+    "design:serve": "http-server ../.claude/design -p 5500 -s",
+    "lint:php": "wp-env run cli sh -c \"find wp-content/themes/ogtrips wp-content/plugins/ogtrips-core -name '*.php' -print0 | xargs -0 -n1 php -l\""
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
+    "@playwright/test": "^1.63.0",
+    "@wordpress/env": "^11.16.0",
+    "http-server": "^14.1.1",
+    "lucide-static": "0.460.0"
+  }
+}

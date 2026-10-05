@@ -6,7 +6,7 @@ Rules for every phase: read `.claude/CLAUDE.md` and the skills it lists. The Wor
 
 | # | Phase | Main outcome | Status |
 |---|---|---|---|
-| 01 | Local environment & child theme skeleton | WordPress running locally with GeneratePress + `ogtrips` child theme (design CSS/JS, self-hosted fonts, icon sprite), SCF, Yoast, `ogtrips-core` skeleton, Playwright smoke test | Spec ready |
+| 01 | Local environment & child theme skeleton | WordPress running locally with GeneratePress + `ogtrips` child theme (design CSS/JS, self-hosted fonts, icon sprite), SCF, Yoast, `ogtrips-core` skeleton, Playwright smoke test | Built — awaiting checkpoint |
 | 02 | Content model & clean admin | Trips, Tour Guides, Reviews, Moments, Enquiries post types; destinations/trip types; SCF forms with tabs; Homepage + Site Settings screens; Editor-role menu clean-up; comments off | — |
 | 03 | Trip page | `single-ogt_itinerary.php` identical to `itinerary.html`, fully driven by admin data; demo-content seeder | — |
 | 04 | Tour Guide page | `single-ogt_guide.php` identical to `guide.html`; restricted block editor + side fields; TOC/progress; Blog uses same layout | — |

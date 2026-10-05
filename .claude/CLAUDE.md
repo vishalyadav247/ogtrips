@@ -47,7 +47,7 @@ GeneratePress itself is installed from wordpress.org by wp-env/WP-CLI — never 
 
 - Windows 11, Git Bash + PowerShell. **No local PHP/Composer** — use wp-env (Docker) for WordPress, WP-CLI and PHP.
 - Available: Node 24, npm 11, Docker 29, git.
-- Local site (once started): http://localhost:8888 · admin: `admin` / `password` · test site on :8889.
+- Local site (once started): http://localhost:8888 · admin: `admin` / `password` (wp-env tests site disabled: `"testsEnvironment": false`; Playwright runs against :8888). First `wp-env start` takes ~12 min; WP-CLI calls take ~8–22 s each on this machine (Docker Desktop bind mounts) — batch them in one `wp-env run cli sh -c`.
 - Git Bash + Docker volume paths: prefix with `MSYS_NO_PATHCONV=1` when passing container paths.
 
 ## Architecture decisions

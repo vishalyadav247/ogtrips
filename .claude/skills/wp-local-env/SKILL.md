@@ -14,13 +14,11 @@ All commands run from `wp/`.
 ```bash
 cd wp
 npm install                 # installs @wordpress/env, @playwright/test, @axe-core/playwright
-npx wp-env start            # dev site http://localhost:8888, tests site :8889
-npx wp-env run cli wp theme install generatepress          # parent — never edited
-npx wp-env run cli wp plugin install secure-custom-fields wordpress-seo --activate
-npx wp-env run cli wp theme activate ogtrips                # our child theme
-npx wp-env run cli wp plugin activate ogtrips-core
-npx wp-env run cli wp rewrite structure '/%postname%/' --hard
+npx wp-env start            # dev site http://localhost:8888 (tests site disabled)
+npm run setup               # idempotent baseline: scripts/setup.sh inside the cli container
 ```
+
+GeneratePress, SCF and Yoast are installed by wp-env from `.wp-env.json`; `setup.sh` activates the theme/plugins, removes default content and sets options. `scripts/` is mounted at `wp-content/ogtrips-scripts` (see `mappings`).
 
 Login: http://localhost:8888/wp-admin — `admin` / `password`.
 
@@ -29,15 +27,16 @@ Login: http://localhost:8888/wp-admin — `admin` / `password`.
 ```json
 {
   "core": null,
+  "testsEnvironment": false,
   "phpVersion": "8.2",
   "themes": [
-    "https://downloads.wordpress.org/theme/generatepress.zip",
+    "https://downloads.wordpress.org/theme/generatepress.3.6.1.zip",
     "./themes/ogtrips"
   ],
   "plugins": [
     "./plugins/ogtrips-core",
-    "https://downloads.wordpress.org/plugin/secure-custom-fields.zip",
-    "https://downloads.wordpress.org/plugin/wordpress-seo.zip"
+    "https://downloads.wordpress.org/plugin/secure-custom-fields.6.9.5.zip",
+    "https://downloads.wordpress.org/plugin/wordpress-seo.28.6.zip"
   ],
   "config": {
     "WP_DEBUG": true,
@@ -49,7 +48,7 @@ Login: http://localhost:8888/wp-admin — `admin` / `password`.
 }
 ```
 
-Only free wordpress.org themes/plugins are allowed, pinned in `.wp-env.json` as above so every setup is identical. Production stack: **GeneratePress** (parent) + **ogtrips** (child) + **Secure Custom Fields** + **Yoast SEO** + **ogtrips-core**, plus a free cache plugin chosen with hosting. Never add paid/"Pro" plugins, GP Premium, page builders or starter-template importers.
+Only free wordpress.org themes/plugins are allowed, pinned to exact versioned zips in `.wp-env.json` as above (bump deliberately, never "latest" — the unversioned Yoast zip once served an RC) so every setup is identical. Production stack: **GeneratePress** (parent) + **ogtrips** (child) + **Secure Custom Fields** + **Yoast SEO** + **ogtrips-core**, plus a free cache plugin chosen with hosting. Never add paid/"Pro" plugins, GP Premium, page builders or starter-template importers.
 
 ## Everyday commands
 

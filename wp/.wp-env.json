@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/wp-env.json",
+  "core": null,
+  "testsEnvironment": false,
+  "phpVersion": "8.2",
+  "themes": [
+    "https://downloads.wordpress.org/theme/generatepress.3.6.1.zip",
+    "./themes/ogtrips"
+  ],
+  "plugins": [
+    "./plugins/ogtrips-core",
+    "https://downloads.wordpress.org/plugin/secure-custom-fields.6.9.5.zip",
+    "https://downloads.wordpress.org/plugin/wordpress-seo.28.6.zip"
+  ],
+  "mappings": {
+    "wp-content/ogtrips-scripts": "./scripts"
+  },
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_DEBUG_DISPLAY": false,
+    "SCRIPT_DEBUG": true,
+    "WP_ENVIRONMENT_TYPE": "local"
+  }
+}
