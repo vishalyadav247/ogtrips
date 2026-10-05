@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OgTrips — Where to next?</title>
+  <meta name="description" content="OgTrips plans unforgettable trips with handpicked stays, day-by-day itineraries and 24/7 support. Where to next?">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a2540">
+  <link rel="icon" href="assets/img/ogtrips-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- =====================================================================
+     HEADER — per notes: Logo · Menu · Search · Reserve · Account
+     WP: header.php → the_custom_logo(), wp_nav_menu('primary'), get_search_form()
+     ===================================================================== -->
+<div class="nav-wrap">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="logo" aria-label="OgTrips home"><img src="assets/img/ogtrips-mark.svg" alt=""><span>Tr<span class="i-pin">ı</span>ps</span></a>
+    <ul class="menu">
+      <li><a href="#trips">Trips</a></li>
+      <li><a href="#why">Why OG</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="guide.html">Travel Guide</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <form class="nav-search" role="search" action="#trips">
+      <i data-lucide="search"></i>
+      <input type="search" placeholder="Search Bali, Ladakh, Maldives…" aria-label="Search trips">
+    </form>
+    <a href="#" class="nav-icon account" aria-label="My account"><i data-lucide="user-round"></i></a>
+    <a href="#contact" class="btn btn--coral">Reserve <span class="arrow"><i data-lucide="arrow-up-right"></i></span></a>
+    <button class="burger" aria-label="Menu"><i data-lucide="menu"></i></button>
+  </nav>
+</div>
+<div class="mobile-menu">
+  <div>
+    <form class="mm-search" role="search"><input type="search" placeholder="Where to next?" aria-label="Search trips"></form>
+    <ul>
+      <li><a href="#trips">Trips</a></li>
+      <li><a href="#why">Why OG</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="guide.html">Travel Guide</a></li>
+      <li><a href="#contact">Reserve</a></li>
+    </ul>
+  </div>
+  <div><small>Talk to a trip expert</small><p style="font-size:1.3rem;margin:4px 0 0">+91 98765 43210</p></div>
+</div>
+
+<main>
+<!-- =====================================================================
+     HERO — "Animations of places" + "Our OG Trips" callout button
+     WP: ACF repeater 'hero_places' (image, place, country)
+     ===================================================================== -->
+<section class="hero" id="home">
+  <div class="hero-frame">
+    <div class="slides">
+      <figure class="slide is-active" data-place="Bali." data-country="Indonesia"><img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=2200&q=80" alt="Bali temple"></figure>
+      <figure class="slide" data-place="Kerala." data-country="India"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=2200&q=80" alt="Kerala backwaters"></figure>
+      <figure class="slide" data-place="the Alps." data-country="Switzerland"><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=2200&q=80" alt="Swiss Alps lake"></figure>
+      <figure class="slide" data-place="Rajasthan." data-country="India"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=2200&q=80" alt="Rajasthan palace"></figure>
+      <figure class="slide" data-place="Maldives." data-country="Indian Ocean"><img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=2200&q=80" alt="Maldives villas"></figure>
+    </div>
+
+    <!-- Dotted flight path + paper plane (from brand poster) -->
+    <svg class="flight" viewBox="0 0 600 300" fill="none" aria-hidden="true">
+      <path d="M10 270 C 140 290, 250 220, 320 160 S 480 50, 548 38" stroke="#fff" stroke-width="3"/>
+      <g class="plane">
+        <path d="M540 44 L596 10 L572 60 L563 46 Z" fill="#FF5A4F"/>
+        <path d="M563 46 L596 10 L552 44 Z" fill="#c9382f"/>
+      </g>
+    </svg>
+
+    <div class="hero-content">
+      <div class="now-showing"><b>Now showing</b><span id="now-country">Indonesia</span></div>
+      <h1>Where to next?<br><span class="place">Bali.</span></h1>
+      <p class="hero-sub">Handpicked stays, day-by-day plans and a real human on call 24/7. You pack the bags — we'll handle everything else.</p>
+      <div class="hero-actions">
+        <a href="#trips" class="btn btn--coral btn--callout">Our OG Trips <span class="arrow"><i data-lucide="arrow-down-right"></i></span></a>
+        <a href="#social" class="btn btn--ghost-light"><i data-lucide="play"></i> Watch traveller reels</a>
+      </div>
+    </div>
+
+    <div class="hero-places" role="tablist" aria-label="Destinations">
+      <button class="hp is-active" role="tab"><span class="bar"><i></i></span><strong>Bali</strong><small>Indonesia</small></button>
+      <button class="hp" role="tab"><span class="bar"><i></i></span><strong>Kerala</strong><small>India</small></button>
+      <button class="hp" role="tab"><span class="bar"><i></i></span><strong>Swiss Alps</strong><small>Switzerland</small></button>
+      <button class="hp" role="tab"><span class="bar"><i></i></span><strong>Rajasthan</strong><small>India</small></button>
+      <button class="hp" role="tab"><span class="bar"><i></i></span><strong>Maldives</strong><small>Indian Ocean</small></button>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     WHY WE ARE OG's — quote para + Trust | Experience Beyond Ordinary | 24/7 Support
+     WP: ACF group 'why_og' (quote, author, 3× pillar: icon, title, text, stat)
+     ===================================================================== -->
+<section class="section" id="why">
+  <div class="container">
+    <div style="text-align:center" class="reveal"><span class="label">Why we are OG's</span></div>
+    <div class="og-quote reveal">
+      <span class="mark" aria-hidden="true">“</span>
+      <blockquote>
+        We started OgTrips because we were tired of <span class="teal">copy-paste holidays</span>. Every trip we sell is one we've
+        <span class="hl">travelled ourselves</span> — so yours feels less like a package and more like a story worth telling.
+      </blockquote>
+      <cite>— The founders, OgTrips</cite>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="ic"><i data-lucide="shield-check"></i></div>
+        <h3>Trust</h3>
+        <p>Transparent pricing, verified stays and no hidden fees. What's included is listed — and so is what's not.</p>
+        <div class="stat"><strong data-count="12" data-suffix="k+">0</strong><span>travellers trust us</span></div>
+      </div>
+      <div class="pillar reveal reveal-d1">
+        <div class="ic"><i data-lucide="sparkles"></i></div>
+        <h3>Experience beyond ordinary</h3>
+        <p>Sunrise volcano treks, private sandbank dinners, homestays with local families — the moments other tours skip.</p>
+        <div class="stat"><strong data-count="120" data-suffix="+">0</strong><span>curated experiences</span></div>
+      </div>
+      <div class="pillar reveal reveal-d2">
+        <div class="ic"><i data-lucide="headset"></i></div>
+        <h3>24/7 support</h3>
+        <p>A real human trip captain on WhatsApp before, during and after your trip — any time zone, any hour.</p>
+        <div class="stat"><strong data-count="5" data-suffix=" min">0</strong><span>average reply time</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     REVIEWS — slider
+     WP: CPT 'review' or Google Reviews plugin (e.g. Trustindex)
+     ===================================================================== -->
+<section class="section reviews-sec" id="reviews">
+  <div class="container">
+    <div class="section-top">
+      <div class="reveal">
+        <span class="label">Reviews</span>
+        <h2 class="display-sm">Loved by <em>12,000+</em> travellers</h2>
+      </div>
+      <div class="rating-sum reveal">
+        <strong>4.9</strong>
+        <div><div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><small>2,300+ reviews on Google &amp; Tripadvisor</small></div>
+        <div class="slider-ctrl" style="margin-left:14px">
+          <button class="icon-btn" data-carousel="prev" data-target="#review-track" aria-label="Previous"><i data-lucide="arrow-left"></i></button>
+          <button class="icon-btn" data-carousel="next" data-target="#review-track" aria-label="Next"><i data-lucide="arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="track reveal" id="review-track">
+      <article class="review">
+        <div class="top"><div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><span class="src"><i data-lucide="badge-check"></i> Google</span></div>
+        <p>“Every transfer was on time and every hotel was better than the photos. It felt like travelling with a friend who knows everyone on the island.”</p>
+        <div class="trip-pic"><img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=120&q=70" alt=""><span>Bali Bliss · 7 days</span></div>
+        <div class="person"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=70" alt=""><div><strong>Priya Sharma</strong><small>Mumbai · June 2026</small></div></div>
+      </article>
+      <article class="review">
+        <div class="top"><div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><span class="src"><i data-lucide="badge-check"></i> Tripadvisor</span></div>
+        <p>“Ladakh was a dream. The acclimatisation days were planned perfectly and our driver knew every secret viewpoint. Already booking the next one.”</p>
+        <div class="trip-pic"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=120&q=70" alt=""><span>Leh–Ladakh · 8 days</span></div>
+        <div class="person"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=70" alt=""><div><strong>Rahul Kapoor</strong><small>Delhi · July 2026</small></div></div>
+      </article>
+      <article class="review">
+        <div class="top"><div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><span class="src"><i data-lucide="badge-check"></i> Google</span></div>
+        <p>“Our honeymoon was flawless — they even surprised us with a private dinner on a sandbank. The 24/7 WhatsApp support is genuinely 24/7.”</p>
+        <div class="trip-pic"><img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=120&q=70" alt=""><span>Maldives Escape · 5 days</span></div>
+        <div class="person"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=120&q=70" alt=""><div><strong>Ananya &amp; Mihir</strong><small>Bengaluru · May 2026</small></div></div>
+      </article>
+      <article class="review">
+        <div class="top"><div class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div><span class="src"><i data-lucide="badge-check"></i> Google</span></div>
+        <p>“Travelled with my parents and two kids — the pace was just right for everyone. The houseboat night was the highlight of our year.”</p>
+        <div class="trip-pic"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=120&q=70" alt=""><span>Kerala Calling · 6 days</span></div>
+        <div class="person"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=70" alt=""><div><strong>Sneha Iyer</strong><small>Pune · April 2026</small></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SOCIAL TAGS — customer images & videos tagging @ogtrips
+     WP: Smash Balloon Instagram Feed (hashtag/tagged feed) or CPT 'ugc'
+     ===================================================================== -->
+<section class="section" id="social" style="padding-bottom:0">
+  <div class="social-sec on-dark">
+    <div class="container section">
+      <div class="section-top">
+        <div class="reveal">
+          <span class="label">#OgTrips moments</span>
+          <h2 class="display-sm" style="color:#fff">Tagged by <em>you</em>, loved by us</h2>
+        </div>
+        <p class="reveal">Real photos and reels from travellers who tagged <strong style="color:#fff">@ogtrips</strong> on Instagram. Tag us — you might be next.</p>
+      </div>
+
+      <div class="ugc reveal">
+        <a href="#" class="ugc-item big is-video">
+          <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=900&q=75" alt="" loading="lazy">
+          <span class="chip chip--dark reel"><i data-lucide="clapperboard"></i> Reel · 0:42</span>
+          <span class="play"><i data-lucide="play"></i></span>
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @wanderwithriya</span><span class="meta"><span><i data-lucide="heart"></i> 12.4k</span><span><i data-lucide="eye"></i> 98k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item">
+          <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=500&q=75" alt="" loading="lazy">
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @arjun.clicks</span><span class="meta"><span><i data-lucide="heart"></i> 2.1k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item tall is-video">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=500&q=75" alt="" loading="lazy">
+          <span class="chip chip--dark reel"><i data-lucide="clapperboard"></i> 0:28</span>
+          <span class="play"><i data-lucide="play"></i></span>
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @ladakh.diaries</span><span class="meta"><span><i data-lucide="heart"></i> 8.7k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item">
+          <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=500&q=75" alt="" loading="lazy">
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @mihir_ananya</span><span class="meta"><span><i data-lucide="heart"></i> 5.3k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item wide">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=75" alt="" loading="lazy">
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @roadtrip.rahul</span><span class="meta"><span><i data-lucide="heart"></i> 3.9k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item">
+          <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=500&q=75" alt="" loading="lazy">
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @desi.nomad</span><span class="meta"><span><i data-lucide="heart"></i> 1.8k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item wide is-video">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=75" alt="" loading="lazy">
+          <span class="chip chip--dark reel"><i data-lucide="clapperboard"></i> 1:05</span>
+          <span class="play"><i data-lucide="play"></i></span>
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @sneha.travels</span><span class="meta"><span><i data-lucide="heart"></i> 6.2k</span></span></span>
+        </a>
+        <a href="#" class="ugc-item">
+          <img src="https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=500&q=75" alt="" loading="lazy">
+          <span class="ov"><span class="handle"><i data-lucide="instagram"></i> @kavya.goes</span><span class="meta"><span><i data-lucide="heart"></i> 2.6k</span></span></span>
+        </a>
+      </div>
+
+      <div class="tag-cta reveal">
+        <span class="hash">Tag <span>@ogtrips</span> &amp; use <span>#WhereToNext</span></span>
+        <a href="#" class="btn btn--sun">Follow on Instagram <span class="arrow"><i data-lucide="instagram"></i></span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     MOST SELLING TRIPS — 4 cards (2×2)
+     WP: WP_Query CPT 'itinerary', meta is_bestseller, orderby bookings, LIMIT 4
+     ===================================================================== -->
+<section class="section" id="trips">
+  <div class="container">
+    <div class="section-top">
+      <div class="reveal">
+        <span class="label">Our OG Trips</span>
+        <h2 class="display-sm">Most-loved <em>trips</em> right now</h2>
+      </div>
+      <a href="itinerary.html" class="link-arrow reveal">View all 120 trips <i data-lucide="arrow-right"></i></a>
+    </div>
+
+    <div class="best">
+      <!-- Card (WP: template-parts/card-bestseller.php) -->
+      <article class="best-card reveal">
+        <a href="itinerary.html" class="media">
+          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=78" alt="Bali" loading="lazy">
+          <span class="chip chip--sun rank">#1 Bestseller</span>
+        </a>
+        <button class="fav" aria-label="Save trip"><i data-lucide="heart"></i></button>
+        <div class="body">
+          <span class="where"><i data-lucide="map-pin"></i> Bali, Indonesia</span>
+          <h3><a href="itinerary.html">Bali Bliss: temples, terraces &amp; hidden beaches</a></h3>
+          <div class="facts"><span><i data-lucide="clock"></i> 7D / 6N</span><span><i data-lucide="star"></i> 4.9 (312)</span><span><i data-lucide="users"></i> 2–12</span></div>
+          <div class="incl-mini" title="Stay · Meals · Transfers · Activities"><span><i data-lucide="bed-double"></i></span><span><i data-lucide="utensils"></i></span><span><i data-lucide="car"></i></span><span><i data-lucide="ticket"></i></span></div>
+          <div class="foot">
+            <div class="price"><small>from / person</small><strong>₹54,999</strong><s>₹62,000</s></div>
+            <a href="itinerary.html" class="btn">Reserve <span class="arrow"><i data-lucide="arrow-up-right"></i></span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="best-card reveal reveal-d1">
+        <a href="itinerary.html" class="media">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=78" alt="Ladakh" loading="lazy">
+          <span class="chip chip--coral rank">Selling fast</span>
+        </a>
+        <button class="fav" aria-label="Save trip"><i data-lucide="heart"></i></button>
+        <div class="body">
+          <span class="where"><i data-lucide="map-pin"></i> Ladakh, India</span>
+          <h3><a href="itinerary.html">Leh–Ladakh road trip with Pangong &amp; Nubra</a></h3>
+          <div class="facts"><span><i data-lucide="clock"></i> 8D / 7N</span><span><i data-lucide="star"></i> 4.8 (204)</span><span><i data-lucide="users"></i> 4–14</span></div>
+          <div class="incl-mini"><span><i data-lucide="bed-double"></i></span><span><i data-lucide="utensils"></i></span><span><i data-lucide="car"></i></span><span><i data-lucide="tent"></i></span></div>
+          <div class="foot">
+            <div class="price"><small>from / person</small><strong>₹38,500</strong></div>
+            <a href="itinerary.html" class="btn">Reserve <span class="arrow"><i data-lucide="arrow-up-right"></i></span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="best-card reveal">
+        <a href="itinerary.html" class="media">
+          <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=900&q=78" alt="Maldives" loading="lazy">
+          <span class="chip rank"><i data-lucide="heart"></i> Honeymoon pick</span>
+        </a>
+        <button class="fav" aria-label="Save trip"><i data-lucide="heart"></i></button>
+        <div class="body">
+          <span class="where"><i data-lucide="map-pin"></i> Baa Atoll, Maldives</span>
+          <h3><a href="itinerary.html">Maldives overwater villa escape</a></h3>
+          <div class="facts"><span><i data-lucide="clock"></i> 5D / 4N</span><span><i data-lucide="star"></i> 5.0 (148)</span><span><i data-lucide="users"></i> 2</span></div>
+          <div class="incl-mini"><span><i data-lucide="bed-double"></i></span><span><i data-lucide="utensils"></i></span><span><i data-lucide="plane"></i></span><span><i data-lucide="waves"></i></span></div>
+          <div class="foot">
+            <div class="price"><small>from / person</small><strong>₹1,24,000</strong></div>
+            <a href="itinerary.html" class="btn">Reserve <span class="arrow"><i data-lucide="arrow-up-right"></i></span></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="best-card reveal reveal-d1">
+        <a href="itinerary.html" class="media">
+          <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=78" alt="Kerala" loading="lazy">
+          <span class="chip rank"><i data-lucide="baby"></i> Family favourite</span>
+        </a>
+        <button class="fav" aria-label="Save trip"><i data-lucide="heart"></i></button>
+        <div class="body">
+          <span class="where"><i data-lucide="map-pin"></i> Kerala, India</span>
+          <h3><a href="itinerary.html">Kerala calling: Munnar, Thekkady &amp; houseboat</a></h3>
+          <div class="facts"><span><i data-lucide="clock"></i> 6D / 5N</span><span><i data-lucide="star"></i> 4.8 (176)</span><span><i data-lucide="users"></i> 2–10</span></div>
+          <div class="incl-mini"><span><i data-lucide="bed-double"></i></span><span><i data-lucide="utensils"></i></span><span><i data-lucide="car"></i></span><span><i data-lucide="sailboat"></i></span></div>
+          <div class="foot">
+            <div class="price"><small>from / person</small><strong>₹27,500</strong></div>
+            <a href="itinerary.html" class="btn">Reserve <span class="arrow"><i data-lucide="arrow-up-right"></i></span></a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     CONTACT US — brand poster style (sky, sun, waves)
+     WP: Contact Form 7 / WPForms shortcode + ACF options (phone, email, address)
+     ===================================================================== -->
+<section class="contact" id="contact">
+  <span class="sunball" aria-hidden="true"></span>
+  <span class="cloud" style="top:12%;left:12%" aria-hidden="true"></span>
+  <span class="cloud" style="top:26%;left:44%;transform:scale(.7);animation-duration:40s" aria-hidden="true"></span>
+  <svg class="waves" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 60 C 240 10, 480 110, 720 60 S 1200 10, 1440 60 V160 H0 Z" fill="#00B3BF"/>
+    <path d="M0 100 C 260 60, 520 140, 760 100 S 1220 60, 1440 100 V160 H0 Z" fill="#0094a0"/>
+  </svg>
+  <div class="container">
+    <div class="reveal">
+      <span class="label" style="color:var(--navy)">Contact us</span>
+      <h2 style="margin-top:18px">Where to <em>next?</em><br>Let's talk.</h2>
+      <p class="lead" style="margin-top:18px;max-width:440px">Tell us your dates and dream — get a free, personalised itinerary within 24 hours.</p>
+      <div class="contact-list">
+        <a href="#"><span class="ic" style="background:#25d366"><i data-lucide="message-circle"></i></span><span><small>WhatsApp</small><strong>+91 98765 43210</strong></span></a>
+        <a href="#"><span class="ic" style="background:var(--coral)"><i data-lucide="phone"></i></span><span><small>Call us</small><strong>+91 98765 43210</strong></span></a>
+        <a href="#"><span class="ic" style="background:var(--teal)"><i data-lucide="mail"></i></span><span><small>Email</small><strong>hello@ogtrips.com</strong></span></a>
+        <a href="#"><span class="ic" style="background:var(--navy)"><i data-lucide="map-pin"></i></span><span><small>Visit</small><strong>MG Road, New Delhi</strong></span></a>
+      </div>
+    </div>
+
+    <div class="form-card reveal reveal-d1">
+      <h3>Plan my trip</h3>
+      <p class="muted" style="margin:0;font-size:.92rem">A trip expert replies within one working day.</p>
+      <form class="form">
+        <div class="input"><input id="c-name" type="text" placeholder=" " required><label for="c-name">Full name</label></div>
+        <div class="input"><input id="c-phone" type="tel" placeholder=" " required><label for="c-phone">Phone / WhatsApp</label></div>
+        <div class="input"><select id="c-dest"><option>Not sure yet</option><option>Bali</option><option>Kerala</option><option>Switzerland</option><option>Rajasthan</option><option>Maldives</option><option>Ladakh</option></select><label for="c-dest">Destination</label></div>
+        <div class="input"><input id="c-date" type="date" placeholder=" "><label for="c-date">Travel date</label></div>
+        <div class="full trip-types" role="group" aria-label="Trip type">
+          <label><input type="radio" name="type" checked><span><i data-lucide="heart"></i> Honeymoon</span></label>
+          <label><input type="radio" name="type"><span><i data-lucide="users"></i> Family</span></label>
+          <label><input type="radio" name="type"><span><i data-lucide="mountain"></i> Adventure</span></label>
+          <label><input type="radio" name="type"><span><i data-lucide="party-popper"></i> Friends</span></label>
+        </div>
+        <div class="input full"><textarea id="c-msg" placeholder=" "></textarea><label for="c-msg">Budget, interests, special occasions…</label></div>
+        <div class="full"><button type="submit" class="btn btn--coral btn--block">Get my free itinerary <span class="arrow"><i data-lucide="arrow-up-right"></i></span></button></div>
+        <p class="form-note full"><i data-lucide="lock"></i> We never share your details. No spam, ever.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER (WP: footer.php + footer menus) ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="logo" aria-label="OgTrips home"><img src="assets/img/ogtrips-mark.svg" alt=""><span>Tr<span class="i-pin">ı</span>ps</span></a>
+        <p class="muted" style="margin-top:16px;max-width:340px">Trips planned by people who've actually been there. Handpicked stays, honest prices, 24/7 support.</p>
+        <form class="news"><input type="email" placeholder="Get travel deals by email" aria-label="Email"><button type="submit" class="btn btn--plain">Subscribe</button></form>
+      </div>
+      <div><h4>Explore</h4><ul><li><a href="#trips">Trips</a></li><li><a href="guide.html">Travel guide</a></li><li><a href="#why">Why OgTrips</a></li><li><a href="#reviews">Reviews</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="#contact">Contact</a></li><li><a href="#">FAQs</a></li><li><a href="#">Cancellation policy</a></li><li><a href="#">Privacy</a></li></ul></div>
+      <div><h4>Say hello</h4><ul><li>+91 98765 43210</li><li>hello@ogtrips.com</li><li>MG Road, New Delhi</li></ul></div>
+    </div>
+    <p class="wordmark" aria-hidden="true">Where to <em>next</em><span class="q">?</span></p>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> OgTrips. All rights reserved.</span>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        <a href="#" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

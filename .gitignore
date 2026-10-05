@@ -1,0 +1,17 @@
+# Dependencies & build output
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+
+# Local-only overrides & logs
+wp/.wp-env.override.json
+.claude/settings.local.json
+*.log
+
+# Archives, OS & editor files
+*.zip
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

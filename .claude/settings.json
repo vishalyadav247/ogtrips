@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx wp-env start*)",
+      "Bash(npx wp-env stop*)",
+      "Bash(npx wp-env run *)",
+      "Bash(npx wp-env logs*)",
+      "Bash(npx wp-env install-path*)",
+      "Bash(npx playwright *)",
+      "Bash(npm run *)",
+      "Bash(npm install*)",
+      "Bash(npm ci*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(docker ps*)"
+    ],
+    "ask": [
+      "Bash(npx wp-env clean*)",
+      "Bash(npx wp-env destroy*)",
+      "Bash(git push*)"
+    ],
+    "deny": [
+      "Edit(resources/**)"
+    ]
+  }
+}

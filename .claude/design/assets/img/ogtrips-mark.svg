@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 64" fill="none">
+  <!-- OgTrips mark: coral O + teal G ring, sun-yellow overlap, paper plane -->
+  <circle cx="26" cy="32" r="20" stroke="#FF5A4F" stroke-width="9"/>
+  <circle cx="58" cy="32" r="20" stroke="#00B3BF" stroke-width="9" stroke-dasharray="101 25" transform="rotate(12 58 32)"/>
+  <path d="M42 20 A20 20 0 0 0 42 44" stroke="#FFC72C" stroke-width="9"/>
+  <path d="M42 20 A20 20 0 0 1 42 44" stroke="#FFC72C" stroke-width="9"/>
+  <path d="M66 30 L100 18 L82 42 L79 34 Z" fill="#FFC72C"/>
+  <path d="M79 34 L100 18 L74 33 Z" fill="#E6A800"/>
+</svg>
