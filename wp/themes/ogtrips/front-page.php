@@ -271,25 +271,39 @@ $ogtrips_insta   = (string) ogtrips_setting( 'instagram_url' );
 
 <?php
 // ---- Most-loved trips ----
-$ogtrips_best = ogtrips_trip_query(
+// Only trips ticked "Show on the homepage" (max 4), by their position number; trips without a
+// number come after numbered ones. If none are ticked, the 4 newest trips are shown instead.
+$ogtrips_featured = get_posts(
 	[
-		'posts_per_page' => 4,
+		'post_type'      => 'ogt_itinerary',
+		'post_status'    => 'publish',
+		'posts_per_page' => 20,
+		'fields'         => 'ids',
 		'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			[
 				'key'   => 'is_bestseller',
 				'value' => '1',
 			],
 		],
-		'meta_key'       => 'bestseller_rank', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-		'orderby'        => [
-			'meta_value_num' => 'ASC',
-			'date'           => 'DESC',
-		],
 	]
 );
-if ( ! $ogtrips_best->have_posts() ) {
-	$ogtrips_best = ogtrips_trip_query( [ 'posts_per_page' => 4 ] );
-}
+usort(
+	$ogtrips_featured,
+	static function ( $a, $b ) {
+		$ra = (int) get_post_meta( $a, 'bestseller_rank', true );
+		$rb = (int) get_post_meta( $b, 'bestseller_rank', true );
+		return ( $ra ? $ra : PHP_INT_MAX ) <=> ( $rb ? $rb : PHP_INT_MAX );
+	}
+);
+$ogtrips_best = $ogtrips_featured
+	? ogtrips_trip_query(
+		[
+			'post__in'       => array_slice( $ogtrips_featured, 0, 4 ),
+			'orderby'        => 'post__in',
+			'posts_per_page' => 4,
+		]
+	)
+	: ogtrips_trip_query( [ 'posts_per_page' => 4 ] );
 $ogtrips_count = (int) wp_count_posts( 'ogt_itinerary' )->publish;
 ?>
 <?php if ( $ogtrips_best->have_posts() ) : ?>

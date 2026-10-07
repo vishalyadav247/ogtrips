@@ -33,7 +33,7 @@ $ogtrips_reserve = is_singular( 'ogt_itinerary' ) ? '#book' : ogtrips_contact_ur
 			<?php echo ogtrips_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search Ladakh, Kashmir, Spiti…', 'ogtrips' ); ?>" aria-label="<?php esc_attr_e( 'Search trips', 'ogtrips' ); ?>">
 		</form>
-		<a href="#" class="nav-icon account" aria-label="<?php esc_attr_e( 'My account', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'user-round' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+		<a href="<?php echo esc_url( is_user_logged_in() ? admin_url() : wp_login_url() ); ?>" class="nav-icon account" rel="nofollow" aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'Dashboard', 'ogtrips' ) : esc_attr__( 'Log in', 'ogtrips' ); ?>" title="<?php echo is_user_logged_in() ? esc_attr__( 'Dashboard', 'ogtrips' ) : esc_attr__( 'Log in', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'user-round' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<a href="<?php echo esc_url( $ogtrips_reserve ); ?>" class="btn btn--coral"><?php esc_html_e( 'Reserve', 'ogtrips' ); ?> <span class="arrow"><?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
 		<button class="burger" aria-label="<?php esc_attr_e( 'Menu', 'ogtrips' ); ?>" aria-expanded="false"><?php echo ogtrips_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
 	</nav>

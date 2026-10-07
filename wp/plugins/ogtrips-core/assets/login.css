@@ -1,0 +1,215 @@
+/* OgTrips login screen (wp-login.php). Fonts, logo and photo URLs come from includes/admin/login.php. */
+:root {
+	--ogt-navy: #0a2540;
+	--ogt-coral: #ff5a4f;
+	--ogt-coral-2: #e8473d;
+	--ogt-teal: #00b3bf;
+	--ogt-sun: #ffc72c;
+	--ogt-ink: #0a2540;
+	--ogt-muted: #6b7b8f;
+	--ogt-line: rgba(10, 37, 64, .14);
+}
+
+body.login {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 16px;
+	box-sizing: border-box;
+	font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+	color: var(--ogt-ink);
+	background:
+		linear-gradient(160deg, rgba(10, 37, 64, .55) 0%, rgba(10, 37, 64, .85) 100%),
+		var(--ogt-photo, linear-gradient(135deg, #00b3bf, #0a2540)) center / cover no-repeat fixed,
+		var(--ogt-navy);
+}
+
+#login {
+	width: 100%;
+	max-width: 420px;
+	padding: 0;
+	margin: 0;
+}
+
+/* Logo: mark + site name, white on the photo. */
+#login h1 { margin-bottom: 22px; text-align: center; }
+#login h1 a {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	width: auto;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	background: none;
+	text-indent: 0;
+	overflow: visible;
+	font-family: "Poppins", sans-serif;
+	font-weight: 700;
+	font-size: 2rem;
+	letter-spacing: -.03em;
+	line-height: 1;
+	color: #fff;
+	text-decoration: none;
+	outline-offset: 6px;
+}
+#login h1 a::before {
+	content: "";
+	width: 48px;
+	height: 48px;
+	flex: none;
+	border-radius: 14px;
+	background: #fff var(--ogt-logo) center / 34px no-repeat;
+	box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .5);
+}
+
+/* The card. */
+.login form,
+.login #login_error,
+.login .message,
+.login .notice,
+.login .success {
+	border: 0;
+	border-radius: 24px;
+	box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .55);
+}
+.login form {
+	margin-top: 0;
+	padding: 30px 30px 26px;
+	background: #fff;
+	overflow: visible;
+}
+.login .ogt-login-welcome {
+	margin: 0 0 14px;
+	padding: 22px 30px;
+	border-radius: 24px 24px 0 0;
+	background: var(--ogt-sun);
+	color: var(--ogt-navy);
+	box-shadow: none;
+}
+.login .ogt-login-welcome + #loginform,
+.login .ogt-login-welcome ~ form { border-radius: 0 0 24px 24px; margin-top: -14px; }
+.login .ogt-login-welcome strong { display: block; font-family: "Poppins", sans-serif; font-size: 1.35rem; letter-spacing: -.02em; }
+.login .ogt-login-welcome span { display: block; margin-top: 4px; font-size: .92rem; opacity: .8; }
+
+.login #login_error,
+.login .message,
+.login .notice,
+.login .success {
+	margin-bottom: 14px;
+	padding: 14px 18px;
+	border-left: 4px solid var(--ogt-teal);
+	background: #fff;
+	font-size: .92rem;
+}
+.login #login_error { border-left-color: var(--ogt-coral); }
+
+/* Fields. */
+.login label {
+	font-size: .85rem;
+	font-weight: 500;
+	color: var(--ogt-muted);
+	margin-bottom: 6px;
+}
+.login form .input,
+.login input[type="text"],
+.login input[type="password"],
+.login input[type="email"] {
+	min-height: 52px;
+	margin: 4px 0 18px;
+	padding: 0 18px;
+	border: 1.5px solid var(--ogt-line);
+	border-radius: 14px;
+	background: #f6f8fb;
+	font-family: inherit;
+	font-size: 1rem;
+	color: var(--ogt-ink);
+	box-shadow: none;
+	transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.login form .input:focus,
+.login input[type="text"]:focus,
+.login input[type="password"]:focus {
+	border-color: var(--ogt-teal);
+	background: #fff;
+	box-shadow: 0 0 0 4px rgba(0, 179, 191, .15);
+	outline: none;
+}
+.login .wp-pwd { position: relative; }
+.login .button.wp-hide-pw {
+	height: 52px;
+	min-height: 52px;
+	width: 52px;
+	margin-top: 4px;
+	color: var(--ogt-muted);
+	border-radius: 0 14px 14px 0;
+}
+.login .button.wp-hide-pw:focus { box-shadow: 0 0 0 2px var(--ogt-teal); }
+.login .button.wp-hide-pw .dashicons { top: .4rem; }
+
+.login .forgetmenot { margin: 6px 0 0; }
+.login .forgetmenot label { font-size: .88rem; color: var(--ogt-ink); }
+.login input[type="checkbox"] { border-radius: 6px; border-color: var(--ogt-line); }
+.login input[type="checkbox"]:checked::before { filter: hue-rotate(0); }
+
+/* Button. */
+.login .submit { display: block; clear: both; padding-top: 18px; }
+.login .button-primary,
+.wp-core-ui .button-primary {
+	float: none;
+	width: 100%;
+	height: 52px;
+	min-height: 52px;
+	padding: 0 22px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--ogt-coral);
+	color: #fff;
+	font-family: "Poppins", sans-serif;
+	font-weight: 600;
+	font-size: 1rem;
+	letter-spacing: -.01em;
+	text-shadow: none;
+	box-shadow: 0 14px 28px -12px rgba(255, 90, 79, .8);
+	transition: background .2s, transform .2s;
+}
+.login .button-primary:hover,
+.login .button-primary:focus,
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+	background: var(--ogt-coral-2);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 0 0 3px rgba(255, 90, 79, .3), 0 14px 28px -12px rgba(255, 90, 79, .8);
+}
+
+/* Links under the card. */
+.login #nav,
+.login #backtoblog {
+	margin: 16px 0 0;
+	padding: 0;
+	text-align: center;
+	font-size: .9rem;
+	color: rgba(255, 255, 255, .7);
+}
+.login #nav a,
+.login #backtoblog a {
+	color: #fff;
+	text-decoration: none;
+	font-weight: 500;
+}
+.login #nav a:hover,
+.login #backtoblog a:hover { color: var(--ogt-sun); text-decoration: underline; }
+.login .privacy-policy-page-link { margin: 20px 0 0; }
+.login .privacy-policy-page-link a { color: rgba(255, 255, 255, .7); }
+
+/* Phones. */
+@media (max-width: 480px) {
+	body.login { align-items: flex-start; padding-top: 40px; background-attachment: scroll; }
+	#login h1 a { font-size: 1.7rem; }
+	#login h1 a::before { width: 42px; height: 42px; background-size: 30px; }
+	.login form { padding: 24px 20px 20px; }
+	.login .ogt-login-welcome { padding: 18px 20px; }
+}
+.login .forgetmenot { margin-bottom: 6px; }

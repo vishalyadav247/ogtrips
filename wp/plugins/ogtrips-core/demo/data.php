@@ -332,9 +332,9 @@ return [
 		[ '@arjun.clicks', 'dal-lake', 'normal', 'image', '', '2.1k', '' ],
 		[ '@ladakh.diaries', 'ladakh-road', 'tall', 'video', '0:28', '8.7k', '' ],
 		[ '@mihir_ananya', 'meadow', 'normal', 'image', '', '5.3k', '' ],
-		[ '@roadtrip.rahul', 'roadtrip', 'wide', 'image', '', '3.9k', '' ],
+		[ '@roadtrip.rahul', 'roadtrip', 'normal', 'image', '', '3.9k', '' ],
 		[ '@desi.nomad', 'flags', 'normal', 'image', '', '1.8k', '' ],
-		[ '@sneha.travels', 'rohtang', 'wide', 'video', '1:05', '6.2k', '' ],
+		[ '@sneha.travels', 'rohtang', 'normal', 'video', '1:05', '6.2k', '' ],
 		[ '@kavya.goes', 'shimla', 'normal', 'image', '', '2.6k', '' ],
 	],
 

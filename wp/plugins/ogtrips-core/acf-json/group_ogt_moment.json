@@ -118,7 +118,7 @@
             "name": "tile_size",
             "aria_label": "",
             "type": "select",
-            "instructions": "Size in the homepage grid.",
+            "instructions": "How big the tile is in the homepage collage. Tip: with 8 moments, use 1 Big + 1 Tall + 6 Normal for a grid with no gaps on every screen size.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -218,5 +218,5 @@
     "active": true,
     "description": "Ask the traveller for permission before posting their photo or video.",
     "show_in_rest": 0,
-    "modified": 1791259200
+    "modified": 1791404108
 }

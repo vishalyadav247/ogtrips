@@ -55,6 +55,7 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 
 ## 5. Accounts
 
+- **Logging in:** click the person icon in the site header (or go to `/wp-login.php`). The login page is branded with the OgTrips logo and the first homepage photo. Once logged in, the same icon opens the dashboard.
 - Keep your **Administrator** account for yourself (developer).
 - **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Homepage, Site Settings, Media.
 
@@ -73,7 +74,7 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 | **Trips** | Add / edit / delete trips — simple form with tabs (Overview, Facts, Price & dates, Day by day, Stays, Inclusions, Gallery, FAQ, Expert). Bestseller tick + rank puts a trip on the homepage. |
 | **Tour Guides** | Articles in the block editor (paragraph, heading, image, list, quote, table, separator + **Trip CTA** box). Side fields: cover caption, "at a glance" box, destination, topic. |
 | **Blog** | Same article layout as tour guides. |
-| **Reviews / Moments** | Homepage reviews slider and Instagram grid. |
+| **Reviews / Moments** | Homepage reviews slider and Instagram grid. For a gap-free grid with 8 moments use tile sizes 1 Big + 1 Tall + 6 Normal. |
 | **Homepage** | Hero slideshow places, "Why OG" text, section headings, contact text. Write `*word*` to show a word in coral, e.g. `Most-loved *trips* right now`. |
 | **Site Settings** | Contact details, social links, footer text, newsletter switch, price switch. |
 
@@ -81,7 +82,6 @@ Menus: **Appearance → Menus** (locations: Main menu, Footer — Explore, Foote
 
 ## 8. Known follow-ups (not blocking launch)
 
-- The account icon in the header is a non-functional placeholder (as agreed).
 - Newsletter box is off; it only stores sign-ups as Enquiries — connect a mail service later if wanted.
 - The ₹ sign uses the system font (Poppins has no ₹ glyph in the subset we ship) — looks fine, can be refined.
 - Listing pages (all trips, tour guide list, destination pages, search, 404) use a simple layout built from the design's components; they had no approved design.
