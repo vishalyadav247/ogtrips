@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
       mobileMenu.classList.toggle('is-open', open);
       document.body.classList.toggle('menu-open', open);
       document.body.style.overflow = open ? 'hidden' : '';
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
       var icon = $('use', burger);
       if (icon) icon.setAttribute('href', icon.getAttribute('href').replace(/#.*$/, open ? '#x' : '#menu'));
     };
@@ -149,7 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
     expandAll.addEventListener('click', function () {
       var days = $$('.day'), allOpen = days.every(function (d) { return d.classList.contains('is-open'); });
       days.forEach(function (d) { d.classList.toggle('is-open', !allOpen); });
-      expandAll.firstChild.textContent = allOpen ? 'Expand all ' : 'Collapse all ';
+      days.forEach(function (d) { var h = $('.day-head', d); if (h) h.setAttribute('aria-expanded', !allOpen); });
+      expandAll.firstChild.textContent = (allOpen ? (window.ogtripsL10n || {}).expand || 'Expand all' : (window.ogtripsL10n || {}).collapse || 'Collapse all') + ' ';
     });
   }
 
@@ -159,8 +161,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var price = parseInt(pax.dataset.price, 10);
     var fmt = function (n) { return '₹' + n.toLocaleString('en-IN'); };
     var update = function (v) {
-      v = Math.max(1, Math.min(12, v)); pax.textContent = v;
-      $('#total').textContent = fmt(price * v);
+      v = Math.max(1, Math.min(20, v)); pax.textContent = v;
+      var input = $('#pax-input'); if (input) input.value = v;
+      var total = $('#total'); if (total && price) total.textContent = fmt(price * v);
     };
     $('[data-step="minus"]').addEventListener('click', function () { update(+pax.textContent - 1); });
     $('[data-step="plus"]').addEventListener('click', function () { update(+pax.textContent + 1); });
@@ -188,14 +191,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { passive: true });
   }
 
-  // ---- Demo forms (WP: replace with Contact Form 7 / WPForms / Fluent Forms) ----
-  $$('form').forEach(function (f) {
+  // ---- Enquiry forms: post to admin-post.php; stop double submits ----
+  var L = window.ogtripsL10n || {};
+  $$('form[action$="admin-post.php"]').forEach(function (f) {
     f.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = $('button[type="submit"]', f);
-      if (btn) { btn.innerHTML = 'Thank you — we\'ll be in touch'; btn.disabled = true; }
+      if (f.dataset.sent) { e.preventDefault(); return; }
+      f.dataset.sent = '1';
+      var btn = e.submitter;
+      if (btn && btn.value === 'email') {
+        setTimeout(function () { btn.disabled = true; btn.textContent = L.sending || 'Sending…'; }, 0);
+      }
+      // WhatsApp opens in a new app/tab; allow another send afterwards.
+      setTimeout(function () { delete f.dataset.sent; }, 4000);
     });
   });
 
-  var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
+  // Scroll to the form message after an enquiry redirect.
+  var msg = $('.form-msg');
+  if (msg) { msg.scrollIntoView({ block: 'center' }); }
+
+  // ---- Copy-link share button ----
+  $$('[data-copy-link]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!navigator.clipboard) return;
+      e.preventDefault();
+      navigator.clipboard.writeText(a.href).then(function () {
+        a.setAttribute('aria-label', L.copied || 'Link copied');
+        a.classList.add('is-copied');
+      });
+    });
+  });
 });
