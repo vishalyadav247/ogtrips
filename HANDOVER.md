@@ -40,7 +40,7 @@ The demo **trips and Ladakh guide come from your own itineraries**, but these ar
 - **Homepage** (left menu): numbers like "12,000+ travellers", "4.9", "2,300+ reviews" are placeholders.
 - Photos are free Unsplash images — swap for your own when you have them.
 
-To wipe all demo items at once: **Settings → OgTrips demo → Remove demo content** (only removes items the importer created).
+To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only deletes demo items nobody has edited since the import — a demo trip or guide you edited is kept as real content, photos still in use are kept, and Homepage / Site Settings fields are cleared only if they still hold the demo text. Import never overwrites settings you have filled in. **After removing, open Site Settings and check every contact field is yours** (an empty WhatsApp number hides the WhatsApp buttons).
 
 ## 3. Prices
 
@@ -51,7 +51,7 @@ To wipe all demo items at once: **Settings → OgTrips demo → Remove demo cont
 - Contact form and trip booking form: every enquiry is saved under **Enquiries** in wp-admin (with status New / Contacted / Booked / Closed) **and** emailed to the Site Settings enquiry email.
 - **"Send on WhatsApp"** buttons open WhatsApp with the trip, dates, travellers and name pre-filled (to the Site Settings WhatsApp number), and the lead is still saved in Enquiries.
 - **Make email reliable:** in hPanel create a mailbox (e.g. `hello@yourdomain`), then install the free **WP Mail SMTP** plugin and connect it to Hostinger's SMTP (`smtp.hostinger.com`, port 465, SSL, the mailbox and its password). Send a test email from the plugin.
-- Spam protection: hidden honeypot field, security token and max 5 enquiries per visitor per 10 minutes.
+- Spam protection: hidden honeypot field and max 5 enquiries per visitor per 10 minutes (pages are cached, so the forms deliberately use no expiring security token). **After launch, send 2 test enquiries** and check both arrive; if the limit ever blocks everyone, Hostinger may be hiding visitor IPs behind a proxy — tell a developer.
 
 ## 5. Accounts
 
@@ -60,7 +60,7 @@ To wipe all demo items at once: **Settings → OgTrips demo → Remove demo cont
 
 ## 6. Speed & SEO settings
 
-- **LiteSpeed Cache → Cache:** enable. **Page Optimization:** leave CSS/JS **minify/combine OFF** (the theme already ships one small CSS and one JS file). **Cache → TTL → Default Public Cache TTL: `36000`** (10 h) — keeps the enquiry forms' security token valid.
+- **LiteSpeed Cache → Cache:** enable. **Page Optimization:** leave CSS/JS **minify/combine OFF** (the theme already ships one small CSS and one JS file). The default cache time is fine.
 - **Image optimisation (optional):** LiteSpeed → Image Optimization → request WebP.
 - **Yoast SEO:** run the first-time configuration (organisation name "OgTrips", logo). Sitemaps are automatic (`/sitemap_index.xml`). Trip pages output **TouristTrip** and **FAQPage** structured data through Yoast.
 - **Settings → Reading:** untick "Discourage search engines" when going live.
@@ -94,3 +94,13 @@ Menus: **Appearance → Menus** (locations: Main menu, Footer — Explore, Foote
 - Field definitions: `wp/plugins/ogtrips-core/acf-json/` (Secure Custom Fields local JSON).
 - Rebuild the zips: from `wp/themes` and `wp/plugins`, zip the `ogtrips` and `ogtrips-core` folders (folder at the top level of the zip).
 - Project rules and decisions: `.claude/CLAUDE.md` and `.claude/specs/`.
+
+## 10. Code-review follow-ups (minor, 2026-10-08)
+
+The pre-launch review's high and medium items are fixed. Still open (small, not blocking):
+
+- Bestseller with an empty rank sorts before rank 1 — always fill the rank when ticking Bestseller.
+- Homepage reviews: the 12 newest are taken, then featured ones shown first — an old featured review may not appear.
+- Trip expert's WhatsApp pre-filled text can show codes like `&#8217;` for apostrophes in trip titles.
+- Accessibility polish: day/FAQ accordion buttons need `aria-controls` and the heading outside the button; the scrollable route line needs keyboard focus.
+- Newsletter (off by default): after subscribing, no thank-you message is shown on article pages.

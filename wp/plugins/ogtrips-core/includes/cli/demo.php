@@ -38,8 +38,9 @@ function ogtrips_core_demo_page() {
 		<?php elseif ( 'remove' === $done ) : ?>
 			<div class="notice notice-success"><p><?php esc_html_e( 'Demo content removed.', 'ogtrips-core' ); ?></p></div>
 		<?php endif; ?>
-		<p><?php esc_html_e( 'Fills the site with the sample trips, tour guides, reviews, moments, homepage text and site settings from the approved design, with photos from Unsplash. Reviews, phone numbers and prices are fake placeholders: change them, or remove the demo content before launch.', 'ogtrips-core' ); ?></p>
-		<p><?php esc_html_e( 'Importing downloads about 20 photos and can take a few minutes. Running it again updates the demo items instead of duplicating them. Homepage and Site Settings text is overwritten.', 'ogtrips-core' ); ?></p>
+		<p><?php esc_html_e( 'Fills the site with sample content built from your itineraries: trips (Ladakh, Shimla & Manali, Kashmir, Spiti), tour guides, reviews, Instagram moments, homepage text and site settings, with photos from Unsplash. Reviews, social handles, phone numbers and ratings are fake placeholders.', 'ogtrips-core' ); ?></p>
+		<p><?php esc_html_e( 'Remove: deletes only demo items nobody has edited since the import. A demo trip or guide you edited is kept as real content, photos still in use are kept, and Homepage / Site Settings fields are cleared only if they still hold the demo text. Best used before adding real content.', 'ogtrips-core' ); ?></p>
+		<p><?php esc_html_e( 'Importing downloads about 20 photos and can take a few minutes. Running it again updates the demo items instead of duplicating them. Homepage and Site Settings fields are only filled when empty — your own text is never overwritten.', 'ogtrips-core' ); ?></p>
 		<?php if ( $imported ) : ?>
 			<p><strong>
 				<?php
@@ -54,7 +55,7 @@ function ogtrips_core_demo_page() {
 			<?php wp_nonce_field( 'ogtrips_demo' ); ?>
 			<?php submit_button( __( 'Import demo content', 'ogtrips-core' ), 'primary', 'submit', false ); ?>
 		</form>
-		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline-block" onsubmit="return confirm('<?php echo esc_js( __( 'Delete all demo trips, guides, reviews, moments and their photos?', 'ogtrips-core' ) ); ?>');">
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="display:inline-block" onsubmit="return confirm('<?php echo esc_js( __( 'Delete the unedited demo trips, guides, reviews, moments and their photos?', 'ogtrips-core' ) ); ?>');">
 			<input type="hidden" name="action" value="ogtrips_demo">
 			<input type="hidden" name="task" value="remove">
 			<?php wp_nonce_field( 'ogtrips_demo' ); ?>

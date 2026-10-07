@@ -37,7 +37,7 @@ function ogtrips_core_trip_schema( $graph, $context = null ) {
 		$trip['image'] = $image;
 	}
 
-	$stops = (array) get_field( 'route_stops', $id );
+	$stops = array_values( array_filter( get_field( 'route_stops', $id ) ?: [], static fn( $row ) => is_array( $row ) && '' !== trim( (string) ( $row['label'] ?? '' ) ) ) );
 	if ( $stops ) {
 		$trip['itinerary'] = [
 			'@type'           => 'ItemList',
@@ -78,7 +78,7 @@ function ogtrips_core_trip_schema( $graph, $context = null ) {
 
 	$graph[] = $trip;
 
-	$faqs = (array) get_field( 'faqs', $id );
+	$faqs = array_values( array_filter( get_field( 'faqs', $id ) ?: [], static fn( $row ) => is_array( $row ) && '' !== trim( (string) ( $row['question'] ?? '' ) ) && '' !== trim( wp_strip_all_tags( (string) ( $row['answer'] ?? '' ) ) ) ) );
 	if ( $faqs ) {
 		$graph[] = [
 			'@type'      => 'FAQPage',

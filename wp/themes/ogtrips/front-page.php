@@ -26,13 +26,18 @@ $ogtrips_cta2   = $ogtrips_cta2 ? $ogtrips_cta2 : [ 'url' => '#social', 'title' 
 			<?php foreach ( $ogtrips_places as $ogtrips_i => $ogtrips_place ) : ?>
 				<figure class="slide<?php echo 0 === $ogtrips_i ? ' is-active' : ''; ?>" data-place="<?php echo esc_attr( (string) ( $ogtrips_place['place'] ?? '' ) ); ?>" data-country="<?php echo esc_attr( (string) ( $ogtrips_place['country'] ?? '' ) ); ?>">
 					<?php
-					echo ogtrips_img( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					$ogtrips_slide = ogtrips_img(
 						(int) ( $ogtrips_place['image'] ?? 0 ),
 						'ogt-hero',
 						0 === $ogtrips_i
 							? [ 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw' ]
-							: [ 'sizes' => '100vw' ]
+							: [ 'sizes' => '100vw', 'loading' => false ]
 					);
+					// Later slides load in JS just before they show, so they don't compete with the first (LCP) image.
+					if ( $ogtrips_i ) {
+						$ogtrips_slide = str_replace( [ ' src=', ' srcset=' ], [ ' data-src=', ' data-srcset=' ], $ogtrips_slide );
+					}
+					echo $ogtrips_slide; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image() output.
 					?>
 				</figure>
 			<?php endforeach; ?>
@@ -62,7 +67,7 @@ $ogtrips_cta2   = $ogtrips_cta2 ? $ogtrips_cta2 : [ 'url' => '#social', 'title' 
 			<div class="hero-places" role="tablist" aria-label="<?php esc_attr_e( 'Destinations', 'ogtrips' ); ?>">
 				<?php foreach ( $ogtrips_places as $ogtrips_i => $ogtrips_place ) : ?>
 					<?php $ogtrips_tab = (string) ( $ogtrips_place['tab_label'] ?? '' ); ?>
-					<button class="hp<?php echo 0 === $ogtrips_i ? ' is-active' : ''; ?>" type="button" role="tab"><span class="bar"><i></i></span><strong><?php echo esc_html( '' !== $ogtrips_tab ? $ogtrips_tab : rtrim( (string) ( $ogtrips_place['place'] ?? '' ), '.' ) ); ?></strong><small><?php echo esc_html( (string) ( $ogtrips_place['country'] ?? '' ) ); ?></small></button>
+					<button class="hp<?php echo 0 === $ogtrips_i ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo 0 === $ogtrips_i ? 'true' : 'false'; ?>"><span class="bar"><i></i></span><strong><?php echo esc_html( '' !== $ogtrips_tab ? $ogtrips_tab : rtrim( (string) ( $ogtrips_place['place'] ?? '' ), '.' ) ); ?></strong><small><?php echo esc_html( (string) ( $ogtrips_place['country'] ?? '' ) ); ?></small></button>
 				<?php endforeach; ?>
 			</div>
 		<?php endif; ?>

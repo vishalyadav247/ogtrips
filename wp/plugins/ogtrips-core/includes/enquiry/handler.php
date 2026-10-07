@@ -17,6 +17,22 @@ defined( 'ABSPATH' ) || exit;
 const OGTRIPS_CORE_ENQUIRY_LIMIT = 5;
 
 /**
+ * The page the form was sent from — only a URL on this site (validated), else the referer, else home.
+ *
+ * @return string
+ */
+function ogtrips_core_enquiry_source() {
+	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- public lead form; see ogtrips_core_handle_enquiry().
+	$source = isset( $_POST['source_page'] ) ? wp_validate_redirect( esc_url_raw( wp_unslash( $_POST['source_page'] ) ), '' ) : '';
+
+	if ( '' === $source ) {
+		$source = wp_validate_redirect( (string) wp_get_referer(), '' );
+	}
+
+	return '' !== $source ? $source : home_url( '/' );
+}
+
+/**
  * Where to send the visitor back to, with ?enquiry=sent|error and the form anchor.
  *
  * @param string $state  sent|error.
@@ -24,9 +40,7 @@ const OGTRIPS_CORE_ENQUIRY_LIMIT = 5;
  * @return string
  */
 function ogtrips_core_enquiry_return_url( $state, $anchor ) {
-	$back = wp_get_referer();
-	$back = $back ? $back : home_url( '/' );
-	$back = remove_query_arg( 'enquiry', strtok( $back, '#' ) );
+	$back = remove_query_arg( 'enquiry', strtok( ogtrips_core_enquiry_source(), '#' ) );
 
 	return add_query_arg( 'enquiry', $state, $back ) . '#' . $anchor;
 }
@@ -40,13 +54,16 @@ function ogtrips_core_handle_enquiry() {
 	$form   = in_array( $form, [ 'contact', 'booking', 'newsletter' ], true ) ? $form : 'contact';
 	$anchor = 'booking' === $form ? 'book' : ( 'newsletter' === $form ? 'main' : 'contact' );
 
-	// Bots fill the hidden "website" field: pretend success, store nothing.
-	if ( ! empty( $_POST['website'] ) ) {
+	// Bots fill the hidden honeypot field: pretend success, store nothing.
+	if ( ! empty( $_POST['ogt_hp'] ) ) {
 		wp_safe_redirect( ogtrips_core_enquiry_return_url( 'sent', $anchor ) );
 		exit;
 	}
 
-	if ( ! isset( $_POST['ogtrips_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ogtrips_nonce'] ) ), 'ogtrips_enquiry' ) ) {
+	// Visitors' pages are served from the page cache for days, so a logged-out nonce would have
+	// expired; a CSRF token protects nothing on an anonymous lead form. Honeypot + rate limit do
+	// the anti-spam work. Logged-in users get uncached pages, so their nonce is checked.
+	if ( is_user_logged_in() && ( ! isset( $_POST['ogtrips_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ogtrips_nonce'] ) ), 'ogtrips_enquiry' ) ) ) {
 		wp_safe_redirect( ogtrips_core_enquiry_return_url( 'error', $anchor ) );
 		exit;
 	}
@@ -73,7 +90,7 @@ function ogtrips_core_handle_enquiry() {
 		'departure'   => $text( 'departure', 100 ),
 		'message'     => isset( $_POST['message'] ) ? mb_substr( sanitize_textarea_field( wp_unslash( $_POST['message'] ) ), 0, 2000 ) : '',
 		'channel'     => ( isset( $_POST['channel'] ) && 'whatsapp' === $_POST['channel'] ) ? 'whatsapp' : ( 'newsletter' === $form ? 'newsletter' : 'email' ),
-		'source_page' => isset( $_POST['source_page'] ) ? esc_url_raw( wp_unslash( $_POST['source_page'] ) ) : '',
+		'source_page' => ogtrips_core_enquiry_source(),
 	];
 	$trip = absint( $_POST['itinerary_id'] ?? 0 );
 	// phpcs:enable
@@ -135,6 +152,9 @@ function ogtrips_core_handle_enquiry() {
 		}
 	}
 
+	// Every lead is emailed — WhatsApp ones too, in case the visitor never presses Send in WhatsApp.
+	ogtrips_core_email_enquiry( $post_id, $title, $lines, $data );
+
 	if ( 'whatsapp' === $data['channel'] ) {
 		$number = preg_replace( '/\D+/', '', (string) ( function_exists( 'get_field' ) ? get_field( 'whatsapp', 'option' ) : '' ) );
 		if ( '' !== $number ) {
@@ -144,8 +164,6 @@ function ogtrips_core_handle_enquiry() {
 			exit;
 		}
 	}
-
-	ogtrips_core_email_enquiry( $post_id, $title, $lines, $data );
 
 	wp_safe_redirect( ogtrips_core_enquiry_return_url( 'sent', $anchor ) );
 	exit;
@@ -165,8 +183,11 @@ function ogtrips_core_email_enquiry( $post_id, $title, $lines, $data ) {
 	$to = function_exists( 'get_field' ) ? (string) get_field( 'enquiry_email', 'option' ) : '';
 	$to = is_email( $to ) ? $to : (string) get_option( 'admin_email' );
 
-	/* translators: %s: enquiry title */
-	$subject = sprintf( __( 'New enquiry: %s', 'ogtrips-core' ), $title );
+	$subject = 'whatsapp' === $data['channel']
+		/* translators: %s: enquiry title */
+		? sprintf( __( 'New enquiry (sent to WhatsApp): %s', 'ogtrips-core' ), $title )
+		/* translators: %s: enquiry title */
+		: sprintf( __( 'New enquiry: %s', 'ogtrips-core' ), $title );
 	$body    = implode( "\n", $lines ) . "\n\n";
 	if ( '' !== $data['source_page'] ) {
 		/* translators: %s: page URL */

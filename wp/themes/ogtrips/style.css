@@ -742,3 +742,6 @@ svg.lucide { width: 1em; height: 1em; stroke-width: 1.9; flex-shrink: 0; }
 .layout > * { min-width: 0; }
 .route { overflow-x: auto; scrollbar-width: none; }
 .route::-webkit-scrollbar { display: none; }
+/* Hero slideshow paused on hover/focus; no progress animation with reduced motion. */
+.hero.is-paused .hp.is-active .bar i { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .hp.is-active .bar i { animation: none; width: 100%; } }

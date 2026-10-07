@@ -35,14 +35,40 @@ document.addEventListener('DOMContentLoaded', function () {
   var slides = $$('.slide');
   if (slides.length) {
     var tabs = $$('.hp'), placeEl = $('.hero .place'), countryEl = $('#now-country');
-    var SLIDE_MS = 6000, si = 0, slideTimer;
+    var SLIDE_MS = 6000, si = 0, slideTimer, paused = false;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var heroEl = $('.hero');
     document.documentElement.style.setProperty('--slide-time', SLIDE_MS / 1000 + 's');
+    // Slides after the first carry data-src; load one just before it is shown.
+    var load = function (k) {
+      var img = $('img[data-src]', slides[k % slides.length]);
+      if (!img) return;
+      if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src'); img.removeAttribute('data-srcset');
+    };
+    var schedule = function () {
+      clearTimeout(slideTimer);
+      if (!paused && !reduced) slideTimer = setTimeout(function () { go(si + 1); }, SLIDE_MS);
+    };
+    // Pause while the visitor hovers or tabs into the hero (WCAG 2.2.2); no autoplay with reduced motion.
+    if (heroEl) {
+      var pause = function () { paused = true; heroEl.classList.add('is-paused'); clearTimeout(slideTimer); };
+      var resume = function () { paused = false; heroEl.classList.remove('is-paused'); go(si); };
+      heroEl.addEventListener('mouseenter', pause);
+      heroEl.addEventListener('mouseleave', resume);
+      heroEl.addEventListener('focusin', pause);
+      heroEl.addEventListener('focusout', function (e) { if (!heroEl.contains(e.relatedTarget)) resume(); });
+      if (reduced) heroEl.classList.add('is-paused');
+    }
     var go = function (n) {
       si = (n + slides.length) % slides.length;
+      load(si); load(si + 1);
       slides.forEach(function (s, k) { s.classList.toggle('is-active', k === si); });
       tabs.forEach(function (t, k) {
         t.classList.remove('is-active');
         t.classList.toggle('is-done', k < si);
+        t.setAttribute('aria-selected', k === si ? 'true' : 'false');
         if (k === si) { void t.offsetWidth; t.classList.add('is-active'); }
       });
       var s = slides[si];
@@ -51,11 +77,12 @@ document.addEventListener('DOMContentLoaded', function () {
         placeEl.textContent = s.dataset.place; placeEl.classList.add('is-swap');
       }
       if (countryEl) countryEl.textContent = s.dataset.country;
-      clearTimeout(slideTimer);
-      slideTimer = setTimeout(function () { go(si + 1); }, SLIDE_MS);
+      schedule();
     };
     tabs.forEach(function (t, k) { t.addEventListener('click', function () { go(k); }); });
-    go(0);
+    // First slide's text is already in the HTML: just preload the next slide and start the timer.
+    window.addEventListener('load', function () { load(1); });
+    schedule();
   }
 
   // ---- Reveal on scroll ----

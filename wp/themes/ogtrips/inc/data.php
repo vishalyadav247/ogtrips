@@ -255,7 +255,7 @@ function ogtrips_enquiry_hidden_fields( $source, $trip = 0 ) {
 	<input type="hidden" name="itinerary_id" value="<?php echo esc_attr( (string) (int) $trip ); ?>">
 	<input type="hidden" name="source_page" value="<?php echo esc_url( home_url( add_query_arg( [] ) ) ); ?>">
 	<?php wp_nonce_field( 'ogtrips_enquiry', 'ogtrips_nonce' ); ?>
-	<div class="hp-field" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+	<div class="hp-field" aria-hidden="true"><label>Leave empty <input type="text" name="ogt_hp" tabindex="-1" autocomplete="off"></label></div>
 	<?php
 }
 

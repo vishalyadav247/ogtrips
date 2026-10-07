@@ -54,24 +54,106 @@ function ogtrips_core_demo_image( $url, $name ) {
 }
 
 /**
- * Finds a demo post by slug and type.
+ * Finds a post by slug and type. By default only posts the importer created (tagged _ogt_demo),
+ * so a merchant post that happens to use the same slug is never adopted or overwritten.
+ *
+ * @param string $type      Post type.
+ * @param string $slug      Slug.
+ * @param bool   $demo_only Only match demo-tagged posts.
+ * @return int
+ */
+function ogtrips_core_demo_find( $type, $slug, $demo_only = true ) {
+	$args = [
+		'post_type'      => $type,
+		'name'           => $slug,
+		'post_status'    => 'any',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+	];
+	if ( $demo_only ) {
+		$args['meta_key'] = '_ogt_demo'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+	}
+	$found = get_posts( $args );
+
+	return $found ? (int) $found[0] : 0;
+}
+
+/**
+ * Which post an import should write to: the untouched demo post (its ID), a new one (0), or none (-1)
+ * when the merchant edited the demo post (it is real content now — untagged and left alone) or owns
+ * a post with the same slug.
  *
  * @param string $type Post type.
  * @param string $slug Slug.
  * @return int
  */
-function ogtrips_core_demo_find( $type, $slug ) {
-	$found = get_posts(
-		[
-			'post_type'      => $type,
-			'name'           => $slug,
-			'post_status'    => 'any',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-		]
-	);
+function ogtrips_core_demo_slot( $type, $slug ) {
+	$id = ogtrips_core_demo_find( $type, $slug );
 
-	return $found ? (int) $found[0] : 0;
+	if ( ! $id ) {
+		return ogtrips_core_demo_find( $type, $slug, false ) ? -1 : 0;
+	}
+
+	$stamp = (string) get_post_meta( $id, '_ogt_demo_modified', true );
+	if ( '' !== $stamp && get_post_field( 'post_modified_gmt', $id ) !== $stamp ) {
+		delete_post_meta( $id, '_ogt_demo' );
+		delete_post_meta( $id, '_ogt_demo_modified' );
+		return -1;
+	}
+
+	return $id;
+}
+
+/**
+ * Stable fingerprint of a field value (DB values come back as strings, fresh ones as ints).
+ *
+ * @param mixed $value Raw field value.
+ * @return string
+ */
+function ogtrips_core_demo_hash( $value ) {
+	if ( is_array( $value ) ) {
+		array_walk_recursive(
+			$value,
+			static function ( &$v ) {
+				$v = is_bool( $v ) ? (string) (int) $v : (string) $v;
+			}
+		);
+	} else {
+		$value = is_bool( $value ) ? (string) (int) $value : (string) $value;
+	}
+
+	return md5( wp_json_encode( $value ) );
+}
+
+/**
+ * Records a demo post's last-modified time; "Remove demo content" keeps posts edited after import.
+ *
+ * @param int $id Post ID.
+ */
+function ogtrips_core_demo_stamp( $id ) {
+	clean_post_cache( $id );
+	update_post_meta( $id, '_ogt_demo_modified', get_post_field( 'post_modified_gmt', $id ) );
+}
+
+/**
+ * Sets a Homepage/Site Settings field only when it is empty or still holds the value the importer
+ * wrote last time — the merchant's own settings are never overwritten. Remembers what it wrote.
+ *
+ * @param string $name  Field name.
+ * @param mixed  $value Value.
+ */
+function ogtrips_core_demo_set_option( $name, $value ) {
+	$written = (array) get_option( 'ogtrips_demo_options', [] );
+	$current = get_field( $name, 'option', false );
+	$is_ours = isset( $written[ $name ] ) && ogtrips_core_demo_hash( $current ) === $written[ $name ];
+
+	if ( ! $is_ours && ! ( null === $current || '' === $current || false === $current || [] === $current ) ) {
+		return;
+	}
+
+	update_field( $name, $value, 'option' );
+	$written[ $name ] = ogtrips_core_demo_hash( get_field( $name, 'option', false ) );
+	update_option( 'ogtrips_demo_options', $written, false );
 }
 
 /**
@@ -105,17 +187,23 @@ function ogtrips_core_import_demo( $log = null ) {
 		$term = term_exists( $slug, 'ogt_destination' );
 		if ( ! $term ) {
 			$term = wp_insert_term( $dest[0], 'ogt_destination', [ 'slug' => $slug, 'description' => $dest[1] ] );
+			// Only destinations created here are demo; existing ones belong to the merchant.
+			if ( ! is_wp_error( $term ) ) {
+				update_term_meta( (int) $term['term_id'], '_ogt_demo', 1 );
+			}
 		}
-		if ( ! is_wp_error( $term ) ) {
+		if ( $term && ! is_wp_error( $term ) ) {
 			$dest_ids[ $slug ] = (int) $term['term_id'];
-			update_term_meta( (int) $term['term_id'], '_ogt_demo', 1 );
 		}
 	}
 
-	// Trip expert (guide author).
-	$e    = $data['expert'];
-	$user = get_user_by( 'login', $e['login'] );
-	if ( ! $user ) {
+	// Trip expert (guide author). An existing non-demo user with the same login is left alone.
+	$e       = $data['expert'];
+	$user    = get_user_by( 'login', $e['login'] );
+	$user_id = 0;
+	if ( $user && get_user_meta( $user->ID, '_ogt_demo', true ) ) {
+		$user_id = (int) $user->ID;
+	} elseif ( ! $user ) {
 		$user_id = wp_insert_user(
 			[
 				'user_login'   => $e['login'],
@@ -128,21 +216,33 @@ function ogtrips_core_import_demo( $log = null ) {
 				'role'         => 'author',
 			]
 		);
-	} else {
-		$user_id = $user->ID;
+		$user_id = is_wp_error( $user_id ) ? 0 : (int) $user_id;
 	}
-	$user_id = is_wp_error( $user_id ) ? 1 : (int) $user_id;
-	update_user_meta( $user_id, '_ogt_demo', 1 );
-	update_field( 'ogt_photo', $img( $e['photo'] ), 'user_' . $user_id );
-	foreach ( [ 'byline_role', 'specialty', 'reply_time' ] as $key ) {
-		update_field( $key, $e[ $key ], 'user_' . $user_id );
+	if ( $user_id ) {
+		update_user_meta( $user_id, '_ogt_demo', 1 );
+		update_field( 'ogt_photo', $img( $e['photo'] ), 'user_' . $user_id );
+		foreach ( [ 'byline_role', 'specialty', 'reply_time' ] as $key ) {
+			update_field( $key, $e[ $key ], 'user_' . $user_id );
+		}
 	}
+	$admins    = get_users(
+		[
+			'role'   => 'administrator',
+			'number' => 1,
+			'fields' => 'ID',
+		]
+	);
+	$author_id = $user_id ? $user_id : ( get_current_user_id() ? get_current_user_id() : (int) ( $admins[0] ?? 0 ) );
 
 	// Trips.
 	$trip_ids = [];
 	foreach ( $data['trips'] as $trip ) {
 		$log( 'Trip: ' . $trip['title'] );
-		$id = ogtrips_core_demo_find( 'ogt_itinerary', $trip['slug'] );
+		$id = ogtrips_core_demo_slot( 'ogt_itinerary', $trip['slug'] );
+		if ( -1 === $id ) {
+			$trip_ids[ $trip['slug'] ] = ogtrips_core_demo_find( 'ogt_itinerary', $trip['slug'], false ); // Merchant's version: link to it, don't touch it.
+			continue;
+		}
 		$id = wp_insert_post(
 			[
 				'ID'           => $id,
@@ -185,19 +285,26 @@ function ogtrips_core_import_demo( $log = null ) {
 		if ( isset( $f['gallery'] ) ) {
 			$f['gallery'] = array_values( array_filter( array_map( $img, $f['gallery'] ) ) );
 		}
-		$f['expert'] = $user_id;
+		if ( $user_id ) {
+			$f['expert'] = $user_id;
+		}
 		foreach ( $f as $name => $value ) {
 			update_field( $name, $value, $id );
 		}
+		ogtrips_core_demo_stamp( $id );
 	}
 	$counts['trips'] = count( $trip_ids );
 
 	// Reviews.
 	foreach ( $data['reviews'] as $i => $r ) {
 		$slug = 'demo-review-' . ( $i + 1 );
-		$id   = wp_insert_post(
+		$slot = ogtrips_core_demo_slot( 'ogt_review', $slug );
+		if ( -1 === $slot ) {
+			continue;
+		}
+		$id = wp_insert_post(
 			[
-				'ID'          => ogtrips_core_demo_find( 'ogt_review', $slug ),
+				'ID'          => $slot,
 				'post_type'   => 'ogt_review',
 				'post_status' => 'publish',
 				'post_name'   => $slug,
@@ -222,15 +329,20 @@ function ogtrips_core_import_demo( $log = null ) {
 		foreach ( $values as $name => $value ) {
 			update_field( $name, $value, $id );
 		}
+		ogtrips_core_demo_stamp( $id );
 	}
 	$counts['reviews'] = count( $data['reviews'] );
 
 	// Moments.
 	foreach ( $data['moments'] as $i => $m ) {
 		$slug = 'demo-moment-' . ( $i + 1 );
-		$id   = wp_insert_post(
+		$slot = ogtrips_core_demo_slot( 'ogt_moment', $slug );
+		if ( -1 === $slot ) {
+			continue;
+		}
+		$id = wp_insert_post(
 			[
-				'ID'          => ogtrips_core_demo_find( 'ogt_moment', $slug ),
+				'ID'          => $slot,
 				'post_type'   => 'ogt_moment',
 				'post_status' => 'publish',
 				'post_name'   => $slug,
@@ -254,25 +366,30 @@ function ogtrips_core_import_demo( $log = null ) {
 		foreach ( $values as $name => $value ) {
 			update_field( $name, $value, $id );
 		}
+		ogtrips_core_demo_stamp( $id );
 	}
 	$counts['moments'] = count( $data['moments'] );
 
 	// Tour guides.
 	foreach ( $data['guides'] as $g ) {
 		$log( 'Guide: ' . $g['title'] );
+		$slot = ogtrips_core_demo_slot( 'ogt_guide', $g['slug'] );
+		if ( -1 === $slot ) {
+			continue;
+		}
 		$content = 'guide' === $g['blocks']
 			? ogtrips_core_demo_guide_blocks( $img( 'flags' ), $trip_ids['soul-of-ladakh'] ?? 0 )
 			: ogtrips_core_demo_short_blocks( $g['excerpt'] );
 		$id      = wp_insert_post(
 			[
-				'ID'           => ogtrips_core_demo_find( 'ogt_guide', $g['slug'] ),
+				'ID'           => $slot,
 				'post_type'    => 'ogt_guide',
 				'post_status'  => 'publish',
 				'post_name'    => $g['slug'],
 				'post_title'   => $g['title'],
 				'post_excerpt' => $g['excerpt'],
 				'post_content' => wp_slash( $content ), // wp_insert_post() unslashes.
-				'post_author'  => $user_id,
+				'post_author'  => $author_id,
 				'meta_input'   => [ '_ogt_demo' => 1 ],
 			]
 		);
@@ -287,6 +404,7 @@ function ogtrips_core_import_demo( $log = null ) {
 		foreach ( (array) ( $g['fields'] ?? [] ) as $name => $value ) {
 			update_field( $name, $value, $id );
 		}
+		ogtrips_core_demo_stamp( $id );
 	}
 	$counts['guides'] = count( $data['guides'] );
 
@@ -298,19 +416,19 @@ function ogtrips_core_import_demo( $log = null ) {
 	$home['hero_cta_primary']   = [ 'url' => '#trips', 'title' => 'Our OG Trips', 'target' => '' ];
 	$home['hero_cta_secondary'] = [ 'url' => '#social', 'title' => 'Watch traveller reels', 'target' => '' ];
 	foreach ( $home as $name => $value ) {
-		update_field( $name, $value, 'option' );
+		ogtrips_core_demo_set_option( $name, $value );
 	}
 	$settings                  = $data['settings'];
 	$settings['enquiry_email'] = (string) get_option( 'admin_email' );
 	foreach ( $settings as $name => $value ) {
-		update_field( $name, $value, 'option' );
+		ogtrips_core_demo_set_option( $name, $value );
 	}
 
 	// Static front page + "Blog" posts page (structural, not demo-tagged), only if not set up yet.
 	if ( 'page' !== get_option( 'show_on_front' ) || ! get_option( 'page_on_front' ) ) {
-		$front = ogtrips_core_demo_find( 'page', 'home' );
+		$front = ogtrips_core_demo_find( 'page', 'home', false );
 		$front = $front ? $front : wp_insert_post( [ 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Home', 'post_name' => 'home' ] );
-		$blog  = ogtrips_core_demo_find( 'page', 'blog' );
+		$blog  = ogtrips_core_demo_find( 'page', 'blog', false );
 		$blog  = $blog ? $blog : wp_insert_post( [ 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Blog', 'post_name' => 'blog' ] );
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', (int) $front );
@@ -397,29 +515,54 @@ function ogtrips_core_demo_short_blocks( $intro ) {
 }
 
 /**
- * Deletes everything tagged as demo content (posts, images, the demo expert user).
+ * Deletes the demo content the importer created and nobody has touched since:
+ * - demo posts that were edited after import are kept (they became real content);
+ * - demo photos still used by kept or merchant content are kept;
+ * - demo destinations that still have other posts are kept;
+ * - Homepage / Site Settings fields are cleared only if they still hold the demo value.
  *
  * @return int Number of items deleted.
  */
 function ogtrips_core_remove_demo() {
-	$ids = get_posts(
+	global $wpdb;
+
+	$deleted = 0;
+
+	// 1. Settings that still hold the value the importer wrote.
+	$written = (array) get_option( 'ogtrips_demo_options', [] );
+	foreach ( $written as $name => $hash ) {
+		if ( ogtrips_core_demo_hash( get_field( $name, 'option', false ) ) === $hash ) {
+			delete_field( $name, 'option' );
+		}
+	}
+	delete_option( 'ogtrips_demo_options' );
+
+	// 2. Demo posts not edited since import.
+	$ids     = get_posts(
 		[
-			'post_type'      => [ 'ogt_itinerary', 'ogt_guide', 'ogt_review', 'ogt_moment', 'post', 'attachment' ],
+			'post_type'      => [ 'ogt_itinerary', 'ogt_guide', 'ogt_review', 'ogt_moment', 'post' ],
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
 			'meta_key'       => '_ogt_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 		]
 	);
-
+	$removed = [];
 	foreach ( $ids as $id ) {
-		if ( 'attachment' === get_post_type( $id ) ) {
-			wp_delete_attachment( $id, true );
-		} else {
-			wp_delete_post( $id, true );
+		$stamp = (string) get_post_meta( $id, '_ogt_demo_modified', true );
+		if ( '' !== $stamp && get_post_field( 'post_modified_gmt', $id ) !== $stamp ) {
+			delete_post_meta( $id, '_ogt_demo' ); // Edited by the merchant: it is real content now.
+			delete_post_meta( $id, '_ogt_demo_modified' );
+			continue;
 		}
+		$removed[] = (int) $id;
+	}
+	foreach ( $removed as $id ) {
+		wp_delete_post( $id, true );
+		++$deleted;
 	}
 
+	// 3. Demo user, unless they now author real (kept) content.
 	$users = get_users(
 		[
 			'meta_key' => '_ogt_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
@@ -429,24 +572,55 @@ function ogtrips_core_remove_demo() {
 	if ( $users ) {
 		require_once ABSPATH . 'wp-admin/includes/user.php';
 		foreach ( $users as $user_id ) {
-			wp_delete_user( (int) $user_id, get_current_user_id() ? get_current_user_id() : 1 );
+			if ( count_user_posts( (int) $user_id, [ 'ogt_guide', 'post', 'ogt_itinerary' ] ) > 0 ) {
+				continue;
+			}
+			wp_delete_user( (int) $user_id );
+			++$deleted;
 		}
 	}
 
+	// 4. Demo photos nobody else uses (posts, settings, user photos, article bodies).
+	$images = get_posts(
+		[
+			'post_type'      => 'attachment',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_key'       => '_ogt_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		]
+	);
+	foreach ( $images as $image_id ) {
+		$id   = (string) (int) $image_id;
+		$used = $wpdb->get_var( $wpdb->prepare( "SELECT 1 FROM {$wpdb->postmeta} pm JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE p.post_type <> 'attachment' AND p.post_status <> 'inherit' AND ( pm.meta_value = %s OR pm.meta_value LIKE %s ) LIMIT 1", $id, '%"' . $id . '"%' ) ) // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			|| $wpdb->get_var( $wpdb->prepare( "SELECT 1 FROM {$wpdb->options} WHERE option_name LIKE 'options\_%%' AND ( option_value = %s OR option_value LIKE %s ) LIMIT 1", $id, '%"' . $id . '"%' ) ) // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			|| $wpdb->get_var( $wpdb->prepare( "SELECT 1 FROM {$wpdb->usermeta} WHERE meta_key = 'ogt_photo' AND meta_value = %s LIMIT 1", $id ) ) // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			|| $wpdb->get_var( $wpdb->prepare( "SELECT 1 FROM {$wpdb->posts} WHERE post_type <> 'revision' AND post_content LIKE %s LIMIT 1", '%wp-image-' . $id . '"%' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		if ( $used ) {
+			continue;
+		}
+		wp_delete_attachment( (int) $image_id, true );
+		++$deleted;
+	}
+
+	// 5. Demo destinations with nothing left in them.
 	$terms = get_terms(
 		[
 			'taxonomy'   => 'ogt_destination',
 			'hide_empty' => false,
-			'fields'     => 'ids',
 			'meta_key'   => '_ogt_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 		]
 	);
-	foreach ( is_wp_error( $terms ) ? [] : $terms as $term_id ) {
-		wp_delete_term( (int) $term_id, 'ogt_destination' );
+	foreach ( is_wp_error( $terms ) ? [] : $terms as $term ) {
+		$objects = get_objects_in_term( $term->term_id, 'ogt_destination' );
+		if ( empty( $objects ) || is_wp_error( $objects ) ) {
+			wp_delete_term( $term->term_id, 'ogt_destination' );
+			++$deleted;
+		}
 	}
 
 	delete_option( 'ogtrips_demo_images' );
 	delete_option( 'ogtrips_demo_imported' );
 
-	return count( $ids ) + count( $users );
+	return $deleted;
 }
