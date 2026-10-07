@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       OgTrips Core
  * Description:       OgTrips content model (trips, tour guides, reviews, moments, enquiries), admin clean-up, enquiry handler and demo-content seeder. Content lives here so it survives a theme change.
- * Version:           0.2.0
+ * Version:           1.0.0
  * Requires at least: 6.7
  * Requires PHP:      8.1
  * Requires Plugins:  secure-custom-fields
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'OGTRIPS_CORE_VERSION', '0.2.0' );
+define( 'OGTRIPS_CORE_VERSION', '1.0.0' );
 define( 'OGTRIPS_CORE_FILE', __FILE__ );
 define( 'OGTRIPS_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'OGTRIPS_CORE_URL', plugin_dir_url( __FILE__ ) );
