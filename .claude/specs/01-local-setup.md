@@ -1,6 +1,6 @@
 # 01 — Local environment & child theme skeleton
 
-Status: **Built** — approved 2026-10-05; tester PASS + reviewer fixes applied 2026-10-06; awaiting user checkpoint
+Status: **Done** — approved 2026-10-05; built + tested 2026-10-06; checkpoint approved 2026-10-06
 
 ## Goal
 

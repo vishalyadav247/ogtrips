@@ -20,6 +20,13 @@ main() {
 		fi
 	done
 
+	echo "== Remove unused default themes (keep GeneratePress + OgTrips)"
+	for t in $(wpq theme list --status=inactive --field=name); do
+		if [ "$t" != "generatepress" ]; then
+			wpq theme delete "$t"
+		fi
+	done
+
 	echo "== Default content"
 	delete_post_by_slug() {
 		ids=$(wpq post list --post_type="$1" --name="$2" --post_status=any --field=ID)
@@ -51,8 +58,8 @@ main() {
 	wpq option update timezone_string "Asia/Kolkata"
 	wpq option update date_format "j M Y"
 
-	echo "== Permalinks"
-	wp rewrite structure '/%postname%/'
+	echo "== Permalinks: pages /{slug}/, blog /blog/{slug}/ (trips, guides, destinations have their own bases)"
+	wp rewrite structure '/blog/%postname%/'
 	wp rewrite flush
 
 	echo "== Comments closed by default"
@@ -63,7 +70,15 @@ main() {
 	echo "== Discourage search engines (local only)"
 	wpq option update blog_public 0
 
-	echo "== Done: http://localhost:8888 (admin / password)"
+	echo "== Starter terms: trip types (with icons) and guide topics"
+	wp eval-file wp-content/ogtrips-scripts/seed-terms.php
+
+	echo "== Local merchant account (Editor role) — local only, never on the live site"
+	if ! wpq user get merchant --field=ID >/dev/null 2>&1; then
+		wpq user create merchant merchant@ogtrips.local --role=editor --user_pass=password --display_name="OgTrips team"
+	fi
+
+	echo "== Done: http://localhost:8888 (admin / password · merchant / password)"
 }
 
 main "$@"

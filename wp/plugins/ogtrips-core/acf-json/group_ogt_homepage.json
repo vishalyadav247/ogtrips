@@ -1,0 +1,858 @@
+{
+    "key": "group_ogt_homepage",
+    "title": "Homepage",
+    "fields": [
+        {
+            "key": "field_ogt_homepage_tab_1",
+            "label": "Hero",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_hero_heading",
+            "label": "Heading",
+            "name": "hero_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Big heading over the slideshow. Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Where to next?",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_hero_subtitle",
+            "label": "Text under the heading",
+            "name": "hero_subtitle",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "One or two sentences under the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_homepage_hero_cta_primary",
+            "label": "Main button",
+            "name": "hero_cta_primary",
+            "aria_label": "",
+            "type": "link",
+            "instructions": "Coral button, e.g. \"Our OG Trips\" → #trips.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_ogt_homepage_hero_cta_secondary",
+            "label": "Second button",
+            "name": "hero_cta_secondary",
+            "aria_label": "",
+            "type": "link",
+            "instructions": "Outline button, e.g. \"Watch traveller reels\" → #social.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_ogt_homepage_hero_places",
+            "label": "Slideshow places",
+            "name": "hero_places",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "3–5 places work best.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 6,
+            "collapsed": "field_ogt_homepage_hero_places_image",
+            "button_label": "Add place",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_homepage_hero_places_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "aria_label": "",
+                    "type": "image",
+                    "instructions": "Landscape, at least 2200px wide.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png,webp",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_ogt_homepage_hero_places"
+                },
+                {
+                    "key": "field_ogt_homepage_hero_places_place",
+                    "label": "Big text",
+                    "name": "place",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Shown huge after \"Where to next?\" — end with a full stop.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "34",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "the Alps.",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_hero_places"
+                },
+                {
+                    "key": "field_ogt_homepage_hero_places_country",
+                    "label": "Country",
+                    "name": "country",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Shown in the \"Now showing\" pill.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Switzerland",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_hero_places"
+                },
+                {
+                    "key": "field_ogt_homepage_hero_places_tab_label",
+                    "label": "Tab label",
+                    "name": "tab_label",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Short name on the tab under the slideshow.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Swiss Alps",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_hero_places"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_homepage_tab_2",
+            "label": "Why OG",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_why_label",
+            "label": "Small label",
+            "name": "why_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Why we are OG's",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_why_heading",
+            "label": "Heading",
+            "name": "why_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "The *OG* way",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_why_quote",
+            "label": "Quote",
+            "name": "why_quote",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "Big quote. Wrap words in *stars* to highlight them.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_homepage_why_cite",
+            "label": "Quote by",
+            "name": "why_cite",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Who said it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Founder, OgTrips",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_why_pillars",
+            "label": "Reasons",
+            "name": "why_pillars",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "Exactly 3 reasons look best.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 3,
+            "collapsed": "field_ogt_homepage_why_pillars_icon",
+            "button_label": "Add reason",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_homepage_why_pillars_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "aria_label": "",
+                    "type": "select",
+                    "instructions": "Small icon above the title.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "35",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "sunrise": "Sunrise",
+                        "sprout": "Rice field / nature",
+                        "droplets": "Waterfall / water",
+                        "waves": "Beach / sea",
+                        "flame": "Fire / ceremony",
+                        "utensils": "Food / meals",
+                        "bed-double": "Stay / hotel",
+                        "car": "Car / transfer",
+                        "coffee": "Breakfast / café",
+                        "mountain": "Mountain / trek",
+                        "ship": "Boat / ferry",
+                        "ticket": "Tickets / activity",
+                        "plane": "Flight",
+                        "tent": "Camping",
+                        "sailboat": "Cruise / sailing",
+                        "camera": "Photo stop",
+                        "heart": "Romantic",
+                        "sparkles": "Special",
+                        "shield-check": "Safety / trust",
+                        "headset": "Support"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 1,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                },
+                {
+                    "key": "field_ogt_homepage_why_pillars_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Short reason, e.g. \"Safety first, always\".",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "65",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                },
+                {
+                    "key": "field_ogt_homepage_why_pillars_text",
+                    "label": "Text",
+                    "name": "text",
+                    "aria_label": "",
+                    "type": "textarea",
+                    "instructions": "One or two sentences.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 2,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                },
+                {
+                    "key": "field_ogt_homepage_why_pillars_stat_number",
+                    "label": "Number",
+                    "name": "stat_number",
+                    "aria_label": "",
+                    "type": "number",
+                    "instructions": "Counts up when shown, e.g. 24.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "placeholder": "24",
+                    "step": 0.1,
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                },
+                {
+                    "key": "field_ogt_homepage_why_pillars_stat_suffix",
+                    "label": "After the number",
+                    "name": "stat_suffix",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Shown right after the number, e.g. /7 or +.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "/7",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                },
+                {
+                    "key": "field_ogt_homepage_why_pillars_stat_label",
+                    "label": "Number label",
+                    "name": "stat_label",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Small text after the number.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "34",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "human support",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_homepage_why_pillars"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_homepage_tab_3",
+            "label": "Reviews",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_reviews_label",
+            "label": "Small label",
+            "name": "reviews_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Reviews",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_reviews_heading",
+            "label": "Heading",
+            "name": "reviews_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Loved by *12,000+* travellers",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_reviews_rating",
+            "label": "Overall rating",
+            "name": "reviews_rating",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Overall star rating, e.g. 4.9.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 5,
+            "placeholder": "",
+            "step": 0.1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_reviews_count_label",
+            "label": "Rating note",
+            "name": "reviews_count_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown next to the rating.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "70",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "2,300+ reviews on Google & Tripadvisor",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_tab_4",
+            "label": "Moments",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_moments_label",
+            "label": "Small label",
+            "name": "moments_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "#OgTrips moments",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_moments_heading",
+            "label": "Heading",
+            "name": "moments_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Tagged by *you*, loved by us",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_moments_intro",
+            "label": "Intro",
+            "name": "moments_intro",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "Short intro under the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_homepage_tab_5",
+            "label": "Trips",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_trips_label",
+            "label": "Small label",
+            "name": "trips_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Our OG Trips",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_trips_heading",
+            "label": "Heading",
+            "name": "trips_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Most-loved *trips* right now",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_tab_6",
+            "label": "Contact",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_homepage_contact_label",
+            "label": "Small label",
+            "name": "contact_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small label above the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Contact us",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_contact_heading",
+            "label": "Heading",
+            "name": "contact_heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Wrap a word in *stars* to colour it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Where to *next?* Let's talk.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_contact_lead",
+            "label": "Intro",
+            "name": "contact_lead",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "Short intro under the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_homepage_form_title",
+            "label": "Form title",
+            "name": "form_title",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Heading on the enquiry form card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Plan my trip",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_homepage_form_subtitle",
+            "label": "Form subtitle",
+            "name": "form_subtitle",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Line under the form heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "A trip expert replies within one working day.",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "ogtrips-homepage"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

@@ -1,0 +1,236 @@
+{
+    "key": "group_ogt_review",
+    "title": "Review",
+    "fields": [
+        {
+            "key": "field_ogt_review_quote",
+            "label": "Review",
+            "name": "quote",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "The review text, as the traveller wrote it.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_review_reviewer_name",
+            "label": "Name",
+            "name": "reviewer_name",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown under the review.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Priya Sharma",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_review_reviewer_city",
+            "label": "City",
+            "name": "reviewer_city",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown after the name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Mumbai",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_review_travel_date",
+            "label": "Travelled in",
+            "name": "travel_date",
+            "aria_label": "",
+            "type": "date_picker",
+            "instructions": "Any day in the month; shown as \"June 2026\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_ogt_review_rating",
+            "label": "Stars",
+            "name": "rating",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Stars the traveller gave.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "5": "5 stars",
+                "4": "4 stars",
+                "3": "3 stars",
+                "2": "2 stars",
+                "1": "1 star"
+            },
+            "default_value": "5",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_review_source",
+            "label": "Where it was posted",
+            "name": "source",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Google and Tripadvisor reviews get a verified badge.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "google": "Google",
+                "tripadvisor": "Tripadvisor",
+                "direct": "Sent to us directly"
+            },
+            "default_value": "google",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_review_avatar",
+            "label": "Reviewer photo",
+            "name": "avatar",
+            "aria_label": "",
+            "type": "image",
+            "instructions": "Square, optional.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_ogt_review_itinerary",
+            "label": "Trip",
+            "name": "itinerary",
+            "aria_label": "",
+            "type": "post_object",
+            "instructions": "Optional: the trip they took.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "ogt_itinerary"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_ogt_review_featured",
+            "label": "Show on the homepage",
+            "name": "featured",
+            "aria_label": "",
+            "type": "true_false",
+            "instructions": "Turn on to show this review on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "ogt_review"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

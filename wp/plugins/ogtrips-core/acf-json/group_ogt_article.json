@@ -1,0 +1,132 @@
+{
+    "key": "group_ogt_article",
+    "title": "Article details",
+    "fields": [
+        {
+            "key": "field_ogt_article_cover_caption",
+            "label": "Cover photo caption",
+            "name": "cover_caption",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Short caption under the cover photo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Pura Lempuyang at sunrise",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_article_glance_best_time",
+            "label": "At a glance: best time",
+            "name": "glance_best_time",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown in the \"at a glance\" box. The box is hidden when all four are empty.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "April – October",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_article_glance_budget",
+            "label": "At a glance: daily budget",
+            "name": "glance_budget",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Typical spend per person per day.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "₹4,000 – ₹9,000",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_article_glance_length",
+            "label": "At a glance: ideal length",
+            "name": "glance_length",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "How long to stay.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "7–10 days",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_article_glance_visa",
+            "label": "At a glance: visa",
+            "name": "glance_visa",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Visa rule for Indian passport holders, in a few words.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Visa on arrival",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "ogt_guide"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "The \"at a glance\" box is hidden when all four are empty.",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

@@ -1,0 +1,1448 @@
+{
+    "key": "group_ogt_itinerary",
+    "title": "Trip details",
+    "fields": [
+        {
+            "key": "field_ogt_itinerary_tab_1",
+            "label": "Overview",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_title_display",
+            "label": "Title as shown on the trip page",
+            "name": "title_display",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional. Wrap a word in *stars* to colour it, e.g. Bali Bliss: temples *&* rice terraces. Empty = the trip name above.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_short_title",
+            "label": "Short name for cards",
+            "name": "short_title",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional, e.g. \"Bali Bliss\". Used on small cards and reviews. Empty = the trip name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_location_label",
+            "label": "Location line",
+            "name": "location_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "e.g. \"Bali, Indonesia\" or \"Munnar · Alleppey\". Empty = the destination.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_badge",
+            "label": "Badge",
+            "name": "badge",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional label on the photo, e.g. \"#1 Bestseller\", \"Selling fast\", \"Honeymoon pick\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_badge_style",
+            "label": "Badge colour",
+            "name": "badge_style",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Colour of the badge.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "sun": "Yellow",
+                "coral": "Coral",
+                "plain": "Plain (white)"
+            },
+            "default_value": "sun",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_itinerary_badge_icon",
+            "label": "Badge icon",
+            "name": "badge_icon",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Optional.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "award": "Award",
+                "heart": "Heart",
+                "baby": "Family",
+                "flame": "Flame",
+                "sparkles": "Sparkles"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_itinerary_is_bestseller",
+            "label": "Show on the homepage \"Most-loved trips\"",
+            "name": "is_bestseller",
+            "aria_label": "",
+            "type": "true_false",
+            "instructions": "Turn on to feature this trip on the homepage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_ogt_itinerary_bestseller_rank",
+            "label": "Position on the homepage",
+            "name": "bestseller_rank",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "1 = first. Up to 4 trips are shown.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 99,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_route_stops",
+            "label": "Route",
+            "name": "route_stops",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "The stops in order, shown as a route line.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_route_stops_label",
+            "button_label": "Add stop",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_route_stops_label",
+                    "label": "Place",
+                    "name": "label",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Town or area.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "60",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Ubud",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_route_stops"
+                },
+                {
+                    "key": "field_ogt_itinerary_route_stops_days",
+                    "label": "Days",
+                    "name": "days",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Which days, e.g. Day 1–3.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Day 1–3",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_route_stops"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_highlights",
+            "label": "Highlights",
+            "name": "highlights",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "Short highlights with an icon (4–6 works best).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_highlights_icon",
+            "button_label": "Add highlight",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_highlights_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "aria_label": "",
+                    "type": "select",
+                    "instructions": "Pick the closest icon.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "35",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "sunrise": "Sunrise",
+                        "sprout": "Rice field / nature",
+                        "droplets": "Waterfall / water",
+                        "waves": "Beach / sea",
+                        "flame": "Fire / ceremony",
+                        "utensils": "Food / meals",
+                        "bed-double": "Stay / hotel",
+                        "car": "Car / transfer",
+                        "coffee": "Breakfast / café",
+                        "mountain": "Mountain / trek",
+                        "ship": "Boat / ferry",
+                        "ticket": "Tickets / activity",
+                        "plane": "Flight",
+                        "tent": "Camping",
+                        "sailboat": "Cruise / sailing",
+                        "camera": "Photo stop",
+                        "heart": "Romantic",
+                        "sparkles": "Special",
+                        "shield-check": "Safety / trust",
+                        "headset": "Support"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 1,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_ogt_itinerary_highlights"
+                },
+                {
+                    "key": "field_ogt_itinerary_highlights_text",
+                    "label": "Highlight",
+                    "name": "text",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Short, one line.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "65",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Sunrise trek up Mount Batur",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_highlights"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_tab_2",
+            "label": "Facts",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_duration_days",
+            "label": "Days",
+            "name": "duration_days",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Total days.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 60,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_duration_nights",
+            "label": "Nights",
+            "name": "duration_nights",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Total nights.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 60,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_group_min",
+            "label": "Group size from",
+            "name": "group_min",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Smallest group.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 99,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_group_max",
+            "label": "Group size up to",
+            "name": "group_max",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Largest group (same as \"from\" for a fixed size).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 99,
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_best_time",
+            "label": "Best time to go",
+            "name": "best_time",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Months to travel.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "April – October",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_pace",
+            "label": "Pace",
+            "name": "pace",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "How active the trip is.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "easy": "Easy",
+                "easy-moderate": "Easy – moderate",
+                "moderate": "Moderate",
+                "moderate-challenging": "Moderate – challenging",
+                "challenging": "Challenging"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_itinerary_stays_label",
+            "label": "Stays",
+            "name": "stays_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "One line about the hotels.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "4★ villas & resorts",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_rating",
+            "label": "Rating",
+            "name": "rating",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Out of 5, e.g. 4.9.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": 5,
+            "placeholder": "",
+            "step": 0.1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_review_count",
+            "label": "Number of reviews",
+            "name": "review_count",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "How many reviews the rating is based on.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": 1,
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_tab_3",
+            "label": "Price & dates",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_price_from",
+            "label": "Price per person (₹)",
+            "name": "price_from",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Starting price per person, numbers only.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": 1,
+            "prepend": "₹",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_price_original",
+            "label": "Original price (₹)",
+            "name": "price_original",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Optional. Shown crossed out; the saving is calculated.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": 1,
+            "prepend": "₹",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_offer_label",
+            "label": "Offer label",
+            "name": "offer_label",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional, shown before the saving, e.g. \"Early-bird\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_itinerary_departures",
+            "label": "Departure dates",
+            "name": "departures",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "Fixed group departures. \"Private — my own dates\" is always offered too.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_departures_date",
+            "button_label": "Add date",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_departures_date",
+                    "label": "Date",
+                    "name": "date",
+                    "aria_label": "",
+                    "type": "date_picker",
+                    "instructions": "Departure day.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "60",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "j M Y",
+                    "return_format": "Y-m-d",
+                    "first_day": 1,
+                    "parent_repeater": "field_ogt_itinerary_departures"
+                },
+                {
+                    "key": "field_ogt_itinerary_departures_seats_left",
+                    "label": "Seats left",
+                    "name": "seats_left",
+                    "aria_label": "",
+                    "type": "number",
+                    "instructions": "Leave empty to hide.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 0,
+                    "max": "",
+                    "placeholder": "",
+                    "step": 1,
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_departures"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_pdf_itinerary",
+            "label": "PDF itinerary",
+            "name": "pdf_itinerary",
+            "aria_label": "",
+            "type": "file",
+            "instructions": "Optional download for travellers.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "pdf"
+        },
+        {
+            "key": "field_ogt_itinerary_tab_4",
+            "label": "Day by day",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_days",
+            "label": "Days",
+            "name": "days",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "One row per day, in order. Day numbers are added automatically.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_days_title",
+            "button_label": "Add day",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_days_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Short title for the day.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Arrive in Ubud",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_days"
+                },
+                {
+                    "key": "field_ogt_itinerary_days_location",
+                    "label": "Where / travel",
+                    "name": "location",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Where the day happens, and travel time if any.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Denpasar → Ubud · 1.5 hr drive",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_days"
+                },
+                {
+                    "key": "field_ogt_itinerary_days_description",
+                    "label": "What happens",
+                    "name": "description",
+                    "aria_label": "",
+                    "type": "wysiwyg",
+                    "instructions": "What travellers do that day.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "visual",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 1,
+                    "parent_repeater": "field_ogt_itinerary_days"
+                },
+                {
+                    "key": "field_ogt_itinerary_days_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "aria_label": "",
+                    "type": "image",
+                    "instructions": "Optional, landscape.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png,webp",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_ogt_itinerary_days"
+                },
+                {
+                    "key": "field_ogt_itinerary_days_tags",
+                    "label": "Included that day",
+                    "name": "tags",
+                    "aria_label": "",
+                    "type": "repeater",
+                    "instructions": "Small tags under the day, e.g. Villa stay, Breakfast.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "table",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_ogt_itinerary_days_tags_icon",
+                    "button_label": "Add item",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_ogt_itinerary_days_tags_icon",
+                            "label": "Icon",
+                            "name": "icon",
+                            "aria_label": "",
+                            "type": "select",
+                            "instructions": "Pick the closest icon.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "35",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "sunrise": "Sunrise",
+                                "sprout": "Rice field / nature",
+                                "droplets": "Waterfall / water",
+                                "waves": "Beach / sea",
+                                "flame": "Fire / ceremony",
+                                "utensils": "Food / meals",
+                                "bed-double": "Stay / hotel",
+                                "car": "Car / transfer",
+                                "coffee": "Breakfast / café",
+                                "mountain": "Mountain / trek",
+                                "ship": "Boat / ferry",
+                                "ticket": "Tickets / activity",
+                                "plane": "Flight",
+                                "tent": "Camping",
+                                "sailboat": "Cruise / sailing",
+                                "camera": "Photo stop",
+                                "heart": "Romantic",
+                                "sparkles": "Special",
+                                "shield-check": "Safety / trust",
+                                "headset": "Support"
+                            },
+                            "default_value": false,
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 1,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0,
+                            "parent_repeater": "field_ogt_itinerary_days_tags"
+                        },
+                        {
+                            "key": "field_ogt_itinerary_days_tags_text",
+                            "label": "Text",
+                            "name": "text",
+                            "aria_label": "",
+                            "type": "text",
+                            "instructions": "One or two words.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "65",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "Villa stay",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_ogt_itinerary_days_tags"
+                        }
+                    ],
+                    "parent_repeater": "field_ogt_itinerary_days"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_tab_5",
+            "label": "Stays",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_stays",
+            "label": "Stays",
+            "name": "stays",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "Hotels in the order travellers stay.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_stays_name",
+            "button_label": "Add stay",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_stays_name",
+                    "label": "Hotel / villa",
+                    "name": "name",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Hotel or villa name.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_stays"
+                },
+                {
+                    "key": "field_ogt_itinerary_stays_nights",
+                    "label": "Nights",
+                    "name": "nights",
+                    "aria_label": "",
+                    "type": "number",
+                    "instructions": "Nights there.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 1,
+                    "max": "",
+                    "placeholder": "",
+                    "step": 1,
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_stays"
+                },
+                {
+                    "key": "field_ogt_itinerary_stays_room",
+                    "label": "Room type",
+                    "name": "room",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "Room type.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Pool villa",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_stays"
+                },
+                {
+                    "key": "field_ogt_itinerary_stays_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "aria_label": "",
+                    "type": "image",
+                    "instructions": "Landscape photo of the stay.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png,webp",
+                    "preview_size": "medium",
+                    "parent_repeater": "field_ogt_itinerary_stays"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_tab_6",
+            "label": "Inclusions",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_incl_icons",
+            "label": "Icons on trip cards",
+            "name": "incl_icons",
+            "aria_label": "",
+            "type": "checkbox",
+            "instructions": "Small icons shown on the homepage trip card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "bed-double": "Stay",
+                "utensils": "Meals",
+                "car": "Transfers",
+                "ticket": "Activities",
+                "tent": "Camping",
+                "plane": "Flights",
+                "waves": "Water sports",
+                "sailboat": "Cruise"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "save_custom": 0,
+            "layout": "horizontal",
+            "toggle": 0,
+            "custom_choice_button_text": ""
+        },
+        {
+            "key": "field_ogt_itinerary_included",
+            "label": "Included",
+            "name": "included",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "What the price includes.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_included_text",
+            "button_label": "Add item",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_included_text",
+                    "label": "Item",
+                    "name": "text",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "One item per row.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_included"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_excluded",
+            "label": "Not included",
+            "name": "excluded",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "What travellers pay for themselves.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_excluded_text",
+            "button_label": "Add item",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_excluded_text",
+                    "label": "Item",
+                    "name": "text",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "One item per row.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_excluded"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_tab_7",
+            "label": "Gallery",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_gallery",
+            "label": "Gallery",
+            "name": "gallery",
+            "aria_label": "",
+            "type": "gallery",
+            "instructions": "5 photos work best (the first one is shown largest).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": "",
+            "max": "",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_ogt_itinerary_tab_8",
+            "label": "FAQ",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_faqs",
+            "label": "Questions",
+            "name": "faqs",
+            "aria_label": "",
+            "type": "repeater",
+            "instructions": "Also shown to Google as FAQ.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_ogt_itinerary_faqs_question",
+            "button_label": "Add question",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ogt_itinerary_faqs_question",
+                    "label": "Question",
+                    "name": "question",
+                    "aria_label": "",
+                    "type": "text",
+                    "instructions": "The question as a traveller would ask it.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ogt_itinerary_faqs"
+                },
+                {
+                    "key": "field_ogt_itinerary_faqs_answer",
+                    "label": "Answer",
+                    "name": "answer",
+                    "aria_label": "",
+                    "type": "wysiwyg",
+                    "instructions": "Short answer; links are allowed.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "visual",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 1,
+                    "parent_repeater": "field_ogt_itinerary_faqs"
+                }
+            ]
+        },
+        {
+            "key": "field_ogt_itinerary_tab_9",
+            "label": "Expert",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_itinerary_expert",
+            "label": "Trip expert",
+            "name": "expert",
+            "aria_label": "",
+            "type": "user",
+            "instructions": "The \"Talk to …\" person on this trip. Experts are user accounts with a photo, specialty and reply time.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "role": [
+                "author",
+                "editor",
+                "administrator"
+            ],
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "ogt_itinerary"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "discussion",
+        "comments",
+        "format",
+        "send-trackbacks",
+        "tags"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

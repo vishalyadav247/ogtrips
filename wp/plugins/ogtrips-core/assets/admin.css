@@ -1,0 +1,25 @@
+/* OgTrips Core — small wp-admin tweaks (admin only; never loaded on the front end). */
+
+/* Trip types and guide topics are flat lists: hide the "Parent" pickers. */
+.taxonomy-ogt_trip_type .term-parent-wrap,
+.taxonomy-ogt_guide_topic .term-parent-wrap,
+#newogt_trip_type_parent,
+#newogt_guide_topic_parent { display: none; }
+
+/* Dashboard widget */
+.ogtrips-quick-add { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+.ogtrips-dashboard-heading { margin: 16px 0 8px; font-size: 14px; }
+.ogtrips-dashboard-enquiries li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.ogtrips-muted { color: #646970; }
+
+/* Enquiry status labels (list, dashboard) */
+.ogtrips-status { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; line-height: 1.6; background: #f0f0f1; color: #1d2327; }
+.ogtrips-status--new { background: #ffe1df; color: #8a1f17; }
+.ogtrips-status--contacted { background: #fff3c4; color: #5c4400; }
+.ogtrips-status--won { background: #d5f5f6; color: #00474d; }
+
+/* Enquiry details */
+.ogtrips-enquiry th { width: 160px; font-weight: 600; }
+
+/* Trip CTA block placeholder in the editor */
+.ogtrips-block-placeholder { padding: 16px; border: 1px dashed #c3c4c7; border-radius: 8px; color: #50575e; }

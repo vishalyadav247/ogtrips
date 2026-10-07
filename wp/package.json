@@ -13,7 +13,7 @@
     "build:fonts": "node scripts/build-fonts.mjs",
     "test:e2e": "playwright test",
     "design:serve": "http-server ../.claude/design -p 5500 -s",
-    "lint:php": "wp-env run cli sh -c \"find wp-content/themes/ogtrips wp-content/plugins/ogtrips-core -name '*.php' -print0 | xargs -0 -n1 php -l\""
+    "lint:php": "wp-env run cli sh -c \"find wp-content/themes/ogtrips wp-content/plugins/ogtrips-core wp-content/ogtrips-scripts -name '*.php' -print0 | xargs -0 -n1 php -l\""
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

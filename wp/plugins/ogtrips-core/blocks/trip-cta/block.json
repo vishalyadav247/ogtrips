@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "ogtrips/trip-cta",
+	"title": "Trip CTA",
+	"description": "A box that links this article to one of your trips (photo, length, heading, short text and button).",
+	"category": "text",
+	"icon": "palmtree",
+	"keywords": [ "trip", "itinerary", "cta", "ogtrips" ],
+	"textdomain": "ogtrips-core",
+	"supports": {
+		"html": false,
+		"align": false,
+		"color": false,
+		"typography": false,
+		"spacing": false,
+		"customClassName": false
+	},
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	}
+}

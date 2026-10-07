@@ -55,19 +55,19 @@ Design files: `.claude/design/index.html`, `itinerary.html`, `guide.html`.
 
 | Design (file · section) | Template part | Data source |
 |---|---|---|
-| all · `.nav-wrap`, `.mobile-menu` | `global/nav.php`, `global/mobile-menu.php` | `wp_nav_menu('primary')`, `get_search_form()`, options (phone) |
+| all · `.nav-wrap`, `.mobile-menu` | `global/nav.php`, `global/mobile-menu.php` | `wp_nav_menu('primary')`, `get_search_form()`, Site Settings `phone` |
 | index · `#home` hero | `home/hero.php` | Homepage options `hero_places` |
-| index · `#why` | `home/why.php` | Homepage options `why_og` |
+| index · `#why` | `home/why.php` | Homepage options `why_*` (label, heading, quote, cite, pillars) |
 | index · `#reviews` | `home/reviews.php` + `cards/review-card.php` | `ogt_review` query (featured) |
 | index · `#social` | `home/social.php` + `cards/ugc-item.php` | `ogt_moment` query |
 | index · `#trips` | `home/bestsellers.php` + `cards/best-card.php` | `ogt_itinerary` where `is_bestseller`, order `bestseller_rank`, 4 |
-| index · `#contact` | `home/contact.php` | Site Settings `contact` + `ogtrips_enquiry_form()` (ogtrips-core) |
+| index · `#contact` | `home/contact.php` | Homepage `contact_*`/`form_*` + Site Settings contact fields + `ogtrips_enquiry_form()` (ogtrips-core) |
 | all · footer | `footer.php` | footer menus + Site Settings |
 | itinerary.html | `single-ogt_itinerary.php` + `itinerary/*` | itinerary fields |
 | guide.html | `single-ogt_guide.php` (Tour Guide) + `article/*` | guide body + side fields |
 | guide.html | `single.php` (optional Blog) — same `article/*` parts | post + fields |
 | all · header `.nav-icon.account` | `global/nav.php` | non-functional placeholder for now (`href="#"`, keep aria-label) |
-| all · WhatsApp links / "Send on WhatsApp" | `home/contact.php`, `itinerary/booking.php` | Site Settings `contact.whatsapp` → wa.me pre-filled message |
+| all · WhatsApp links / "Send on WhatsApp" | `home/contact.php`, `itinerary/booking.php` | Site Settings `whatsapp` → wa.me pre-filled message |
 
 ## Conventions
 

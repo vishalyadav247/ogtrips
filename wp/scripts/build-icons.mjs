@@ -13,7 +13,8 @@ const designDir = join( root, '../.claude/design' );
 const iconsDir = join( dirname( require.resolve( 'lucide-static/package.json' ) ), 'icons' );
 const outFile = join( root, 'themes/ogtrips/assets/icons/sprite.svg' );
 
-const EXTRA_ICONS = [];
+// camera, landmark: offered in wp-admin icon pickers (photo stop, culture trip type).
+const EXTRA_ICONS = [ 'camera', 'landmark' ];
 
 const sources = [
 	...readdirSync( designDir )

@@ -1,0 +1,130 @@
+{
+    "key": "group_ogt_user",
+    "title": "OgTrips profile",
+    "fields": [
+        {
+            "key": "field_ogt_user_ogt_photo",
+            "label": "Photo",
+            "name": "ogt_photo",
+            "aria_label": "",
+            "type": "image",
+            "instructions": "Square photo, shown on trips and articles (replaces the default avatar).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_ogt_user_byline_role",
+            "label": "Role under the name",
+            "name": "byline_role",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown under the name on articles.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "OgTrips trip captain",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_user_specialty",
+            "label": "Specialty",
+            "name": "specialty",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown on the trip expert card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Bali specialist",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_user_reply_time",
+            "label": "Reply time",
+            "name": "reply_time",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown on the trip expert card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "replies in ~5 min",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_user_whatsapp",
+            "label": "WhatsApp number",
+            "name": "whatsapp",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional. Country code + number, digits only (e.g. 919876543210). Empty = the company number.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

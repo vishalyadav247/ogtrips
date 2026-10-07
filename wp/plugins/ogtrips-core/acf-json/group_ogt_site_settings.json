@@ -1,0 +1,363 @@
+{
+    "key": "group_ogt_site_settings",
+    "title": "Site Settings",
+    "fields": [
+        {
+            "key": "field_ogt_site_settings_tab_1",
+            "label": "Contact",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_site_settings_phone",
+            "label": "Phone (as shown)",
+            "name": "phone",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Shown on the site and used for call links.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "+91 98765 43210",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_whatsapp",
+            "label": "WhatsApp number",
+            "name": "whatsapp",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Country code + number, digits only, e.g. 919876543210.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_email",
+            "label": "Public email",
+            "name": "email",
+            "aria_label": "",
+            "type": "email",
+            "instructions": "Shown on the site.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_enquiry_email",
+            "label": "Send enquiries to",
+            "name": "enquiry_email",
+            "aria_label": "",
+            "type": "email",
+            "instructions": "Where new enquiries are emailed. Not shown on the site.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_address",
+            "label": "Office address",
+            "name": "address",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "Shown in the contact section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_site_settings_office_map_url",
+            "label": "Office map link",
+            "name": "office_map_url",
+            "aria_label": "",
+            "type": "url",
+            "instructions": "Google Maps link.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_ogt_site_settings_tab_2",
+            "label": "Social",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_site_settings_instagram_handle",
+            "label": "Instagram handle",
+            "name": "instagram_handle",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "With the @.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "@ogtrips",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_hashtag",
+            "label": "Hashtag",
+            "name": "hashtag",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "With the #.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "#WhereToNext",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_site_settings_instagram_url",
+            "label": "Instagram link",
+            "name": "instagram_url",
+            "aria_label": "",
+            "type": "url",
+            "instructions": "Full link to the Instagram profile.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_ogt_site_settings_facebook_url",
+            "label": "Facebook link",
+            "name": "facebook_url",
+            "aria_label": "",
+            "type": "url",
+            "instructions": "Full link to the Facebook page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_ogt_site_settings_youtube_url",
+            "label": "YouTube link",
+            "name": "youtube_url",
+            "aria_label": "",
+            "type": "url",
+            "instructions": "Full link to the YouTube channel.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_ogt_site_settings_tab_3",
+            "label": "Footer",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_site_settings_footer_blurb",
+            "label": "Footer text",
+            "name": "footer_blurb",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "Short line about OgTrips in the footer.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_ogt_site_settings_newsletter_enabled",
+            "label": "Show the newsletter box",
+            "name": "newsletter_enabled",
+            "aria_label": "",
+            "type": "true_false",
+            "instructions": "Keep off until sign-ups have somewhere to go.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_ogt_site_settings_tab_4",
+            "label": "Booking",
+            "name": "",
+            "aria_label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ogt_site_settings_booking_trust_text",
+            "label": "Note under the Reserve button",
+            "name": "booking_trust_text",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Small reassurance line on every trip page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "No payment now · Free cancellation",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "ogtrips-site-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

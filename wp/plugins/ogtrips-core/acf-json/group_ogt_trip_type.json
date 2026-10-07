@@ -1,0 +1,58 @@
+{
+    "key": "group_ogt_trip_type",
+    "title": "Trip type",
+    "fields": [
+        {
+            "key": "field_ogt_trip_type_icon",
+            "label": "Icon",
+            "name": "icon",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Icon on the contact form button for this trip type.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "heart": "Heart (honeymoon)",
+                "users": "People (family)",
+                "mountain": "Mountain (adventure)",
+                "party-popper": "Party (friends)",
+                "landmark": "Landmark (culture)",
+                "waves": "Waves (beach)",
+                "sparkles": "Sparkles"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "ogt_trip_type"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}

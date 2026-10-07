@@ -1,0 +1,222 @@
+{
+    "key": "group_ogt_moment",
+    "title": "Moment",
+    "fields": [
+        {
+            "key": "field_ogt_moment_media_type",
+            "label": "Type",
+            "name": "media_type",
+            "aria_label": "",
+            "type": "radio",
+            "instructions": "Photo or video/reel.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "Photo",
+                "video": "Video / reel"
+            },
+            "default_value": "image",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_ogt_moment_image",
+            "label": "Photo (or video cover)",
+            "name": "image",
+            "aria_label": "",
+            "type": "image",
+            "instructions": "The photo, or the cover frame of a video. Portrait works best.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_ogt_moment_video_file",
+            "label": "Video file (MP4)",
+            "name": "video_file",
+            "aria_label": "",
+            "type": "file",
+            "instructions": "Optional short clip; otherwise the photo links to Instagram.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4"
+        },
+        {
+            "key": "field_ogt_moment_duration",
+            "label": "Video length",
+            "name": "duration",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Videos only, e.g. 0:42.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "0:42",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_moment_handle",
+            "label": "Instagram handle",
+            "name": "handle",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Who posted it.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "@priya.travels",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_moment_tile_size",
+            "label": "Tile size",
+            "name": "tile_size",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Size in the homepage grid.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "normal": "Normal",
+                "tall": "Tall",
+                "wide": "Wide",
+                "big": "Big"
+            },
+            "default_value": "normal",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_moment_likes",
+            "label": "Likes",
+            "name": "likes",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional, as shown on Instagram, e.g. 12.4k.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "12.4k",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_moment_views",
+            "label": "Views",
+            "name": "views",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional, videos only, e.g. 98k.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "98k",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_moment_link",
+            "label": "Instagram post link",
+            "name": "link",
+            "aria_label": "",
+            "type": "url",
+            "instructions": "Opens when the tile is clicked.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "ogt_moment"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Ask the traveller for permission before posting their photo or video.",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}
