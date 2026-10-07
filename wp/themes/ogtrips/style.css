@@ -755,8 +755,16 @@ svg.lucide { width: 1em; height: 1em; stroke-width: 1.9; flex-shrink: 0; }
 .article-head { padding-top: 130px; padding-bottom: 40px; }
 .listing-head .lead { margin-left: auto; margin-right: auto; }
 .listing-chips { justify-content: center; }
-/* Booking box: sticks 100px from the top; on short laptop screens it moves up so the whole box stays visible. */
-.aside { top: clamp(16px, calc(100svh - 700px), 100px); }
+/* Booking box: sticks 100px below the top (rule at .aside above). If it is taller than the screen,
+   it scrolls inside itself so nothing is cut off. Laptops at 125% scaling (1025–1180px wide) keep
+   the side-by-side layout; below 1025px the box sits under the trip content as in the design. */
+@media (min-width: 1025px) {
+  .layout { align-items: start; }
+  .aside { position: sticky; top: 100px; margin-top: 70px; max-height: calc(100vh - 116px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 14px 18px; margin-left: -14px; margin-right: -14px; }
+}
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; }
+}
 /* Moments: breathing room inside the dark panel. */
 .social-sec > .container { padding-left: max(var(--gutter), 28px); padding-right: max(var(--gutter), 28px); }
 @media (max-width: 560px) {
@@ -773,3 +781,10 @@ svg.lucide { width: 1em; height: 1em; stroke-width: 1.9; flex-shrink: 0; }
 main > .section:last-child { padding-bottom: clamp(16px, 2.5vw, 36px); }
 .page-prose { padding-bottom: clamp(16px, 2.5vw, 36px); }
 .listing-empty { padding: 10px 0 0; }
+/* Moments on phones: every tile the same large size in a swipeable row (collage stays on tablet/desktop). */
+@media (max-width: 560px) {
+  .ugc { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; grid-auto-rows: auto; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; padding-bottom: 4px; }
+  .ugc::-webkit-scrollbar { display: none; }
+  .ugc .ugc-item, .ugc .ugc-item.big, .ugc .ugc-item.wide, .ugc .ugc-item.tall { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 5; scroll-snap-align: start; }
+  .ugc .ugc-item .ov { opacity: 1; }
+}
