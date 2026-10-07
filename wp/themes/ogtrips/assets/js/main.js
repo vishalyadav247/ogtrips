@@ -51,14 +51,12 @@ document.addEventListener('DOMContentLoaded', function () {
       clearTimeout(slideTimer);
       if (!paused && !reduced) slideTimer = setTimeout(function () { go(si + 1); }, SLIDE_MS);
     };
-    // Pause while the visitor hovers or tabs into the hero (WCAG 2.2.2); no autoplay with reduced motion.
+    // Keeps playing on mouse hover; pauses only while a keyboard user tabs through it (WCAG 2.2.2). No autoplay with reduced motion.
     if (heroEl) {
       var pause = function () { paused = true; heroEl.classList.add('is-paused'); clearTimeout(slideTimer); };
       var resume = function () { paused = false; heroEl.classList.remove('is-paused'); go(si); };
-      heroEl.addEventListener('mouseenter', pause);
-      heroEl.addEventListener('mouseleave', resume);
-      heroEl.addEventListener('focusin', pause);
-      heroEl.addEventListener('focusout', function (e) { if (!heroEl.contains(e.relatedTarget)) resume(); });
+      heroEl.addEventListener('focusin', function (e) { if (e.target.matches(':focus-visible')) pause(); });
+      heroEl.addEventListener('focusout', function (e) { if (paused && !reduced && !heroEl.contains(e.relatedTarget)) resume(); });
       if (reduced) heroEl.classList.add('is-paused');
     }
     var go = function (n) {
