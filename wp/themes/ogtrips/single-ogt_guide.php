@@ -80,7 +80,7 @@ while ( have_posts() ) :
 				</ol>
 			<?php endif; ?>
 			<div class="share">
-				<a href="<?php echo esc_url( 'https://wa.me/?text=' . rawurlencode( get_the_title() . ' ' . $ogtrips_url ) ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Share on WhatsApp', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'message-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a href="<?php echo esc_url( 'https://wa.me/?text=' . rawurlencode( get_the_title() . ' ' . $ogtrips_url ) ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Share on WhatsApp', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 				<a href="<?php echo esc_url( 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $ogtrips_url ) ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Share on Facebook', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'facebook' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 				<a href="<?php echo esc_url( $ogtrips_url ); ?>" data-copy-link aria-label="<?php esc_attr_e( 'Copy link', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'link' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>

@@ -839,20 +839,33 @@
     "location": [
         [
             {
-                "param": "options_page",
+                "param": "page_type",
                 "operator": "==",
-                "value": "ogtrips-homepage"
+                "value": "front_page"
             }
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "acf_after_title",
     "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "slug",
+        "author",
+        "format",
+        "page_attributes",
+        "featured_image",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791259200
+    "modified": 1791408857
 }

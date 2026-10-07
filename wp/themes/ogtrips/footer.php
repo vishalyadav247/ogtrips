@@ -72,6 +72,18 @@ $ogtrips_socials = [
 	</div>
 </footer>
 
+<?php
+$ogtrips_wa_float = function_exists( 'get_field' ) ? get_field( 'whatsapp_float', 'option' ) : false;
+$ogtrips_wa_text  = is_singular( 'ogt_itinerary' )
+	/* translators: %s: trip name */
+	? sprintf( __( 'Hi OgTrips! I have a question about the %s trip.', 'ogtrips' ), str_replace( '*', '', get_post_field( 'post_title', get_queried_object_id() ) ) )
+	: __( 'Hi OgTrips! I would like help planning a trip.', 'ogtrips' );
+$ogtrips_wa_link  = ( null === $ogtrips_wa_float || $ogtrips_wa_float ) ? ogtrips_whatsapp_url( (string) ogtrips_setting( 'whatsapp' ), $ogtrips_wa_text ) : '';
+?>
+<?php if ( '' !== $ogtrips_wa_link ) : ?>
+<a href="<?php echo esc_url( $ogtrips_wa_link ); ?>" class="wa-float" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Chat with us on WhatsApp', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+<?php endif; ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

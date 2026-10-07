@@ -27,7 +27,7 @@ function ogtrips_core_menu_order( $order ) {
 		'edit.php?post_type=ogt_review',
 		'edit.php?post_type=ogt_moment',
 		'edit.php?post_type=ogt_enquiry',
-		'ogtrips-homepage',
+		'edit.php?post_type=page',
 		'ogtrips-site-settings',
 		'upload.php',
 		'separator1',

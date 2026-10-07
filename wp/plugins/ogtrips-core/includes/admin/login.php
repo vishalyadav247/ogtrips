@@ -22,13 +22,18 @@ function ogtrips_core_login_assets() {
 		}
 	}
 
-	$css = $fonts;
-	if ( file_exists( $theme . '/assets/img/ogtrips-mark.svg' ) ) {
+	$css    = $fonts;
+	$custom = function_exists( 'get_field' ) ? (int) get_field( 'logo', 'option' ) : 0;
+	$custom = $custom ? wp_get_attachment_image_url( $custom, 'medium' ) : '';
+	if ( $custom ) {
+		// Uploaded logo (Site Settings → Logo): shown on its own, on a white pill.
+		$css .= sprintf( ':root{--ogt-logo:url("%s");}#login h1 a{font-size:0;gap:0;}#login h1 a::before{width:220px;height:72px;border-radius:18px;background:#fff var(--ogt-logo) center/180px 52px no-repeat;background-size:contain;background-origin:content-box;padding:10px 20px;box-sizing:border-box;}', esc_url( $custom ) );
+	} elseif ( file_exists( $theme . '/assets/img/ogtrips-mark.svg' ) ) {
 		$css .= sprintf( ':root{--ogt-logo:url("%s");}', esc_url( get_theme_file_uri( 'assets/img/ogtrips-mark.svg' ) ) );
 	}
 
 	// Background: the first homepage hero photo, if set.
-	$places = function_exists( 'get_field' ) ? get_field( 'hero_places', 'option' ) : [];
+	$places = function_exists( 'ogtrips_core_home_field' ) ? ogtrips_core_home_field( 'hero_places', [] ) : [];
 	$photo  = is_array( $places ) && ! empty( $places[0]['image'] ) ? wp_get_attachment_image_url( (int) $places[0]['image'], 'large' ) : '';
 	if ( $photo ) {
 		$css .= sprintf( ':root{--ogt-photo:url("%s");}', esc_url( $photo ) );

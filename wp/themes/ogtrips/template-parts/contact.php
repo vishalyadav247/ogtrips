@@ -26,12 +26,12 @@ $ogtrips_types = get_terms(
 	]
 );
 $ogtrips_opt   = static function ( $key, $default ) {
-	return (string) ogtrips_field( $key, 'option', $default );
+	return (string) ogtrips_home( $key, $default );
 };
 
 $ogtrips_lines = [];
 if ( '' !== $ogtrips_wa ) {
-	$ogtrips_lines[] = [ ogtrips_whatsapp_url( $ogtrips_wa, __( 'Hi OgTrips! I would like help planning a trip.', 'ogtrips' ) ), '#25d366', 'message-circle', __( 'WhatsApp', 'ogtrips' ), $ogtrips_wa ];
+	$ogtrips_lines[] = [ ogtrips_whatsapp_url( $ogtrips_wa, __( 'Hi OgTrips! I would like help planning a trip.', 'ogtrips' ) ), '#25d366', 'whatsapp', __( 'WhatsApp', 'ogtrips' ), $ogtrips_wa ];
 }
 if ( '' !== $ogtrips_phone ) {
 	$ogtrips_lines[] = [ 'tel:' . ogtrips_phone_digits( $ogtrips_phone ), 'var(--coral)', 'phone', __( 'Call us', 'ogtrips' ), $ogtrips_phone ];
@@ -92,7 +92,7 @@ if ( '' !== $ogtrips_addr ) {
 				<div class="input full"><textarea id="c-msg" name="message" placeholder=" "></textarea><label for="c-msg"><?php esc_html_e( 'Budget, interests, special occasions…', 'ogtrips' ); ?></label></div>
 				<div class="full"><button type="submit" name="channel" value="email" class="btn btn--coral btn--block"><?php esc_html_e( 'Get my free itinerary', 'ogtrips' ); ?> <span class="arrow"><?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></button></div>
 				<?php if ( '' !== $ogtrips_wa ) : ?>
-					<div class="full"><button type="submit" name="channel" value="whatsapp" class="btn btn--ghost btn--block btn--wa"><?php echo ogtrips_icon( 'message-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Or send it on WhatsApp', 'ogtrips' ); ?></button></div>
+					<div class="full"><button type="submit" name="channel" value="whatsapp" class="btn btn--ghost btn--block btn--wa"><?php echo ogtrips_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Or send it on WhatsApp', 'ogtrips' ); ?></button></div>
 				<?php endif; ?>
 				<p class="form-note full"><?php echo ogtrips_icon( 'lock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'We never share your details. No spam, ever.', 'ogtrips' ); ?></p>
 			</form>

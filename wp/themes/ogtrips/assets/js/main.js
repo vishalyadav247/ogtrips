@@ -195,7 +195,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ---- Scroll-spy for sub nav / table of contents ----
-  var spyLinks = $$('.subnav a, .toc a');
+  // Only in-page links (#section) — the share buttons in the TOC column link elsewhere.
+  var spyLinks = $$('.subnav a, .toc a').filter(function (a) { return /^#[\w-]+$/.test(a.getAttribute('href') || ''); });
   if (spyLinks.length) {
     var targets = spyLinks.map(function (a) { return $(a.getAttribute('href')); }).filter(Boolean);
     var spy = new IntersectionObserver(function (entries) {

@@ -23,10 +23,10 @@ Only code is moved — **no database migration**. All structures (content types,
 5. **Appearance → Themes → Add new:** search **GeneratePress**, install (do not activate).
    Then **Upload theme** → `release/ogtrips-theme.zip` → **Activate**.
    Delete the other default themes (Twenty Twenty-…).
-6. **Plugins → Add new → Upload plugin** → `release/ogtrips-core-plugin.zip` → **Activate**.
-7. **Settings → Permalinks:** choose **Custom structure** and enter `/blog/%postname%/` → Save.
-8. **Settings → OgTrips demo → Import demo content.** Wait 2–5 minutes (it downloads ~17 photos). This creates the 4 trips (Ladakh, Shimla–Manali, Kashmir, Spiti), 4 tour guides, reviews, Instagram moments, homepage text, site settings, and sets the Home + Blog pages.
-9. Visit the site. Done.
+6. **Plugins → Add new → Upload plugin** → `release/ogtrips-core-plugin.zip` → **Activate**. (About 6 MB — it includes the demo photos.)
+7. **Settings → OgTrips demo → Import demo content.** Takes about a minute. The result is the same site as the development laptop: 4 trips (Ladakh, Shimla–Manali, Kashmir, Spiti), 4 tour guides, 2 blog posts, reviews, Instagram moments, the Home page content, About/FAQs/Cancellation/Privacy pages, Site Settings, the 5 destinations, trip types with icons and guide topics, and the same 17 photos (bundled inside the plugin — no internet download). It also sets the site name, tagline, India time zone, date format, `/blog/post-name/` links and comments off, and makes Home the front page and Blog the posts page.
+8. Open **Settings → Permalinks** once and click **Save** (refreshes the link rules), then visit the site.
+9. Create the client's **Editor** account (section 5) and set up email (section 4).
 
 ## 2. Before going live — replace the placeholders
 
@@ -50,14 +50,39 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 
 - Contact form and trip booking form: every enquiry is saved under **Enquiries** in wp-admin (with status New / Contacted / Booked / Closed) **and** emailed to the Site Settings enquiry email.
 - **"Send on WhatsApp"** buttons open WhatsApp with the trip, dates, travellers and name pre-filled (to the Site Settings WhatsApp number), and the lead is still saved in Enquiries.
-- **Make email reliable:** in hPanel create a mailbox (e.g. `hello@yourdomain`), then install the free **WP Mail SMTP** plugin and connect it to Hostinger's SMTP (`smtp.hostinger.com`, port 465, SSL, the mailbox and its password). Send a test email from the plugin.
+- **Floating WhatsApp button** (bottom right, every page): opens a chat with the Site Settings WhatsApp number — on a trip page the message names the trip. Switch it off in Site Settings → Contact → "Show the WhatsApp button". No plugin needed.
+- **No form plugin is needed.** The only plugin to add is **WP Mail SMTP** (below), so the emails are actually delivered.
+- **Make email reliable (WP Mail SMTP, ~10 minutes, do this on the live site):**
+  1. hPanel → **Emails** → create a mailbox, e.g. `hello@ogtrips.com`, and note its password.
+  2. WordPress → **Plugins → Add New** → search **WP Mail SMTP** (by WP Mail SMTP / WPForms) → Install → Activate. Skip its setup wizard.
+  3. hPanel → **File Manager** → open `public_html/wp-config.php` and paste this **above** the line `/* That's all, stop editing! */` — replace the address and password with yours:
+
+     ```php
+     // Email via the Hostinger mailbox (WP Mail SMTP reads these; the password stays out of the database).
+     define( 'WPMS_ON', true );
+     define( 'WPMS_MAIL_FROM', 'hello@ogtrips.com' );
+     define( 'WPMS_MAIL_FROM_FORCE', true );
+     define( 'WPMS_MAIL_FROM_NAME', 'OgTrips' );
+     define( 'WPMS_MAIL_FROM_NAME_FORCE', true );
+     define( 'WPMS_MAILER', 'smtp' );
+     define( 'WPMS_SMTP_HOST', 'smtp.hostinger.com' );
+     define( 'WPMS_SMTP_PORT', 465 );
+     define( 'WPMS_SSL', 'ssl' );
+     define( 'WPMS_SMTP_AUTH', true );
+     define( 'WPMS_SMTP_USER', 'hello@ogtrips.com' );
+     define( 'WPMS_SMTP_PASS', 'PUT-THE-MAILBOX-PASSWORD-HERE' );
+     ```
+
+  4. WordPress → **WP Mail SMTP → Tools → Email Test** → send a test to your own address. Then send one enquiry from the website's contact form and check it arrives at the **Site Settings → enquiry email** address (and appears under **Enquiries**).
+  5. Never commit `wp-config.php` or this password to GitHub.
+  - If the test fails: port `587` with `define( 'WPMS_SSL', 'tls' );` is the alternative; check the mailbox password in hPanel.
 - Spam protection: hidden honeypot field and max 5 enquiries per visitor per 10 minutes (pages are cached, so the forms deliberately use no expiring security token). **After launch, send 2 test enquiries** and check both arrive; if the limit ever blocks everyone, Hostinger may be hiding visitor IPs behind a proxy — tell a developer.
 
 ## 5. Accounts
 
 - **Logging in:** click the person icon in the site header (or go to `/wp-login.php`). The login page is branded with the OgTrips logo and the first homepage photo. Once logged in, the same icon opens the dashboard.
 - Keep your **Administrator** account for yourself (developer).
-- **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Homepage, Site Settings, Media.
+- **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Pages, Site Settings, Media and Appearance → Menus (Customizer, Widgets and theme screens are blocked; the Home and Blog pages cannot be deleted; the Privacy page can only be edited by the admin — a WordPress rule).
 
 ## 6. Speed & SEO settings
 
@@ -73,12 +98,13 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 |---|---|
 | **Trips** | Add / edit / delete trips — simple form with tabs (Overview, Facts, Price & dates, Day by day, Stays, Inclusions, Gallery, FAQ, Expert). Bestseller tick + rank puts a trip on the homepage. |
 | **Tour Guides** | Articles in the block editor (paragraph, heading, image, list, quote, table, separator + **Trip CTA** box). Side fields: cover caption, "at a glance" box, destination, topic. |
-| **Blog** | Same article layout as tour guides. |
+| **Blog** | Same article layout as tour guides. Kept because the client may want to post news/stories; 2 demo posts are imported. |
+| **Footer pages** | About us, FAQs, Cancellation policy (terms from the Ladakh itinerary document) and Privacy policy are created by the demo import with placeholder text — the **admin** edits them under Pages (the merchant account has no Pages menu). Privacy text needs a legal review. |
 | **Reviews / Moments** | Homepage reviews slider and Instagram grid. For a gap-free grid with 8 moments use tile sizes 1 Big + 1 Tall + 6 Normal. |
-| **Homepage** | Hero slideshow places, "Why OG" text, section headings, contact text. Write `*word*` to show a word in coral, e.g. `Most-loved *trips* right now`. |
-| **Site Settings** | Contact details, social links, footer text, newsletter switch, price switch. |
+| **Pages → Home** | Hero slideshow places, "Why OG" text, section headings, contact text. Write `*word*` to show a word in coral, e.g. `Most-loved *trips* right now`. Fields only (no editor) plus the Yoast SEO box for the homepage title / description; changes can be undone from Revisions. |
+| **Site Settings** | Logo (optional upload — replaces the built-in OgTrips logo in header, footer and login page), contact details, WhatsApp button switch, social links, footer text, newsletter switch, price switch. |
 
-Menus: **Appearance → Menus** (locations: Main menu, Footer — Explore, Footer — Support). Until a menu is assigned, sensible default links are shown.
+Menus: **Appearance → Menus** (the merchant can edit these too) (locations: Main menu, Footer — Explore, Footer — Support). Until a menu is assigned, sensible default links are shown.
 
 ## 8. Known follow-ups (not blocking launch)
 

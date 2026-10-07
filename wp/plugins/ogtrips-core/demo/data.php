@@ -384,6 +384,85 @@ return [
 		],
 	],
 
+	// Footer pages. Created only if a page with the same slug does not exist yet; never removed.
+	// Text in [brackets] / marked PLACEHOLDER must be replaced (privacy text needs a legal review).
+	'pages'        => [
+		[
+			'slug'    => 'about-us',
+			'title'   => 'About us',
+			'content' => [
+				[ 'p', 'PLACEHOLDER — replace with the founders’ own story. OgTrips plans trips across Ladakh, Kashmir, Manali, Shimla and Spiti with handpicked stays, day-by-day plans and a real human on call 24/7.' ],
+				[ 'h2', 'Why we started' ],
+				[ 'p', 'We were tired of copy-paste holidays. Every trip we sell is one our team has travelled — the roads, the hotels and the small detours that make a trip memorable.' ],
+				[ 'h2', 'How we work' ],
+				[ 'ul', [ 'Itineraries planned by people who have been there', 'Transparent pricing — what is included is listed, and so is what is not', 'A trip captain on WhatsApp before, during and after your trip' ] ],
+			],
+		],
+		[
+			'slug'    => 'faqs',
+			'title'   => 'FAQs',
+			'content' => [
+				[ 'h2', 'Do I pay on this website?' ],
+				[ 'p', 'No. Send an enquiry or message us on WhatsApp — a trip expert confirms the plan and price with you first.' ],
+				[ 'h2', 'How do I confirm a booking?' ],
+				[ 'p', 'A 50% advance confirms your booking; the balance is due 30 days before the date of travel.' ],
+				[ 'h2', 'Can you customise a trip?' ],
+				[ 'p', 'Yes — add nights, upgrade hotels, change the route or travel privately. Mention it in your enquiry.' ],
+				[ 'h2', 'Do I need permits for Ladakh or Spiti?' ],
+				[ 'p', 'Indian citizens need an Inner Line Permit for areas such as Nubra Valley and Pangong Lake. We arrange the permits for every trip that needs them.' ],
+				[ 'h2', 'What is the cancellation policy?' ],
+				[ 'p', 'See our Cancellation policy page for the full terms.' ],
+			],
+		],
+		[
+			'slug'    => 'cancellation-policy',
+			'title'   => 'Cancellation policy',
+			'content' => [
+				[ 'p', 'These terms apply to all OgTrips packages unless your confirmation says otherwise.' ],
+				[ 'h2', 'Cancellation charges' ],
+				[ 'ul', [ 'More than 30 days before the date of travel: 25% of the total tour cost.', '15 to 30 days before the date of travel: 50% of the total tour cost.', 'Less than 15 days before the date of travel: 100% of the total tour cost.' ] ],
+				[ 'h2', 'Payment' ],
+				[ 'p', 'A 50% advance is required to confirm the booking. The balance of the total tour cost must be paid 30 days before the date of travel.' ],
+				[ 'h2', 'Changes beyond our control' ],
+				[ 'p', 'Extra costs caused by natural calamities, road closures or weather (for example extra nights or transport) are not included in the package cost.' ],
+			],
+		],
+		[
+			'slug'    => 'privacy-policy',
+			'title'   => 'Privacy policy',
+			'privacy' => true,
+			'content' => [
+				[ 'p', 'PLACEHOLDER — have this reviewed before launch. [Company legal name], [address].' ],
+				[ 'h2', 'What we collect' ],
+				[ 'p', 'When you send an enquiry we store the details you enter (name, phone, email, travel plans) so a trip expert can reply. WhatsApp enquiries are handled under WhatsApp’s own privacy policy.' ],
+				[ 'h2', 'How we use it' ],
+				[ 'p', 'Only to plan and confirm your trip. We never sell or share your details for marketing.' ],
+				[ 'h2', 'Your rights' ],
+				[ 'p', 'Ask us at [email address] to see, correct or delete your details.' ],
+			],
+		],
+	],
+
+	// Demo blog posts (Blog menu) — same article layout as the tour guides.
+	'posts'        => [
+		[
+			'slug'     => 'first-time-in-ladakh-diary',
+			'title'    => 'Our first group of the season in Ladakh',
+			'image'    => 'ladakh-road',
+			'dest'     => 'ladakh',
+			'category' => 'Travel stories',
+			'excerpt'  => 'Snow on Khardung La in May, butter tea in Nubra and a full moon over Pangong — notes from our first departure of the season.',
+		],
+		[
+			'slug'     => 'kashmir-in-winter-photo-story',
+			'title'    => 'Kashmir in winter: a photo story',
+			'image'    => 'dal-lake',
+			'dest'     => 'kashmir',
+			'category' => 'Travel stories',
+			'excerpt'  => 'Frozen mornings on Dal Lake, snow in Gulmarg and kahwa by the fire — Kashmir is magic in the cold months.',
+		],
+	],
+
 	'homepage'     => [
 		'hero_heading'        => 'Where to next?',
 		'hero_subtitle'       => "Handpicked stays, day-by-day plans and a real human on call 24/7. You pack the bags — we'll handle everything else.",

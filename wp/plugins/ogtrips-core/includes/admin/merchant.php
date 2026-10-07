@@ -19,18 +19,57 @@ function ogtrips_core_is_merchant() {
 }
 
 /**
- * Hides menus the merchant doesn't need.
+ * The merchant may edit menus (Appearance → Menus): grants edit_theme_options to the Editor
+ * account; everything else that capability unlocks (Customizer, Widgets, theme options) is
+ * hidden and blocked below.
+ *
+ * @param array<string,bool> $allcaps User capabilities.
+ * @param string[]           $caps    Required primitive caps.
+ * @param array<int,mixed>   $args    Requested cap and args.
+ * @param WP_User            $user    User.
+ * @return array<string,bool>
+ */
+function ogtrips_core_merchant_menu_cap( $allcaps, $caps, $args, $user ) {
+	if ( in_array( 'edit_theme_options', $caps, true ) && in_array( 'editor', (array) $user->roles, true ) && empty( $allcaps['manage_options'] ) ) {
+		$allcaps['edit_theme_options'] = true;
+	}
+
+	return $allcaps;
+}
+add_filter( 'user_has_cap', 'ogtrips_core_merchant_menu_cap', 10, 4 );
+
+/**
+ * The Home and Blog pages can't be deleted by the merchant (the site would lose its homepage or blog).
+ *
+ * @param string[] $caps    Primitive caps.
+ * @param string   $cap     Meta cap.
+ * @param int      $user_id User.
+ * @param array    $args    Args (post ID).
+ * @return string[]
+ */
+function ogtrips_core_protect_special_pages( $caps, $cap, $user_id, $args ) {
+	if ( 'delete_post' === $cap && ! empty( $args[0] ) && ! user_can( $user_id, 'manage_options' ) ) {
+		$id = (int) $args[0];
+		if ( $id && in_array( $id, [ (int) get_option( 'page_on_front' ), (int) get_option( 'page_for_posts' ) ], true ) ) {
+			$caps[] = 'do_not_allow';
+		}
+	}
+
+	return $caps;
+}
+add_filter( 'map_meta_cap', 'ogtrips_core_protect_special_pages', 10, 4 );
+
+/**
+ * Hides menus the merchant doesn't need. Appearance keeps only "Menus".
  */
 function ogtrips_core_merchant_menus() {
 	if ( ! ogtrips_core_is_merchant() ) {
 		return;
 	}
 
-	global $menu;
+	global $menu, $submenu;
 
-	foreach ( [ 'tools.php', 'edit.php?post_type=page' ] as $slug ) {
-		remove_menu_page( $slug );
-	}
+	remove_menu_page( 'tools.php' );
 
 	// Yoast SEO: its top-level slug differs by role and version (wpseo_dashboard, wpseo_page_academy…).
 	foreach ( (array) $menu as $item ) {
@@ -38,12 +77,17 @@ function ogtrips_core_merchant_menus() {
 			remove_menu_page( $item[2] );
 		}
 	}
+
+	foreach ( (array) ( $submenu['themes.php'] ?? [] ) as $item ) {
+		if ( isset( $item[2] ) && 'nav-menus.php' !== $item[2] ) {
+			remove_submenu_page( 'themes.php', $item[2] );
+		}
+	}
 }
 add_action( 'admin_menu', 'ogtrips_core_merchant_menus', 999 );
 
 /**
- * Hidden menus are also blocked by URL: Pages (list, new, edit), Tools and Yoast screens are admin-only.
- * (Editors keep the edit_pages capability because the Homepage/Site Settings screens use it.)
+ * Hidden screens are also blocked by URL: Tools, Yoast, Customizer, Widgets, theme options.
  */
 function ogtrips_core_merchant_block_screens() {
 	global $pagenow;
@@ -52,16 +96,12 @@ function ogtrips_core_merchant_block_screens() {
 		return;
 	}
 
-	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only routing check.
-	$post_type = isset( $_GET['post_type'] ) ? sanitize_key( wp_unslash( $_GET['post_type'] ) ) : '';
-	$post_id   = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
-	$page      = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
-	// phpcs:enable
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only routing check.
+	$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
 
-	$blocked = in_array( $pagenow, [ 'tools.php', 'import.php', 'export.php' ], true )
-		|| ( in_array( $pagenow, [ 'edit.php', 'post-new.php' ], true ) && 'page' === $post_type )
-		|| ( 'post.php' === $pagenow && $post_id && 'page' === get_post_type( $post_id ) )
-		|| ( 'admin.php' === $pagenow && str_starts_with( $page, 'wpseo_' ) );
+	$blocked = in_array( $pagenow, [ 'tools.php', 'import.php', 'export.php', 'customize.php', 'widgets.php', 'site-editor.php', 'themes.php' ], true )
+		|| ( 'admin.php' === $pagenow && str_starts_with( $page, 'wpseo_' ) )
+		|| ( 'themes.php' === $pagenow && '' !== $page );
 
 	if ( $blocked ) {
 		wp_die( esc_html__( 'Sorry, this screen is only for the site administrator.', 'ogtrips-core' ), '', [ 'response' => 403, 'back_link' => true ] );

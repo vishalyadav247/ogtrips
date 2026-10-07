@@ -158,3 +158,15 @@ function ogtrips_core_remove_core_patterns() {
 	remove_theme_support( 'core-block-patterns' );
 }
 add_action( 'after_setup_theme', 'ogtrips_core_remove_core_patterns', 99 );
+
+/**
+ * Removes GeneratePress's "Layout" box (sidebars, footer widgets, disable elements…) from every
+ * edit screen — the OgTrips templates don't use any of those options.
+ */
+function ogtrips_core_remove_gp_layout_box() {
+	foreach ( get_post_types( [ 'show_ui' => true ] ) as $post_type ) {
+		remove_meta_box( 'generate_layout_options_meta_box', $post_type, 'side' );
+		remove_meta_box( 'generate_layout_options_meta_box', $post_type, 'normal' );
+	}
+}
+add_action( 'add_meta_boxes', 'ogtrips_core_remove_gp_layout_box', 99 );

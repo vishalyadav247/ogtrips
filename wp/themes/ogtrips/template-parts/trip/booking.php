@@ -75,7 +75,7 @@ $ogtrips_today  = wp_date( 'Y-m-d' );
 			<?php endif; ?>
 			<button type="submit" name="channel" value="email" class="btn btn--coral btn--block"><?php esc_html_e( 'Reserve — pay later', 'ogtrips' ); ?> <span class="arrow"><?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></button>
 			<?php if ( '' !== (string) ogtrips_setting( 'whatsapp' ) ) : ?>
-				<button type="submit" name="channel" value="whatsapp" class="btn btn--ghost btn--block btn--wa" style="justify-content:center"><?php echo ogtrips_icon( 'message-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Send on WhatsApp', 'ogtrips' ); ?></button>
+				<button type="submit" name="channel" value="whatsapp" class="btn btn--ghost btn--block btn--wa" style="justify-content:center"><?php echo ogtrips_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Send on WhatsApp', 'ogtrips' ); ?></button>
 			<?php endif; ?>
 		</form>
 		<?php if ( $ogtrips_pdf && wp_get_attachment_url( $ogtrips_pdf ) ) : ?>
@@ -110,7 +110,7 @@ $ogtrips_today  = wp_date( 'Y-m-d' );
 				?>
 			</strong><small><?php echo esc_html( implode( ' · ', $ogtrips_sub ) ); ?></small></div>
 			<?php if ( '' !== $ogtrips_wa_url ) : ?>
-				<a href="<?php echo esc_url( $ogtrips_wa_url ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'WhatsApp', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'message-circle' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a href="<?php echo esc_url( $ogtrips_wa_url ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'WhatsApp', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>

@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 
 $ogtrips_h = static function ( $key, $default = '' ) {
-	return ogtrips_field( $key, 'option', $default );
+	return ogtrips_home( $key, $default );
 };
 
 $ogtrips_places = (array) $ogtrips_h( 'hero_places', [] );

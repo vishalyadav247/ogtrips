@@ -9,13 +9,16 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Downloads an image once into the Media Library (cached by URL) and returns its ID.
+ * Adds a demo image to the Media Library once (cached by URL) and returns its ID.
+ * Uses the copy bundled in demo/images/<key>.jpg (identical on every site, no internet needed);
+ * downloads from the URL only if that file is missing.
  *
- * @param string $url  Remote image URL.
+ * @param string $url  Remote image URL (also the cache key).
  * @param string $name File/alt name.
+ * @param string $key  Image key (bundled file name).
  * @return int
  */
-function ogtrips_core_demo_image( $url, $name ) {
+function ogtrips_core_demo_image( $url, $name, $key = '' ) {
 	$map = (array) get_option( 'ogtrips_demo_images', [] );
 
 	if ( ! empty( $map[ $url ] ) && get_post( (int) $map[ $url ] ) ) {
@@ -26,9 +29,18 @@ function ogtrips_core_demo_image( $url, $name ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
-	$tmp = download_url( $url, 60 );
-	if ( is_wp_error( $tmp ) ) {
-		return 0;
+	$bundled = '' !== $key ? OGTRIPS_CORE_DIR . 'demo/images/' . sanitize_file_name( $key ) . '.jpg' : '';
+	if ( $bundled && file_exists( $bundled ) ) {
+		// media_handle_sideload() moves the file, so work on a temporary copy.
+		$tmp = wp_tempnam( $name . '.jpg' );
+		if ( ! $tmp || ! copy( $bundled, $tmp ) ) {
+			return 0;
+		}
+	} else {
+		$tmp = download_url( $url, 60 );
+		if ( is_wp_error( $tmp ) ) {
+			return 0;
+		}
 	}
 
 	$id = media_handle_sideload(
@@ -133,26 +145,31 @@ function ogtrips_core_demo_hash( $value ) {
 function ogtrips_core_demo_stamp( $id ) {
 	clean_post_cache( $id );
 	update_post_meta( $id, '_ogt_demo_modified', get_post_field( 'post_modified_gmt', $id ) );
+	if ( function_exists( 'ogtrips_core_index_post' ) ) {
+		ogtrips_core_index_post( $id );
+	}
 }
 
 /**
  * Sets a Homepage/Site Settings field only when it is empty or still holds the value the importer
  * wrote last time — the merchant's own settings are never overwritten. Remembers what it wrote.
  *
- * @param string $name  Field name.
- * @param mixed  $value Value.
+ * @param string     $name   Field name.
+ * @param mixed      $value  Value.
+ * @param int|string $target 'option' (Site Settings) or a post ID (the Home page).
  */
-function ogtrips_core_demo_set_option( $name, $value ) {
+function ogtrips_core_demo_set_option( $name, $value, $target = 'option' ) {
 	$written = (array) get_option( 'ogtrips_demo_options', [] );
-	$current = get_field( $name, 'option', false );
-	$is_ours = isset( $written[ $name ] ) && ogtrips_core_demo_hash( $current ) === $written[ $name ];
+	$key     = 'option' === $target ? $name : 'post:' . (int) $target . ':' . $name;
+	$current = get_field( $name, $target, false );
+	$is_ours = isset( $written[ $key ] ) && ogtrips_core_demo_hash( $current ) === $written[ $key ];
 
 	if ( ! $is_ours && ! ( null === $current || '' === $current || false === $current || [] === $current ) ) {
 		return;
 	}
 
-	update_field( $name, $value, 'option' );
-	$written[ $name ] = ogtrips_core_demo_hash( get_field( $name, 'option', false ) );
+	update_field( $name, $value, $target );
+	$written[ $key ] = ogtrips_core_demo_hash( get_field( $name, $target, false ) );
 	update_option( 'ogtrips_demo_options', $written, false );
 }
 
@@ -174,12 +191,57 @@ function ogtrips_core_import_demo( $log = null ) {
 	$img    = static function ( $key ) use ( &$images, $data, $log ) {
 		if ( ! isset( $images[ $key ] ) ) {
 			$log( 'Image: ' . $key );
-			$images[ $key ] = ogtrips_core_demo_image( $data['images'][ $key ], 'ogtrips-demo-' . $key );
+			$images[ $key ] = ogtrips_core_demo_image( $data['images'][ $key ], 'ogtrips-demo-' . $key, $key );
 		}
 		return $images[ $key ];
 	};
 
 	$counts = [];
+
+	// Site basics, same as the development site: name, tagline, India time, date format,
+	// /blog/<post>/ links, comments off. (Search-engine visibility is left as it is.)
+	update_option( 'blogname', 'OgTrips' );
+	update_option( 'blogdescription', 'Where to next?' );
+	update_option( 'timezone_string', 'Asia/Kolkata' );
+	update_option( 'date_format', 'j M Y' );
+	update_option( 'default_comment_status', 'closed' );
+	update_option( 'default_ping_status', 'closed' );
+	update_option( 'default_pingback_flag', 0 );
+	if ( '/blog/%postname%/' !== get_option( 'permalink_structure' ) ) {
+		global $wp_rewrite;
+		$wp_rewrite->set_permalink_structure( '/blog/%postname%/' );
+		update_option( 'ogtrips_core_rewrite_version', '' ); // Rebuild the link rules on the next page load.
+	}
+
+	// Trip types (with their icons) and tour-guide topics — the fixed lists the forms offer.
+	$fixed_terms = [
+		'ogt_trip_type'   => [
+			'honeymoon' => [ 'Honeymoon', 'heart' ],
+			'family'    => [ 'Family', 'users' ],
+			'adventure' => [ 'Adventure', 'mountain' ],
+			'friends'   => [ 'Friends', 'party-popper' ],
+			'culture'   => [ 'Culture', 'landmark' ],
+		],
+		'ogt_guide_topic' => [
+			'destination-guide' => [ 'Destination guide', '' ],
+			'travel-tips'       => [ 'Travel tips', '' ],
+			'seasonal'          => [ 'Seasonal', '' ],
+		],
+	];
+	foreach ( $fixed_terms as $taxonomy => $list ) {
+		foreach ( $list as $slug => $term_data ) {
+			$term = get_term_by( 'slug', $slug, $taxonomy );
+			$id   = $term ? (int) $term->term_id : 0;
+			if ( ! $id ) {
+				$new = wp_insert_term( $term_data[0], $taxonomy, [ 'slug' => $slug ] );
+				$id  = is_wp_error( $new ) ? 0 : (int) $new['term_id'];
+			}
+			if ( $id && '' !== $term_data[1] && ! get_term_meta( $id, 'icon', true ) ) {
+				update_term_meta( $id, 'icon', $term_data[1] );
+				update_term_meta( $id, '_icon', 'field_ogt_trip_type_icon' );
+			}
+		}
+	}
 
 	// Destinations.
 	$dest_ids = [];
@@ -408,21 +470,58 @@ function ogtrips_core_import_demo( $log = null ) {
 	}
 	$counts['guides'] = count( $data['guides'] );
 
-	// Homepage + Site Settings.
-	$home = $data['homepage'];
-	foreach ( $home['hero_places'] as $k => $row ) {
-		$home['hero_places'][ $k ]['image'] = $img( $row['image'] );
+	// Footer pages: created only when missing; structural (not demo-tagged, never removed).
+	foreach ( $data['pages'] as $page ) {
+		$id = ogtrips_core_demo_find( 'page', $page['slug'], false );
+		if ( ! $id ) {
+			$id = wp_insert_post(
+				[
+					'post_type'    => 'page',
+					'post_status'  => 'publish',
+					'post_name'    => $page['slug'],
+					'post_title'   => $page['title'],
+					'post_content' => wp_slash( ogtrips_core_demo_blocks( $page['content'] ) ),
+					'post_author'  => $author_id,
+				]
+			);
+		}
+		if ( $id && ! is_wp_error( $id ) && ! empty( $page['privacy'] ) && ! get_option( 'wp_page_for_privacy_policy' ) ) {
+			update_option( 'wp_page_for_privacy_policy', (int) $id );
+		}
 	}
-	$home['hero_cta_primary']   = [ 'url' => '#trips', 'title' => 'Our OG Trips', 'target' => '' ];
-	$home['hero_cta_secondary'] = [ 'url' => '#social', 'title' => 'Watch traveller reels', 'target' => '' ];
-	foreach ( $home as $name => $value ) {
-		ogtrips_core_demo_set_option( $name, $value );
+
+	// Demo blog posts.
+	$category = term_exists( 'Travel stories', 'category' );
+	$category = $category ? $category : wp_insert_term( 'Travel stories', 'category' );
+	foreach ( $data['posts'] as $post ) {
+		$slot = ogtrips_core_demo_slot( 'post', $post['slug'] );
+		if ( -1 === $slot ) {
+			continue;
+		}
+		$id = wp_insert_post(
+			[
+				'ID'            => $slot,
+				'post_type'     => 'post',
+				'post_status'   => 'publish',
+				'post_name'     => $post['slug'],
+				'post_title'    => $post['title'],
+				'post_excerpt'  => $post['excerpt'],
+				'post_content'  => wp_slash( ogtrips_core_demo_short_blocks( $post['excerpt'] ) ),
+				'post_author'   => $author_id,
+				'post_category' => is_wp_error( $category ) ? [] : [ (int) $category['term_id'] ],
+				'meta_input'    => [ '_ogt_demo' => 1 ],
+			]
+		);
+		if ( ! $id || is_wp_error( $id ) ) {
+			continue;
+		}
+		set_post_thumbnail( $id, $img( $post['image'] ) );
+		if ( isset( $dest_ids[ $post['dest'] ] ) ) {
+			wp_set_object_terms( $id, [ $dest_ids[ $post['dest'] ] ], 'ogt_destination' );
+		}
+		ogtrips_core_demo_stamp( $id );
 	}
-	$settings                  = $data['settings'];
-	$settings['enquiry_email'] = (string) get_option( 'admin_email' );
-	foreach ( $settings as $name => $value ) {
-		ogtrips_core_demo_set_option( $name, $value );
-	}
+	$counts['posts'] = count( $data['posts'] );
 
 	// Static front page + "Blog" posts page (structural, not demo-tagged), only if not set up yet.
 	if ( 'page' !== get_option( 'show_on_front' ) || ! get_option( 'page_on_front' ) ) {
@@ -433,6 +532,24 @@ function ogtrips_core_import_demo( $log = null ) {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', (int) $front );
 		update_option( 'page_for_posts', (int) $blog );
+	}
+	update_option( 'ogtrips_core_home_migrated', time(), false ); // Homepage content goes straight onto the Home page.
+
+	// Homepage fields (on the Home page) + Site Settings.
+	$home = $data['homepage'];
+	foreach ( $home['hero_places'] as $k => $row ) {
+		$home['hero_places'][ $k ]['image'] = $img( $row['image'] );
+	}
+	$home['hero_cta_primary']   = [ 'url' => '#trips', 'title' => 'Our OG Trips', 'target' => '' ];
+	$home['hero_cta_secondary'] = [ 'url' => '#social', 'title' => 'Watch traveller reels', 'target' => '' ];
+	$home_id                    = (int) get_option( 'page_on_front' );
+	foreach ( $home as $name => $value ) {
+		ogtrips_core_demo_set_option( $name, $value, $home_id );
+	}
+	$settings                  = $data['settings'];
+	$settings['enquiry_email'] = (string) get_option( 'admin_email' );
+	foreach ( $settings as $name => $value ) {
+		ogtrips_core_demo_set_option( $name, $value );
 	}
 
 	update_option( 'ogtrips_demo_imported', time(), false );
@@ -501,13 +618,38 @@ function ogtrips_core_demo_guide_blocks( $image_id, $trip_id ) {
 
 
 /**
+ * Core-block markup from a simple list: [ 'p', text ], [ 'h2', text ], [ 'ul', [ items ] ].
+ *
+ * @param array<int,array{0:string,1:mixed}> $rows Content rows.
+ * @return string
+ */
+function ogtrips_core_demo_blocks( $rows ) {
+	$out = '';
+	foreach ( $rows as $row ) {
+		if ( 'h2' === $row[0] ) {
+			$out .= "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">" . esc_html( $row[1] ) . "</h2>\n<!-- /wp:heading -->\n\n";
+		} elseif ( 'ul' === $row[0] ) {
+			$out .= "<!-- wp:list -->\n<ul class=\"wp-block-list\">";
+			foreach ( $row[1] as $item ) {
+				$out .= "<!-- wp:list-item -->\n<li>" . esc_html( $item ) . "</li>\n<!-- /wp:list-item -->";
+			}
+			$out .= "</ul>\n<!-- /wp:list -->\n\n";
+		} else {
+			$out .= "<!-- wp:paragraph -->\n<p>" . esc_html( $row[1] ) . "</p>\n<!-- /wp:paragraph -->\n\n";
+		}
+	}
+
+	return $out;
+}
+
+/**
  * Short placeholder body for the smaller demo guides.
  *
  * @param string $intro Intro line.
  * @return string
  */
 function ogtrips_core_demo_short_blocks( $intro ) {
-	return "<!-- wp:paragraph -->\n<p>" . esc_html( $intro ) . " This is demo content — replace it with your own article in wp-admin → Tour Guides.</p>\n<!-- /wp:paragraph -->\n\n"
+	return "<!-- wp:paragraph -->\n<p>" . esc_html( $intro ) . " This is demo content — replace it with your own article in wp-admin.</p>\n<!-- /wp:paragraph -->\n\n"
 		. "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">The short answer</h2>\n<!-- /wp:heading -->\n\n"
 		. "<!-- wp:paragraph -->\n<p>Our trip captains have done this many times. Ask us on WhatsApp and we will tailor the advice to your dates, budget and travel style.</p>\n<!-- /wp:paragraph -->\n\n"
 		. "<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">Our top tips</h2>\n<!-- /wp:heading -->\n\n"
@@ -530,9 +672,15 @@ function ogtrips_core_remove_demo() {
 
 	// 1. Settings that still hold the value the importer wrote.
 	$written = (array) get_option( 'ogtrips_demo_options', [] );
-	foreach ( $written as $name => $hash ) {
-		if ( ogtrips_core_demo_hash( get_field( $name, 'option', false ) ) === $hash ) {
-			delete_field( $name, 'option' );
+	foreach ( $written as $key => $hash ) {
+		$target = 'option';
+		$name   = $key;
+		if ( preg_match( '/^post:(\d+):(.+)$/', $key, $m ) ) {
+			$target = (int) $m[1];
+			$name   = $m[2];
+		}
+		if ( ogtrips_core_demo_hash( get_field( $name, $target, false ) ) === $hash ) {
+			delete_field( $name, $target );
 		}
 	}
 	delete_option( 'ogtrips_demo_options' );

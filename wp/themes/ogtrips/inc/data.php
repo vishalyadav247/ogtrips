@@ -273,3 +273,14 @@ function ogtrips_show_prices() {
 
 	return $show;
 }
+
+/**
+ * Homepage field (Pages → Home), via ogtrips-core; falls back to the old settings screen value.
+ *
+ * @param string $key     Field name.
+ * @param mixed  $default Fallback.
+ * @return mixed
+ */
+function ogtrips_home( $key, $default = '' ) {
+	return function_exists( 'ogtrips_core_home_field' ) ? ogtrips_core_home_field( $key, $default ) : ogtrips_field( $key, 'option', $default );
+}
