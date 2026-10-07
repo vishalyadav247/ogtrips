@@ -31,7 +31,7 @@ $ogtrips_reserve = is_singular( 'ogt_itinerary' ) ? '#book' : ogtrips_contact_ur
 		<?php ogtrips_menu( 'primary', 'menu' ); ?>
 		<form class="nav-search" role="search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<?php echo ogtrips_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-			<input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search Bali, Ladakh, Maldives…', 'ogtrips' ); ?>" aria-label="<?php esc_attr_e( 'Search trips', 'ogtrips' ); ?>">
+			<input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search Ladakh, Kashmir, Spiti…', 'ogtrips' ); ?>" aria-label="<?php esc_attr_e( 'Search trips', 'ogtrips' ); ?>">
 		</form>
 		<a href="#" class="nav-icon account" aria-label="<?php esc_attr_e( 'My account', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'user-round' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<a href="<?php echo esc_url( $ogtrips_reserve ); ?>" class="btn btn--coral"><?php esc_html_e( 'Reserve', 'ogtrips' ); ?> <span class="arrow"><?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>

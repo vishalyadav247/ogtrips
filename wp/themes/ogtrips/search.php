@@ -17,7 +17,7 @@ get_template_part(
 		/* translators: %s: search terms */
 		'title' => sprintf( __( 'Results for *%s*', 'ogtrips' ), get_search_query( false ) ),
 		'card'  => 'post',
-		'empty' => __( 'Nothing matched that search. Try a destination like Bali or Kerala — or ask us below.', 'ogtrips' ),
+		'empty' => __( 'Nothing matched that search. Try a destination like Ladakh or Kashmir — or ask us below.', 'ogtrips' ),
 	]
 );
 

@@ -108,6 +108,7 @@ function ogtrips_core_import_demo( $log = null ) {
 		}
 		if ( ! is_wp_error( $term ) ) {
 			$dest_ids[ $slug ] = (int) $term['term_id'];
+			update_term_meta( (int) $term['term_id'], '_ogt_demo', 1 );
 		}
 	}
 
@@ -159,9 +160,8 @@ function ogtrips_core_import_demo( $log = null ) {
 		}
 		$trip_ids[ $trip['slug'] ] = $id;
 		set_post_thumbnail( $id, $img( $trip['image'] ) );
-		if ( isset( $dest_ids[ $trip['dest'] ] ) ) {
-			wp_set_object_terms( $id, [ $dest_ids[ $trip['dest'] ] ], 'ogt_destination' );
-		}
+		$trip_dests = array_values( array_filter( array_map( static fn( $slug ) => $dest_ids[ $slug ] ?? 0, [ $trip['dest'], $trip['dest2'] ?? '' ] ) ) );
+		wp_set_object_terms( $id, $trip_dests, 'ogt_destination' );
 		wp_set_object_terms( $id, $trip['types'], 'ogt_trip_type' );
 
 		$f = $trip['fields'];
@@ -260,8 +260,8 @@ function ogtrips_core_import_demo( $log = null ) {
 	// Tour guides.
 	foreach ( $data['guides'] as $g ) {
 		$log( 'Guide: ' . $g['title'] );
-		$content = 'bali' === $g['blocks']
-			? ogtrips_core_demo_bali_blocks( $img( 'ubud' ), $trip_ids['bali-bliss'] ?? 0 )
+		$content = 'guide' === $g['blocks']
+			? ogtrips_core_demo_guide_blocks( $img( 'flags' ), $trip_ids['soul-of-ladakh'] ?? 0 )
 			: ogtrips_core_demo_short_blocks( $g['excerpt'] );
 		$id      = wp_insert_post(
 			[
@@ -323,13 +323,13 @@ function ogtrips_core_import_demo( $log = null ) {
 }
 
 /**
- * Bali guide body as core blocks (+ Trip CTA block).
+ * Ladakh guide body as core blocks (+ Trip CTA block).
  *
  * @param int $image_id Inline image.
  * @param int $trip_id  Trip for the CTA.
  * @return string
  */
-function ogtrips_core_demo_bali_blocks( $image_id, $trip_id ) {
+function ogtrips_core_demo_guide_blocks( $image_id, $trip_id ) {
 	$p  = static function ( $html ) {
 		return "<!-- wp:paragraph -->\n<p>" . $html . "</p>\n<!-- /wp:paragraph -->\n\n";
 	};
@@ -351,9 +351,9 @@ function ogtrips_core_demo_bali_blocks( $image_id, $trip_id ) {
 			'data' => [
 				'itinerary'  => $trip_id,
 				'_itinerary' => 'field_ogt_trip_cta_itinerary',
-				'heading'    => 'Bali Bliss, fully planned',
+				'heading'    => 'The Soul of Ladakh, fully planned',
 				'_heading'   => 'field_ogt_trip_cta_heading',
-				'text'       => 'Everything in this guide, done for you — stays, drivers, tickets and a trip captain on call.',
+				'text'       => 'Everything in this guide, done for you — hotels, a private car and driver, permits and a trip captain on call.',
 				'_text'      => 'field_ogt_trip_cta_text',
 			],
 			'mode' => 'preview',
@@ -361,24 +361,26 @@ function ogtrips_core_demo_bali_blocks( $image_id, $trip_id ) {
 		JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
 	);
 
-	return $p( "Bali is easy to love and surprisingly easy to get wrong. Traffic is slow, every area feels completely different, and the \"must-see\" spots are crowded by 9 AM. This guide covers everything our trip captains tell travellers before they fly — so your first trip feels like your fifth." )
+	return $p( 'Ladakh is easy to love and surprisingly easy to get wrong. The air is thin, distances are long and the best views sit above 5,000 metres. This guide covers everything our trip captains tell travellers before they fly to Leh — so your first trip feels like your fifth.' )
 		. $h2( 'Best time to visit' )
-		. $p( 'The dry season from <strong>April to October</strong> brings sunny days, low humidity and calm seas for island hopping. July and August are peak months, so book stays early. November to March is the wet season — short afternoon showers, greener landscapes and lower prices.' )
-		. $h2( 'Where to stay' )
-		. $p( 'Most first-timers split their week between the cultural heart and the coast.' )
-		. $ul( [ '<strong>Ubud:</strong> rice terraces, temples, yoga &amp; cafés. 3 nights.', '<strong>Seminyak:</strong> beach clubs, boutiques &amp; sunsets. 2 nights.', '<strong>Uluwatu:</strong> cliff views, surf &amp; hidden coves. 2 nights.' ] )
-		. "<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><!-- wp:paragraph -->\n<p>\"Do Ubud first, beaches last. Ending your trip by the ocean is the best cure for post-holiday blues.\"</p>\n<!-- /wp:paragraph --></blockquote>\n<!-- /wp:quote -->\n\n"
+		. $p( 'The season runs from <strong>May to September</strong>, when the high passes are open and Pangong Lake shines turquoise. June to August is peak season, so book early. From October the roads to Nubra and Pangong can close with snow — winter trips are for the well-prepared.' )
+		. $h2( 'Acclimatisation comes first' )
+		. $p( 'Leh sits at 3,500 metres. Spend your first two days resting and taking it slow around Leh before crossing Khardung La (5,359 m) — every OgTrips itinerary is planned this way.' )
+		. "<!-- wp:quote -->\n<blockquote class=\"wp-block-quote\"><!-- wp:paragraph -->\n<p>\"Do nothing on day one. The passes will still be there on day three — and you will actually enjoy them.\"</p>\n<!-- /wp:paragraph --></blockquote>\n<!-- /wp:quote -->\n\n"
+		. $h2( 'Where to go' )
+		. $ul( [ '<strong>Leh:</strong> Shanti Stupa, Leh Palace, the market and the Indus-valley monasteries. 2–3 nights.', '<strong>Nubra Valley:</strong> Diskit Monastery, Hunder sand dunes and Bactrian camels. 1 night.', '<strong>Pangong Lake:</strong> sunsets, sunrise and the clearest night skies. 1 night.' ] )
+		. ( $image_id ? "<!-- wp:image {\"id\":" . (int) $image_id . ",\"sizeSlug\":\"large\"} -->\n<figure class=\"wp-block-image size-large\"><img src=\"" . esc_url( $url ) . "\" alt=\"\" class=\"wp-image-" . (int) $image_id . "\"/><figcaption class=\"wp-element-caption\">Prayer flags on the passes — distances look short but take hours.</figcaption></figure>\n<!-- /wp:image -->\n\n" : '' )
 		. $h2( 'Getting around' )
-		. $ul( [ '<strong>Private driver:</strong> ₹3,000–3,500 a day — the most comfortable way to see the island.', '<strong>Ride apps:</strong> Grab and Gojek work in most areas, though some zones restrict pick-ups.', "<strong>Scooter:</strong> Cheap and fun, but only if you're an experienced rider with an international licence." ] )
-		. ( $image_id ? "<!-- wp:image {\"id\":" . (int) $image_id . ",\"sizeSlug\":\"large\"} -->\n<figure class=\"wp-block-image size-large\"><img src=\"" . esc_url( $url ) . "\" alt=\"\" class=\"wp-image-" . (int) $image_id . "\"/><figcaption class=\"wp-element-caption\">Hire a driver for temple days — distances look short but take hours.</figcaption></figure>\n<!-- /wp:image -->\n\n" : '' )
+		. $ul( [ '<strong>Private car with driver:</strong> the most comfortable way to cover the long mountain roads.', '<strong>Motorbike:</strong> unforgettable, but only for experienced riders.', '<strong>Permits:</strong> an Inner Line Permit is needed for Nubra and Pangong — we arrange it.' ] )
 		. $h2( 'Budget breakdown' )
-		. "<!-- wp:table -->\n<figure class=\"wp-block-table\"><table><thead><tr><th>Per day</th><th>Budget</th><th>Mid-range</th><th>Luxury</th></tr></thead><tbody><tr><td>Stay</td><td>₹1,500</td><td>₹5,000</td><td>₹20,000+</td></tr><tr><td>Food</td><td>₹800</td><td>₹2,000</td><td>₹5,000+</td></tr><tr><td>Transport</td><td>₹500</td><td>₹3,000</td><td>₹5,000</td></tr><tr><td>Activities</td><td>₹1,000</td><td>₹2,500</td><td>₹6,000+</td></tr></tbody></table></figure>\n<!-- /wp:table -->\n\n"
+		. "<!-- wp:table -->\n<figure class=\"wp-block-table\"><table><thead><tr><th>Per day</th><th>Budget</th><th>Mid-range</th><th>Luxury</th></tr></thead><tbody><tr><td>Stay</td><td>₹1,500</td><td>₹4,500</td><td>₹12,000+</td></tr><tr><td>Food</td><td>₹600</td><td>₹1,500</td><td>₹3,000+</td></tr><tr><td>Transport</td><td>₹1,000</td><td>₹4,000</td><td>₹6,000</td></tr><tr><td>Activities</td><td>₹500</td><td>₹1,500</td><td>₹4,000+</td></tr></tbody></table></figure>\n<!-- /wp:table -->\n\n"
 		. ( $trip_id ? '<!-- wp:ogtrips/trip-cta ' . $cta . " /-->\n\n" : '' )
-		. $h2( 'Visa &amp; entry' )
-		. $p( 'Indian passport holders can get a visa on arrival or apply for an e-VOA online before flying. A small tourist levy is also payable on arrival. Rules change often — always check the official immigration website before you travel.' )
+		. $h2( 'Permits &amp; entry' )
+		. $p( 'Indian citizens need an Inner Line Permit for Nubra Valley and Pangong Lake; foreign nationals need a Protected Area Permit. Rules change — always check before you travel.' )
 		. $h2( 'What to pack' )
-		. $ul( [ 'Light cotton clothes and a sarong (needed for temple visits)', 'Reef-safe sunscreen and insect repellent', 'Sturdy shoes for the Mount Batur trek', 'Universal adapter — Bali uses Type C/F sockets' ] );
+		. $ul( [ 'Warm layers and a down jacket, even in summer', 'Sunscreen, sunglasses and lip balm — the sun is strong at altitude', 'Comfortable walking shoes', 'Basic medicines and a refillable water bottle' ] );
 }
+
 
 /**
  * Short placeholder body for the smaller demo guides.
@@ -429,6 +431,18 @@ function ogtrips_core_remove_demo() {
 		foreach ( $users as $user_id ) {
 			wp_delete_user( (int) $user_id, get_current_user_id() ? get_current_user_id() : 1 );
 		}
+	}
+
+	$terms = get_terms(
+		[
+			'taxonomy'   => 'ogt_destination',
+			'hide_empty' => false,
+			'fields'     => 'ids',
+			'meta_key'   => '_ogt_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		]
+	);
+	foreach ( is_wp_error( $terms ) ? [] : $terms as $term_id ) {
+		wp_delete_term( (int) $term_id, 'ogt_destination' );
 	}
 
 	delete_option( 'ogtrips_demo_images' );

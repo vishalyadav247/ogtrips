@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 $ogtrips_t      = $args['trip'];
 $ogtrips_id     = (int) $ogtrips_t['id'];
-$ogtrips_offer  = (string) ogtrips_field( 'offer_label', $ogtrips_id );
+$ogtrips_offer  = $ogtrips_t['price'] ? (string) ogtrips_field( 'offer_label', $ogtrips_id ) : '';
 $ogtrips_deps   = (array) ogtrips_field( 'departures', $ogtrips_id, [] );
 $ogtrips_pdf    = (int) ogtrips_field( 'pdf_itinerary', $ogtrips_id, 0 );
 $ogtrips_expert = (int) ogtrips_field( 'expert', $ogtrips_id, 0 );
@@ -38,6 +38,9 @@ $ogtrips_today  = wp_date( 'Y-m-d' );
 					?>
 				</span>
 			<?php endif; ?>
+		<?php else : ?>
+			<small class="muted"><?php esc_html_e( 'Personalised for your dates', 'ogtrips' ); ?></small>
+			<div class="book-price book-price--quote"><strong><?php esc_html_e( 'Price on request', 'ogtrips' ); ?></strong></div>
 		<?php endif; ?>
 
 		<?php echo ogtrips_enquiry_notice(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

@@ -160,8 +160,8 @@ function ogtrips_trip_card_data( $post ) {
 		'group'     => $min && $max && $min !== $max ? $min . '–' . $max : (string) ( $max ? $max : $min ),
 		'rating'    => (string) ogtrips_field( 'rating', $id ),
 		'reviews'   => (int) ogtrips_field( 'review_count', $id, 0 ),
-		'price'     => (int) ogtrips_field( 'price_from', $id, 0 ),
-		'orig'      => (int) ogtrips_field( 'price_original', $id, 0 ),
+		'price'     => ogtrips_show_prices() ? (int) ogtrips_field( 'price_from', $id, 0 ) : 0,
+		'orig'      => ogtrips_show_prices() ? (int) ogtrips_field( 'price_original', $id, 0 ) : 0,
 		'incl'      => (array) ogtrips_field( 'incl_icons', $id, [] ),
 		'cat'       => $terms && ! is_wp_error( $terms ) ? $terms[0]->slug : '',
 	];
@@ -257,4 +257,19 @@ function ogtrips_enquiry_hidden_fields( $source, $trip = 0 ) {
 	<?php wp_nonce_field( 'ogtrips_enquiry', 'ogtrips_nonce' ); ?>
 	<div class="hp-field" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 	<?php
+}
+
+/**
+ * Whether prices are shown (Site Settings → Booking → "Show prices on the website"). Off by default.
+ *
+ * @return bool
+ */
+function ogtrips_show_prices() {
+	static $show = null;
+
+	if ( null === $show ) {
+		$show = function_exists( 'get_field' ) && (bool) get_field( 'show_prices', 'option' );
+	}
+
+	return $show;
 }

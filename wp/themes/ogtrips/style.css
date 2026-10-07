@@ -735,3 +735,10 @@ svg.lucide { width: 1em; height: 1em; stroke-width: 1.9; flex-shrink: 0; }
 .ogtrips-block-placeholder { padding: 16px; border: 1px dashed var(--line); border-radius: 12px; }
 /* WordPress images carry width/height attributes; keep the design's crops. */
 .day-inner img { height: auto; align-self: start; }
+/* Prices hidden (Site Settings): keep the Reserve button on the right, smaller "Price on request". */
+.best-card .foot .btn:only-child { margin-left: auto; }
+.book-price--quote strong { font-size: 1.7rem; }
+/* Mobile: the route line is wider than a phone; let it scroll inside its box instead of widening the page. */
+.layout > * { min-width: 0; }
+.route { overflow-x: auto; scrollbar-width: none; }
+.route::-webkit-scrollbar { display: none; }

@@ -321,6 +321,26 @@
             "selected": 0
         },
         {
+            "key": "field_ogt_site_settings_show_prices",
+            "label": "Show prices on the website",
+            "name": "show_prices",
+            "aria_label": "",
+            "type": "true_false",
+            "instructions": "Off: trip prices, discounts and the estimated total are hidden everywhere — visitors simply send an enquiry. Turn on to show the \"from\" price you enter on each trip.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_ogt_site_settings_booking_trust_text",
             "label": "Note under the Reserve button",
             "name": "booking_trust_text",
@@ -359,5 +379,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791259200
+    "modified": 1791396811
 }
