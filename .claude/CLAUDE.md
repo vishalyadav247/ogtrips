@@ -26,9 +26,9 @@ Travel company site for **OgTrips** ("Where to next?"). The static HTML design w
 |---|---|---|
 | `.claude/design/` | **Approved design reference**: `index.html`, `itinerary.html`, `guide.html`, `assets/` (css, js, img) | Source of truth for look & behaviour. Don't edit to "fix" WP output — fix the child theme. Design changes need client sign-off. |
 | `.claude/design/proposals/` | Mockups for screens with no approved design yet | Created by `wp-designer`; link `../assets/css/style.css`. |
-| `wp/` *(planned, not yet created)* | The WordPress project | See layout below. |
+| `wp/` | The WordPress project (built — see `specs/00-roadmap.md` and `/HANDOVER.md` for status) | See layout below. |
 
-Planned `wp/` layout:
+`wp/` layout:
 
 ```
 wp/
