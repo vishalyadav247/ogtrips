@@ -39,6 +39,8 @@
 .ogt-user-form .user-profile-picture,
 .ogt-user-form #createuser tr:has(#url) { display: none; }
 /* Client profiles: no bio, no Yoast author settings. The merchant never sees Yoast's section. */
+/* …and the now-empty "About the user" heading above the hidden bio row */
+.ogt-editing-client #your-profile h2:has(+ .form-table .user-description-wrap),
 .ogt-editing-client .user-description-wrap,
 .ogt-editing-client .yoast-settings,
 .ogt-not-admin .yoast-settings { display: none; }
