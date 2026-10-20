@@ -10,6 +10,7 @@ defined( 'ABSPATH' ) || exit;
 get_header();
 ?>
 <header class="article-head container listing-head">
+	<?php ogtrips_breadcrumbs(); ?>
 	<span class="label"><?php esc_html_e( 'Error 404', 'ogtrips' ); ?></span>
 	<h1><?php echo wp_kses( __( 'This road leads <em>nowhere</em>', 'ogtrips' ), [ 'em' => [] ] ); ?></h1>
 	<p class="lead"><?php esc_html_e( "The page you were looking for has moved or never existed. Let's get you back on track.", 'ogtrips' ); ?></p>

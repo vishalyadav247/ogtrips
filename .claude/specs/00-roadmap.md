@@ -13,7 +13,7 @@ Rules for every phase: read `.claude/CLAUDE.md` and the skills it lists. The Wor
 | 05 | Homepage | `front-page.php` identical to `index.html`; every section editable (hero places, Why OG, reviews, moments, best sellers, contact) | Built 2026-10-07 (fast-track) |
 | 06 | Enquiries | Email (saved + emailed) and WhatsApp (pre-filled wa.me + logged) from contact and trip booking forms | Built 2026-10-07 — email delivery untested (no mail locally; needs SMTP on Hostinger) |
 | 07 | Listing & utility pages | wp-designer proposals → client approval → build: all trips, all tour guides, destination filter, blog list, search, 404, generic page | Built 2026-10-07 with a simple layout from design components — no wp-designer proposals, client approval pending |
-| 08 | SEO & speed | Yoast configuration + schema extensions, breadcrumbs, sitemaps; dequeue unused assets, image sizes/WebP, preload, Lighthouse targets | Partly: GP/emoji/block CSS dequeued, TouristTrip + FAQPage via Yoast graph, preloads done. Pending: Yoast set-up, Lighthouse run, WebP, breadcrumbs |
+| 08 | SEO & speed | Yoast configuration + schema extensions, breadcrumbs, sitemaps; dequeue unused assets, image sizes/WebP, preload, Lighthouse targets | Partly: GP/emoji/block CSS dequeued, TouristTrip + FAQPage via Yoast graph, preloads done. Breadcrumbs on all inner pages + BreadcrumbList schema (2026-10-20). Pending: Yoast set-up, Lighthouse run, WebP |
 | 09 | QA & Hostinger launch | Full test pass, accessibility, cross-browser; Hostinger setup (LiteSpeed Cache, SMTP, clean plugins), real content, demo content removed, go-live checklist | Pending — release zips + `HANDOVER.md` ready; code review 2026-10-08; tests to be run by the user |
 
 ## Spec template

@@ -36,6 +36,7 @@ while ( have_posts() ) :
 	$ogtrips_url     = get_permalink();
 	?>
 <header class="article-head container">
+	<?php ogtrips_breadcrumbs(); ?>
 	<?php if ( '' !== $ogtrips_label ) : ?>
 		<span class="label reveal"><?php echo esc_html( $ogtrips_label ); ?></span>
 	<?php endif; ?>

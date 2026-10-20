@@ -89,6 +89,7 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 - **LiteSpeed Cache → Cache:** enable. **Page Optimization:** leave CSS/JS **minify/combine OFF** (the theme already ships one small CSS and one JS file). The default cache time is fine.
 - **Image optimisation (optional):** LiteSpeed → Image Optimization → request WebP.
 - **Yoast SEO:** run the first-time configuration (organisation name "OgTrips", logo). Sitemaps are automatic (`/sitemap_index.xml`). Trip pages output **TouristTrip** and **FAQPage** structured data through Yoast.
+- **Breadcrumbs** (Home › Trips › Ladakh › …) are shown on every inner page — trip hero, tour guide and blog articles, listings, pages, search and 404 — and Yoast outputs the matching BreadcrumbList schema. Nothing to configure.
 - **Settings → Reading:** untick "Discourage search engines" when going live.
 - Submit the sitemap in Google Search Console.
 
@@ -125,8 +126,8 @@ Menus: **Appearance → Menus** (the merchant can edit these too) (locations: Ma
 
 The pre-launch review's high and medium items are fixed. Still open (small, not blocking):
 
-- Bestseller with an empty rank sorts before rank 1 — always fill the rank when ticking Bestseller.
+(Fixed 2026-10-20: WhatsApp pre-filled text is plain text — no `&#8217;` codes or `*` markers; a Bestseller with an empty rank already sorts last.)
+
 - Homepage reviews: the 12 newest are taken, then featured ones shown first — an old featured review may not appear.
-- Trip expert's WhatsApp pre-filled text can show codes like `&#8217;` for apostrophes in trip titles.
 - Accessibility polish: day/FAQ accordion buttons need `aria-controls` and the heading outside the button; the scrollable route line needs keyboard focus.
 - Newsletter (off by default): after subscribing, no thank-you message is shown on article pages.

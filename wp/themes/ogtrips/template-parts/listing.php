@@ -24,6 +24,7 @@ $ogtrips_args = wp_parse_args(
 );
 ?>
 <header class="article-head container listing-head">
+	<?php ogtrips_breadcrumbs(); ?>
 	<?php if ( '' !== $ogtrips_args['label'] ) : ?>
 		<span class="label reveal"><?php echo esc_html( $ogtrips_args['label'] ); ?></span>
 	<?php endif; ?>

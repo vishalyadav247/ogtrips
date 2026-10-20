@@ -25,6 +25,7 @@ global $wp_query;
 $ogtrips_total = (int) $wp_query->found_posts;
 ?>
 <header class="article-head container listing-head">
+	<?php ogtrips_breadcrumbs(); ?>
 	<span class="label reveal"><?php esc_html_e( 'Search', 'ogtrips' ); ?></span>
 	<h1 class="reveal">
 		<?php

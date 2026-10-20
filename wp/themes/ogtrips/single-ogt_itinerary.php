@@ -72,13 +72,7 @@ while ( have_posts() ) :
 		<div class="hero-media"><?php the_post_thumbnail( 'ogt-hero', [ 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw' ] ); ?></div>
 		<div class="hero-content" style="grid-template-columns:1fr">
 			<div>
-				<div class="crumbs">
-					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'ogtrips' ); ?></a><?php echo ogtrips_icon( 'chevron-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-					<a href="<?php echo esc_url( (string) get_post_type_archive_link( 'ogt_itinerary' ) ); ?>"><?php esc_html_e( 'Trips', 'ogtrips' ); ?></a>
-					<?php if ( $ogtrips_dest ) : ?>
-						<?php echo ogtrips_icon( 'chevron-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><a href="<?php echo esc_url( (string) get_term_link( $ogtrips_dest ) ); ?>"><?php echo esc_html( $ogtrips_dest->name ); ?></a>
-					<?php endif; ?>
-				</div>
+				<?php ogtrips_breadcrumbs( [ 'hide_last' => true ] ); ?>
 				<h1><?php echo ogtrips_em( $ogtrips_heading ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by ogtrips_em(). ?></h1>
 				<div class="hero-chips">
 					<?php if ( '' !== $ogtrips_t['badge'] ) : ?>

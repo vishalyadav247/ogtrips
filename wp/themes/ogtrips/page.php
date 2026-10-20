@@ -13,6 +13,7 @@ while ( have_posts() ) :
 	the_post();
 	?>
 <header class="article-head container listing-head">
+	<?php ogtrips_breadcrumbs(); ?>
 	<h1><?php echo ogtrips_em( get_post_field( 'post_title', get_the_ID() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by ogtrips_em(). ?></h1>
 </header>
 <div class="container">

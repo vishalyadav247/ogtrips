@@ -75,6 +75,9 @@ function ogtrips_whatsapp_url( $phone, $text = '' ) {
 		return '';
 	}
 
+	// Titles arrive texturised (&#8217; for an apostrophe) and may carry *emphasis* markers: WhatsApp needs plain text.
+	$text = str_replace( '*', '', html_entity_decode( wp_strip_all_tags( (string) $text ), ENT_QUOTES | ENT_HTML5, 'UTF-8' ) );
+
 	return 'https://wa.me/' . $digits . ( '' !== $text ? '?text=' . rawurlencode( $text ) : '' );
 }
 

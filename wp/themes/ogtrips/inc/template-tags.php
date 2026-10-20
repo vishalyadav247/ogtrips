@@ -142,3 +142,102 @@ function ogtrips_stars( $count = 5 ) {
 	/* translators: %d: star rating */
 	return '<div class="stars" role="img" aria-label="' . esc_attr( sprintf( __( '%d out of 5 stars', 'ogtrips' ), $count ) ) . '">' . str_repeat( ogtrips_icon( 'star' ), $count ) . '</div>';
 }
+
+/**
+ * Plain post title for places that cannot show markup (breadcrumbs, WhatsApp text, schema):
+ * no *emphasis* markers, no tags, no HTML entities.
+ *
+ * @param int $post_id Post ID.
+ * @return string
+ */
+function ogtrips_plain_title( $post_id ) {
+	$title = wp_strip_all_tags( (string) get_post_field( 'post_title', $post_id ) );
+
+	return trim( str_replace( '*', '', html_entity_decode( $title, ENT_QUOTES | ENT_HTML5, 'UTF-8' ) ) );
+}
+
+/**
+ * Breadcrumb trail in the design's ".crumbs" markup: Home › section › destination › page.
+ * Visible trail only — Yoast SEO keeps outputting the BreadcrumbList schema (ogtrips-core adds the
+ * destination to it so both match). Nothing is printed on the homepage.
+ *
+ * @param array<string,mixed> $args { hide_last (bool): leave out the current page — used in the trip hero where the h1 follows. }
+ */
+function ogtrips_breadcrumbs( $args = [] ) {
+	if ( is_front_page() ) {
+		return;
+	}
+
+	$args  = wp_parse_args( $args, [ 'hide_last' => false ] );
+	$id    = get_queried_object_id();
+	$blog  = (int) get_option( 'page_for_posts' );
+	$items = [ [ home_url( '/' ), __( 'Home', 'ogtrips' ) ] ];
+
+	$destination = static function ( $post_id ) use ( &$items ) {
+		$terms = get_the_terms( $post_id, 'ogt_destination' );
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			$items[] = [ (string) get_term_link( $terms[0] ), $terms[0]->name ];
+		}
+	};
+
+	if ( is_singular( 'ogt_itinerary' ) ) {
+		$items[] = [ (string) get_post_type_archive_link( 'ogt_itinerary' ), __( 'Trips', 'ogtrips' ) ];
+		$destination( $id );
+		$items[] = [ '', ogtrips_plain_title( $id ) ];
+	} elseif ( is_singular( 'ogt_guide' ) ) {
+		$items[] = [ (string) get_post_type_archive_link( 'ogt_guide' ), __( 'Travel guide', 'ogtrips' ) ];
+		$destination( $id );
+		$items[] = [ '', ogtrips_plain_title( $id ) ];
+	} elseif ( is_singular( 'post' ) ) {
+		if ( $blog ) {
+			$items[] = [ (string) get_permalink( $blog ), ogtrips_plain_title( $blog ) ];
+		}
+		$items[] = [ '', ogtrips_plain_title( $id ) ];
+	} elseif ( is_page() ) {
+		foreach ( array_reverse( get_post_ancestors( $id ) ) as $ancestor ) {
+			$items[] = [ (string) get_permalink( $ancestor ), ogtrips_plain_title( $ancestor ) ];
+		}
+		$items[] = [ '', ogtrips_plain_title( $id ) ];
+	} elseif ( is_post_type_archive( [ 'ogt_itinerary', 'ogt_guide' ] ) ) {
+		$type    = is_post_type_archive( 'ogt_itinerary' ) ? 'ogt_itinerary' : 'ogt_guide';
+		$label   = 'ogt_itinerary' === $type ? __( 'Trips', 'ogtrips' ) : __( 'Travel guide', 'ogtrips' );
+		$current = function_exists( 'ogtrips_current_destination' ) ? ogtrips_current_destination() : null;
+		if ( $current ) {
+			$items[] = [ (string) get_post_type_archive_link( $type ), $label ];
+			$items[] = [ '', $current->name ];
+		} else {
+			$items[] = [ '', $label ];
+		}
+	} elseif ( is_tax( 'ogt_destination' ) ) {
+		$term    = get_queried_object();
+		$items[] = [ '', $term instanceof WP_Term ? $term->name : '' ];
+	} elseif ( is_home() ) {
+		$items[] = [ '', $blog ? ogtrips_plain_title( $blog ) : __( 'Blog', 'ogtrips' ) ];
+	} elseif ( is_search() ) {
+		$items[] = [ '', __( 'Search', 'ogtrips' ) ];
+	} elseif ( is_404() ) {
+		$items[] = [ '', __( 'Page not found', 'ogtrips' ) ];
+	} elseif ( is_archive() ) {
+		$items[] = [ '', wp_strip_all_tags( get_the_archive_title() ) ];
+	}
+
+	if ( $args['hide_last'] && count( $items ) > 1 ) {
+		array_pop( $items );
+	}
+	if ( count( $items ) < 2 ) {
+		return;
+	}
+
+	echo '<nav class="crumbs" aria-label="' . esc_attr__( 'Breadcrumb', 'ogtrips' ) . '">';
+	foreach ( $items as $i => $item ) {
+		if ( $i ) {
+			echo ogtrips_icon( 'chevron-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG.
+		}
+		if ( '' === $item[0] ) {
+			echo '<span aria-current="page">' . esc_html( $item[1] ) . '</span>';
+		} else {
+			echo '<a href="' . esc_url( $item[0] ) . '">' . esc_html( $item[1] ) . '</a>';
+		}
+	}
+	echo '</nav>';
+}

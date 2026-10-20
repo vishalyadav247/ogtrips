@@ -8,9 +8,9 @@
     "./themes/ogtrips"
   ],
   "plugins": [
-    "./plugins/ogtrips-core",
     "https://downloads.wordpress.org/plugin/secure-custom-fields.6.9.5.zip",
-    "https://downloads.wordpress.org/plugin/wordpress-seo.28.6.zip"
+    "https://downloads.wordpress.org/plugin/wordpress-seo.28.6.zip",
+    "./plugins/ogtrips-core"
   ],
   "mappings": {
     "wp-content/ogtrips-scripts": "./scripts"
