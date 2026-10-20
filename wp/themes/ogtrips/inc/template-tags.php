@@ -180,7 +180,17 @@ function ogtrips_breadcrumbs( $args = [] ) {
 		}
 	};
 
-	if ( is_singular( 'ogt_itinerary' ) ) {
+	// Client portal (virtual pages from ogtrips-core): /my-trips/ and /my-trips/{booking}/.
+	$portal = function_exists( 'ogtrips_core_portal_screen' ) ? ogtrips_core_portal_screen() : '';
+
+	if ( '' !== $portal ) {
+		if ( 'booking' === $portal ) {
+			$items[] = [ ogtrips_core_portal_url(), __( 'My trips', 'ogtrips' ) ];
+			$items[] = [ '', ogtrips_core_booking_ref( (int) get_query_var( 'ogt_booking' ) ) ];
+		} else {
+			$items[] = [ '', __( 'My trips', 'ogtrips' ) ];
+		}
+	} elseif ( is_singular( 'ogt_itinerary' ) ) {
 		$items[] = [ (string) get_post_type_archive_link( 'ogt_itinerary' ), __( 'Trips', 'ogtrips' ) ];
 		$destination( $id );
 		$items[] = [ '', ogtrips_plain_title( $id ) ];

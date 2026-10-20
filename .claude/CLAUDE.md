@@ -11,7 +11,7 @@ Travel company site for **OgTrips** ("Where to next?"). The static HTML design w
 5. **SEO plugin: Yoast SEO (free).**
 6. **Itineraries are fully dynamic** — merchant can add / edit / delete them from wp-admin via simple forms.
 7. **Priority = Itinerary pages + Tour Guides**, both fully manageable (add / edit / delete) from wp-admin. **Tour Guide** = its own content type built on the approved `guide.html` design. The **Blog** (core posts, same article layout) stays available for the client to use if they wish — no extra work on it now.
-11. **Account icon** in the header stays as a **non-functional placeholder** for now.
+11. **Account icon** in the header opens the **client portal** (added 2026-10-20 from the client's "Lead-to-Client" blueprint): the team creates Client users and Bookings by hand in wp-admin, no payments, no automation; clients log in at `/my-trips/` to see their trip, personalised schedule, service status, documents, payment summary and member-club discount. See `HANDOVER.md` section 4b.
 12. **Blog/guide comments: off.**
 13. **Enquiries go two ways**: email (saved in admin + emailed) **and** WhatsApp directly (pre-filled wa.me message).
 14. **No payments** in the site.
@@ -67,7 +67,6 @@ GeneratePress itself is installed from wordpress.org by wp-env/WP-CLI — never 
 
 ## Open decisions (ask the user before assuming)
 
-- What the account icon should eventually do (placeholder for now).
 - Whether a per-destination landing page is wanted later (currently: tour guides + trips filtered by destination).
 
 ## Screens with no approved design yet

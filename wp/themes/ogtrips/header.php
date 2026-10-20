@@ -9,6 +9,12 @@ defined( 'ABSPATH' ) || exit;
 
 $ogtrips_phone   = (string) ogtrips_setting( 'phone' );
 $ogtrips_reserve = is_singular( 'ogt_itinerary' ) ? '#book' : ogtrips_contact_url();
+
+// Account icon: log in → client portal (staff are sent on to the dashboard); logged-in client → My trips; team → dashboard.
+$ogtrips_client  = function_exists( 'ogtrips_core_is_client' ) && ogtrips_core_is_client();
+$ogtrips_portal  = function_exists( 'ogtrips_core_portal_url' ) ? ogtrips_core_portal_url() : admin_url();
+$ogtrips_account = is_user_logged_in() ? ( $ogtrips_client ? $ogtrips_portal : admin_url() ) : wp_login_url( $ogtrips_portal );
+$ogtrips_acc_lbl = is_user_logged_in() ? ( $ogtrips_client ? __( 'My trips', 'ogtrips' ) : __( 'Dashboard', 'ogtrips' ) ) : __( 'Log in', 'ogtrips' );
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -33,7 +39,7 @@ $ogtrips_reserve = is_singular( 'ogt_itinerary' ) ? '#book' : ogtrips_contact_ur
 			<?php echo ogtrips_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<input type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Search Ladakh, Kashmir, Spiti…', 'ogtrips' ); ?>" aria-label="<?php esc_attr_e( 'Search trips', 'ogtrips' ); ?>">
 		</form>
-		<a href="<?php echo esc_url( is_user_logged_in() ? admin_url() : wp_login_url() ); ?>" class="nav-icon account" rel="nofollow" aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'Dashboard', 'ogtrips' ) : esc_attr__( 'Log in', 'ogtrips' ); ?>" title="<?php echo is_user_logged_in() ? esc_attr__( 'Dashboard', 'ogtrips' ) : esc_attr__( 'Log in', 'ogtrips' ); ?>"><?php echo ogtrips_icon( 'user-round' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+		<a href="<?php echo esc_url( $ogtrips_account ); ?>" class="nav-icon account" rel="nofollow" aria-label="<?php echo esc_attr( $ogtrips_acc_lbl ); ?>" title="<?php echo esc_attr( $ogtrips_acc_lbl ); ?>"><?php echo ogtrips_icon( 'user-round' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<a href="<?php echo esc_url( $ogtrips_reserve ); ?>" class="btn btn--coral"><?php esc_html_e( 'Reserve', 'ogtrips' ); ?> <span class="arrow"><?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
 		<button class="burger" aria-label="<?php esc_attr_e( 'Menu', 'ogtrips' ); ?>" aria-expanded="false"><?php echo ogtrips_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
 	</nav>

@@ -2,7 +2,7 @@
 /**
  * Admin menu: order, Enquiries "new" bubble, and the small admin stylesheet.
  *
- * Order: Dashboard · Trips · Tour Guides · Blog · Reviews · Moments · Enquiries ·
+ * Order: Dashboard · Trips · Tour Guides · Blog · Reviews · Moments · Enquiries · Bookings · Clients ·
  * Homepage · Site Settings · Media · (administrator-only items after).
  *
  * @package ogtrips-core
@@ -27,6 +27,8 @@ function ogtrips_core_menu_order( $order ) {
 		'edit.php?post_type=ogt_review',
 		'edit.php?post_type=ogt_moment',
 		'edit.php?post_type=ogt_enquiry',
+		'edit.php?post_type=ogt_booking',
+		'users.php',
 		'edit.php?post_type=page',
 		'ogtrips-site-settings',
 		'upload.php',

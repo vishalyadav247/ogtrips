@@ -1,0 +1,116 @@
+{
+    "key": "group_ogt_client",
+    "title": "Member club",
+    "fields": [
+        {
+            "key": "field_ogt_client_phone",
+            "label": "Phone / WhatsApp",
+            "name": "client_phone",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "The client can update this from their portal.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "34", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "+91 98765 43210",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_client_member_tier",
+            "label": "Member tier",
+            "name": "member_tier",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Shown on the client's Member club card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "choices": {
+                "explorer": "Explorer (1st trip)",
+                "voyager": "Voyager (2nd trip)",
+                "legend": "Legend (3+ trips)"
+            },
+            "default_value": "explorer",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_ogt_client_member_discount",
+            "label": "Discount on the next trip (%)",
+            "name": "member_discount",
+            "aria_label": "",
+            "type": "number",
+            "instructions": "Loyalty discount you promise for their next booking, e.g. 5 after the first trip, 10 after the second.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "33", "class": "", "id": "" },
+            "default_value": "",
+            "min": 0,
+            "max": 100,
+            "step": 0.5,
+            "placeholder": "5",
+            "prepend": "",
+            "append": "%"
+        },
+        {
+            "key": "field_ogt_client_promo_code",
+            "label": "Promo code",
+            "name": "promo_code",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional code the client quotes when they book again.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "RETURNING-MEM-05",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_client_member_note",
+            "label": "Note on the member card",
+            "name": "member_note",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Optional, e.g. \"Room upgrade priority on your next trip\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_role",
+                "operator": "==",
+                "value": "ogt_client"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Client (traveller) accounts: contact number and loyalty / member club details shown in their portal.",
+    "show_in_rest": 0,
+    "modified": 1792000000
+}

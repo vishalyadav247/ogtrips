@@ -29,6 +29,7 @@ function ogtrips_core_dashboard_widget_render() {
 		'post'          => __( 'Add a blog post', 'ogtrips-core' ),
 		'ogt_review'    => __( 'Add a review', 'ogtrips-core' ),
 		'ogt_moment'    => __( 'Add a moment', 'ogtrips-core' ),
+		'ogt_booking'   => __( 'Add a booking', 'ogtrips-core' ),
 	];
 
 	echo '<div class="ogtrips-quick-add">';

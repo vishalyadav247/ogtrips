@@ -19,14 +19,14 @@ function ogtrips_core_article_post_types() {
 }
 
 /**
- * Block editor on for articles (and admin-only Pages), off for Trips, Reviews, Moments, Enquiries.
+ * Block editor on for articles (and admin-only Pages), off for Trips, Reviews, Moments, Enquiries, Bookings.
  *
  * @param bool   $use       Whether to use the block editor.
  * @param string $post_type Post type.
  * @return bool
  */
 function ogtrips_core_use_block_editor( $use, $post_type ) {
-	if ( in_array( $post_type, [ 'ogt_itinerary', 'ogt_review', 'ogt_moment', 'ogt_enquiry' ], true ) ) {
+	if ( in_array( $post_type, [ 'ogt_itinerary', 'ogt_review', 'ogt_moment', 'ogt_enquiry', 'ogt_booking' ], true ) ) {
 		return false;
 	}
 

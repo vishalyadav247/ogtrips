@@ -78,11 +78,20 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
   - If the test fails: port `587` with `define( 'WPMS_SSL', 'tls' );` is the alternative; check the mailbox password in hPanel.
 - Spam protection: hidden honeypot field and max 5 enquiries per visitor per 10 minutes (pages are cached, so the forms deliberately use no expiring security token). **After launch, send 2 test enquiries** and check both arrive; if the limit ever blocks everyone, Hostinger may be hiding visitor IPs behind a proxy — tell a developer.
 
-## 5. Accounts
+## 4b. Clients & bookings — the client portal (added 2026-10-20)
+
+Built from the client's "Lead-to-Client" blueprint, **without payments or automation**: the team does every step by hand in wp-admin, and the client sees the result at **`/my-trips/`** (the person icon in the site header).
+
+1. **Clients → Add client.** Enter username, email and name; the role is **Client** (the only role the merchant account can create). Tick **"Send the new user an email about their account"** — the client receives the branded *"Your journey is confirmed! Set your password"* email with a one-click set-password link and the portal address. **Resend login email** is on the client's profile and in the Clients list if they lose it. (Email delivery needs the SMTP set-up in section 4.)
+2. **Bookings → Add booking** (or **Add booking** next to the client in Clients). Tabs: **Client** (client, status *Confirmed / Confirmed & paid / On the road / Completed / Cancelled*, assigned curator = trip expert, message to the client, special requests), **Trip / package** (one of the website trips **or** a custom package with its own day-by-day, stays and inclusions), **Dates & travellers**, **Personalised schedule** (timed plan: Day 1 · 10:30 AM · Airport pick-up, driver details, voucher numbers), **Service status** (hotel room, transfers, permits, meals… each *Confirmed / Being arranged / Not included*), **Price & payment** (package price, discount %, paid so far — the discount, total and balance are calculated), **Documents & vouchers** (complete itinerary PDF + any vouchers, tickets, permits).
+3. **Save** — the booking appears in the client's portal immediately with a reference like **#TRIP-00012**, the trip hero, facts bar, their schedule timeline, day-by-day plan, service status tracker, inclusions, documents, payment box, **"Download complete itinerary PDF"** and **"Contact personal guide 24/7"** (WhatsApp to the curator, with the client's name and reference pre-filled).
+4. **Member club.** On the client's profile (Clients → edit): member tier (Explorer / Voyager / Legend), discount on the next trip (%), promo code and a note. Shown on the client's **Member club status** card; type the same % into the booking's Discount field when they book again.
+
+Clients never see wp-admin (they are redirected to the portal), have no admin bar, and can only change their **phone** and **password** from the portal. Nobody can open another client's booking. The portal is excluded from search engines. A local demo client exists only on the development site (`demo.client` / `password`); the live site starts with no clients.## 5. Accounts
 
 - **Logging in:** click the person icon in the site header (or go to `/wp-login.php`). The login page is branded with the OgTrips logo and the first homepage photo. Once logged in, the same icon opens the dashboard.
 - Keep your **Administrator** account for yourself (developer).
-- **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Pages, Site Settings, Media and Appearance → Menus (Customizer, Widgets and theme screens are blocked; the Home and Blog pages cannot be deleted; the Privacy page can only be edited by the admin — a WordPress rule).
+- **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Bookings, Clients, Pages, Site Settings, Media and Appearance → Menus (Customizer, Widgets and theme screens are blocked; the Home and Blog pages cannot be deleted; the Privacy page can only be edited by the admin — a WordPress rule).
 
 ## 6. Speed & SEO settings
 
@@ -101,6 +110,7 @@ To wipe the demo: **Settings → OgTrips demo → Remove demo content**. It only
 | **Tour Guides** | Articles in the block editor (paragraph, heading, image, list, quote, table, separator + **Trip CTA** box). Side fields: cover caption, "at a glance" box, destination, topic. |
 | **Blog** | Same article layout as tour guides. Kept because the client may want to post news/stories; 2 demo posts are imported. |
 | **Footer pages** | About us, FAQs, Cancellation policy (terms from the Ladakh itinerary document) and Privacy policy are created by the demo import with placeholder text — the **admin** edits them under Pages (the merchant account has no Pages menu). Privacy text needs a legal review. |
+| **Bookings / Clients** | The client portal — see section 4b. |
 | **Reviews / Moments** | Homepage reviews slider and Instagram grid. A review with a **Link to the review** (Google, Tripadvisor, Reddit, Facebook…) becomes clickable and opens the original. Each Moment has a **Platform** (Instagram, Facebook, YouTube, other) that sets the tile icon; leave Link empty to fall back to that platform's profile from Site Settings. For a gap-free grid with 8 moments use tile sizes 1 Big + 1 Tall + 6 Normal. |
 | **Pages → Home** | Hero slideshow places, "Why OG" text, "Why OG" heading (leave empty to show the small label text as the title), section headings, contact text. Write `*word*` to show a word in coral, e.g. `Most-loved *trips* right now`. Fields only (no editor) plus the Yoast SEO box for the homepage title / description; changes can be undone from Revisions. |
 | **Site Settings** | Logo (optional upload — replaces the built-in OgTrips logo in header, footer and login page), contact details, WhatsApp button switch, social links, footer text, newsletter switch, price switch. |
