@@ -83,7 +83,17 @@ $ogtrips_pills = (array) $ogtrips_h( 'why_pillars', [] );
 ?>
 <section class="section" id="why">
 	<div class="container">
-		<div style="text-align:center" class="reveal"><span class="label"><?php echo esc_html( (string) $ogtrips_h( 'why_label', __( "Why we are OG's", 'ogtrips' ) ) ); ?></span></div>
+		<?php
+		// Section title as a big display heading (client request 2026-10-17): the "Heading" field, or until it is filled, the label text itself.
+		$ogtrips_why_label   = (string) $ogtrips_h( 'why_label', __( "Why we are OG's", 'ogtrips' ) );
+		$ogtrips_why_heading = (string) $ogtrips_h( 'why_heading' );
+		?>
+		<div class="why-head reveal">
+			<?php if ( '' !== $ogtrips_why_heading && '' !== $ogtrips_why_label ) : ?>
+				<span class="label"><?php echo esc_html( $ogtrips_why_label ); ?></span>
+			<?php endif; ?>
+			<h2><?php echo ogtrips_em( '' !== $ogtrips_why_heading ? $ogtrips_why_heading : $ogtrips_why_label ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped by ogtrips_em(). ?></h2>
+		</div>
 		<?php if ( '' !== $ogtrips_quote ) : ?>
 			<div class="og-quote reveal">
 				<span class="mark" aria-hidden="true">“</span>
@@ -132,6 +142,9 @@ $ogtrips_sources = [
 	'google'      => __( 'Google', 'ogtrips' ),
 	'tripadvisor' => __( 'Tripadvisor', 'ogtrips' ),
 	'direct'      => __( 'Verified traveller', 'ogtrips' ),
+	'reddit'      => __( 'Reddit', 'ogtrips' ),
+	'facebook'    => __( 'Facebook', 'ogtrips' ),
+	'other'       => __( 'Review', 'ogtrips' ),
 ];
 ?>
 <?php if ( $ogtrips_reviews ) : ?>
@@ -140,7 +153,7 @@ $ogtrips_sources = [
 		<div class="section-top">
 			<div class="reveal">
 				<span class="label"><?php echo esc_html( (string) $ogtrips_h( 'reviews_label', __( 'Reviews', 'ogtrips' ) ) ); ?></span>
-				<h2 class="display-sm"><?php echo ogtrips_em( (string) $ogtrips_h( 'reviews_heading', __( 'Loved by *travellers*', 'ogtrips' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+				<h2 class="display-md"><?php echo ogtrips_em( (string) $ogtrips_h( 'reviews_heading', __( 'Loved by *travellers*', 'ogtrips' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			</div>
 			<div class="rating-sum reveal">
 				<?php if ( '' !== (string) $ogtrips_h( 'reviews_rating' ) ) : ?>
@@ -159,12 +172,15 @@ $ogtrips_sources = [
 			foreach ( $ogtrips_reviews as $ogtrips_review ) :
 				$ogtrips_rid    = $ogtrips_review->ID;
 				$ogtrips_src    = (string) ogtrips_field( 'source', $ogtrips_rid, 'direct' );
+				$ogtrips_rurl   = (string) ogtrips_field( 'review_url', $ogtrips_rid );
+				$ogtrips_rlabel = (string) ( $ogtrips_sources[ $ogtrips_src ] ?? $ogtrips_sources['direct'] );
 				$ogtrips_trip   = (int) ogtrips_field( 'itinerary', $ogtrips_rid, 0 );
 				$ogtrips_date   = (string) ogtrips_field( 'travel_date', $ogtrips_rid );
 				$ogtrips_meta   = array_filter( [ (string) ogtrips_field( 'reviewer_city', $ogtrips_rid ), '' !== $ogtrips_date ? wp_date( 'F Y', strtotime( $ogtrips_date ) ) : '' ] );
 				?>
-				<article class="review">
-					<div class="top"><?php echo ogtrips_stars( (int) ogtrips_field( 'rating', $ogtrips_rid, 5 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="src"><?php echo ogtrips_icon( 'badge-check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( $ogtrips_sources[ $ogtrips_src ] ?? '' ); ?></span></div>
+				<article class="review<?php echo '' !== $ogtrips_rurl ? ' is-link' : ''; ?>">
+					<div class="top"><?php echo ogtrips_stars( (int) ogtrips_field( 'rating', $ogtrips_rid, 5 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php if ( '' !== $ogtrips_rurl ) : ?><a class="src src--link" href="<?php echo esc_url( $ogtrips_rurl ); ?>" target="_blank" rel="noopener nofollow" aria-label="<?php /* translators: %s: website the review is on */ echo esc_attr( sprintf( __( 'Read this review on %s', 'ogtrips' ), $ogtrips_rlabel ) ); ?>"><?php echo ogtrips_icon( 'badge-check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( $ogtrips_rlabel ); ?> <?php echo ogtrips_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a><?php else : ?><span class="src"><?php echo ogtrips_icon( 'badge-check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( $ogtrips_rlabel ); ?></span><?php endif; ?>
+</div>
 					<p>“<?php echo esc_html( (string) ogtrips_field( 'quote', $ogtrips_rid ) ); ?>”</p>
 					<?php if ( $ogtrips_trip && 'publish' === get_post_status( $ogtrips_trip ) ) : ?>
 						<?php $ogtrips_tdays = (int) ogtrips_field( 'duration_days', $ogtrips_trip, 0 ); ?>
@@ -221,7 +237,9 @@ $ogtrips_insta   = (string) ogtrips_setting( 'instagram_url' );
 					$ogtrips_mid   = get_the_ID();
 					$ogtrips_video = 'video' === ogtrips_field( 'media_type', $ogtrips_mid, 'image' );
 					$ogtrips_size  = (string) ogtrips_field( 'tile_size', $ogtrips_mid, 'normal' );
-					$ogtrips_link  = (string) ogtrips_field( 'link', $ogtrips_mid, $ogtrips_insta );
+					$ogtrips_plat  = (string) ogtrips_field( 'platform', $ogtrips_mid, 'instagram' );
+					$ogtrips_picon = in_array( $ogtrips_plat, [ 'instagram', 'facebook', 'youtube' ], true ) ? $ogtrips_plat : 'link';
+					$ogtrips_link  = (string) ogtrips_field( 'link', $ogtrips_mid, 'link' === $ogtrips_picon ? '' : (string) ogtrips_setting( $ogtrips_plat . '_url' ) );
 					$ogtrips_dur   = (string) ogtrips_field( 'duration', $ogtrips_mid );
 					$ogtrips_cls   = 'ugc-item' . ( 'normal' !== $ogtrips_size ? ' ' . sanitize_html_class( $ogtrips_size ) : '' ) . ( $ogtrips_video ? ' is-video' : '' );
 					?>
@@ -232,7 +250,7 @@ $ogtrips_insta   = (string) ogtrips_setting( 'instagram_url' );
 							<span class="play"><?php echo ogtrips_icon( 'play' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						<?php endif; ?>
 						<span class="ov">
-							<span class="handle"><?php echo ogtrips_icon( 'instagram' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( (string) ogtrips_field( 'handle', $ogtrips_mid ) ); ?></span>
+							<span class="handle"><?php echo ogtrips_icon( $ogtrips_picon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( (string) ogtrips_field( 'handle', $ogtrips_mid ) ); ?></span>
 							<span class="meta">
 								<?php if ( '' !== (string) ogtrips_field( 'likes', $ogtrips_mid ) ) : ?>
 									<span><?php echo ogtrips_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( (string) ogtrips_field( 'likes', $ogtrips_mid ) ); ?></span>

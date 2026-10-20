@@ -93,12 +93,42 @@
             "append": ""
         },
         {
+            "key": "field_ogt_moment_platform",
+            "label": "Platform",
+            "name": "platform",
+            "aria_label": "",
+            "type": "select",
+            "instructions": "Where it was posted — sets the icon on the tile.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "instagram": "Instagram",
+                "facebook": "Facebook",
+                "youtube": "YouTube",
+                "other": "Other"
+            },
+            "default_value": "instagram",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
             "key": "field_ogt_moment_handle",
-            "label": "Instagram handle",
+            "label": "Account / handle",
             "name": "handle",
             "aria_label": "",
             "type": "text",
-            "instructions": "Who posted it.",
+            "instructions": "Who posted it: an Instagram handle, Facebook page or YouTube channel.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -218,5 +248,5 @@
     "active": true,
     "description": "Ask the traveller for permission before posting their photo or video.",
     "show_in_rest": 0,
-    "modified": 1791404108
+    "modified": 1792000000
 }
