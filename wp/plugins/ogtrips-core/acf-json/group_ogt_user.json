@@ -114,6 +114,11 @@
                 "param": "user_form",
                 "operator": "==",
                 "value": "all"
+            },
+            {
+                "param": "user_role",
+                "operator": "!=",
+                "value": "ogt_client"
             }
         ]
     ],
@@ -126,5 +131,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791259200
+    "modified": 1792000000
 }

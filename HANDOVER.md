@@ -91,6 +91,7 @@ Clients never see wp-admin (they are redirected to the portal), have no admin ba
 
 - **Logging in:** click the person icon in the site header (or go to `/wp-login.php`). The login page is branded with the OgTrips logo and the first homepage photo. Once logged in, the same icon opens the dashboard.
 - Keep your **Administrator** account for yourself (developer).
+- **Roles used on this site** (the only ones offered in the role list): **Administrator (developer)** — you; **Editor (OgTrips team)** — the merchant; **Trip expert (author)** — a named expert shown on trips and tour guides, created by the administrator; **Client (traveller)** — everyone who books, created by the team under Clients. User screens are trimmed to what matters: no editor preferences, colour schemes, website, nickname, Gravatar or social-profile rows; Client profiles show only name, contact, password, their bookings and the Member club card.
 - **Users → Add new** for the client with role **Editor**. Editors see only: Dashboard, Trips, Tour Guides, Blog, Reviews, Moments, Enquiries, Bookings, Clients, Pages, Site Settings, Media and Appearance → Menus (Customizer, Widgets and theme screens are blocked; the Home and Blog pages cannot be deleted; the Privacy page can only be edited by the admin — a WordPress rule).
 
 ## 6. Speed & SEO settings
