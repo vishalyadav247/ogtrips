@@ -116,15 +116,31 @@ function ogtrips_core_editable_roles( $roles ) {
 add_filter( 'editable_roles', 'ogtrips_core_editable_roles' );
 
 /**
- * New users default to Client (the team only ever creates clients).
+ * New users default to Client for everyone, administrators included: WordPress would
+ * otherwise pre-select "Subscriber", and a Subscriber lands in a restricted wp-admin
+ * instead of the portal. Staff accounts are still created by picking another role.
  *
  * @param string $role Default role.
  * @return string
  */
 function ogtrips_core_default_new_user_role( $role ) {
-	return is_admin() && ! current_user_can( 'manage_options' ) ? OGTRIPS_CORE_CLIENT_ROLE : $role;
+	return is_admin() ? OGTRIPS_CORE_CLIENT_ROLE : $role;
 }
 add_filter( 'pre_option_default_role', 'ogtrips_core_default_new_user_role' );
+
+/**
+ * A traveller created as "Subscriber" by mistake becomes a Client the moment they log in
+ * (the site has no other use for subscribers: comments and registration are off).
+ *
+ * @param string  $login User login.
+ * @param WP_User $user  User.
+ */
+function ogtrips_core_subscriber_becomes_client( $login, $user ) {
+	if ( $user instanceof WP_User && [ 'subscriber' ] === array_values( (array) $user->roles ) && get_role( OGTRIPS_CORE_CLIENT_ROLE ) ) {
+		$user->set_role( OGTRIPS_CORE_CLIENT_ROLE );
+	}
+}
+add_action( 'wp_login', 'ogtrips_core_subscriber_becomes_client', 5, 2 );
 
 /**
  * Users list for the team shows clients only.
@@ -363,7 +379,7 @@ function ogtrips_core_login_redirect( $redirect_to, $requested, $user ) {
 		return $redirect_to;
 	}
 
-	if ( ogtrips_core_is_client( $user ) ) {
+	if ( ogtrips_core_is_client( $user ) || ! user_can( $user, 'edit_posts' ) ) {
 		return str_starts_with( (string) $redirect_to, ogtrips_core_portal_url() ) ? $redirect_to : ogtrips_core_portal_url();
 	}
 
@@ -375,7 +391,8 @@ add_filter( 'login_redirect', 'ogtrips_core_login_redirect', 10, 3 );
  * wp-admin is not for clients (profile edits happen in the portal).
  */
 function ogtrips_core_block_admin_for_clients() {
-	if ( ogtrips_core_is_client() && ! wp_doing_ajax() && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+	// Clients, and any other account with no content rights (e.g. a Subscriber), belong in the portal.
+	if ( is_user_logged_in() && ( ogtrips_core_is_client() || ! current_user_can( 'edit_posts' ) ) && ! wp_doing_ajax() && ! ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
 		wp_safe_redirect( ogtrips_core_portal_url() );
 		exit;
 	}
