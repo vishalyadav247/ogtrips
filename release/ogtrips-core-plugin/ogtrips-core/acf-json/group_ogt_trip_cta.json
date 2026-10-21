@@ -1,0 +1,93 @@
+{
+    "key": "group_ogt_trip_cta",
+    "title": "Trip CTA",
+    "fields": [
+        {
+            "key": "field_ogt_trip_cta_itinerary",
+            "label": "Trip",
+            "name": "itinerary",
+            "aria_label": "",
+            "type": "post_object",
+            "instructions": "The trip this box links to.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "ogt_itinerary"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_ogt_trip_cta_heading",
+            "label": "Heading",
+            "name": "heading",
+            "aria_label": "",
+            "type": "text",
+            "instructions": "Empty = the trip name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Bali Bliss, fully planned",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ogt_trip_cta_text",
+            "label": "Text",
+            "name": "text",
+            "aria_label": "",
+            "type": "textarea",
+            "instructions": "One sentence under the heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "Everything in this guide, done for you — stays, drivers, tickets and a trip captain on call.",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "ogtrips/trip-cta"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791259200
+}
